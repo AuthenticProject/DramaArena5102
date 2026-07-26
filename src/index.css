@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root, .main-wrapper {
+  background-color: #08090C;
+  color: #D7E2EA;
+  font-family: 'Kanit', sans-serif;
+  min-height: 100vh;
+}
+
+.main-wrapper {
+  overflow-x: clip;
+}
+
+.hero-heading {
+  background: linear-gradient(180deg, #53627A 0%, #A3C7E6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #08090C;
+}
+::-webkit-scrollbar-thumb {
+  background: #53627A;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #A3C7E6;
+}
