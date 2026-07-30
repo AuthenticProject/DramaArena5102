@@ -1,117 +1,213 @@
-import React from 'react';
-import { TicketButton } from './TicketButton';
-import { Magnet } from './Magnet';
+import React, { useState } from 'react';
 import { FadeIn } from './FadeIn';
-import { Calendar, MapPin, Sparkles } from 'lucide-react';
+import { Calendar, MapPin, Menu, X } from 'lucide-react';
 
 interface HeroSectionProps {
-  onOpenTicketModal: () => void;
+  onOpenSponsorshipModal: () => void;
   onNavigate: (sectionId: string) => void;
 }
 
-export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenTicketModal, onNavigate }) => {
+export const StampLogo: React.FC<{ size?: number }> = ({ size = 200 }) => (
+  <svg width={size} height={size} viewBox="0 0 200 200" className="float-anim">
+    <rect x="10" y="10" width="180" height="180" rx="4" fill="none" stroke="#062B4A" strokeWidth="3"/>
+    <rect x="20" y="20" width="160" height="160" rx="2" fill="none" stroke="#D69103" strokeWidth="1.5" strokeDasharray="4,3"/>
+    <g transform="translate(100,100)">
+      <path d="M-28,-38 L28,-38 L8,-4 L28,4 L-28,4 Z" fill="#D69103" opacity="0.15"/>
+      <path d="M-28,38 L28,38 L8,4 L-28,4 Z" fill="#062B4A" opacity="0.12"/>
+      <path d="M-28,-38 L28,-38 L8,-4 L28,4 L-28,4 Z" fill="none" stroke="#D69103" strokeWidth="2.5"/>
+      <path d="M28,-38 L8,-4 L28,4 L-28,4 L8,38 L-28,38" fill="none" stroke="#062B4A" strokeWidth="2.5"/>
+      <line x1="-28" y1="-38" x2="28" y2="-38" stroke="#062B4A" strokeWidth="3"/>
+      <line x1="-28" y1="38" x2="28" y2="38" stroke="#062B4A" strokeWidth="3"/>
+    </g>
+    <text x="100" y="48" textAnchor="middle" fontFamily="'Mileast', serif" fontSize="9" fontWeight="700" fill="#062B4A" letterSpacing="3">DRAMA</text>
+    <text x="100" y="165" textAnchor="middle" fontFamily="'Mileast', serif" fontSize="9" fontWeight="700" fill="#D69103" letterSpacing="3">ARENA</text>
+    <text x="100" y="178" textAnchor="middle" fontFamily="'Cormorant SC', serif" fontSize="7" fill="#062B4A" letterSpacing="2">5102</text>
+    <text x="22" y="32" fontFamily="serif" fontSize="10" fill="#D69103" opacity="0.6">✦</text>
+    <text x="172" y="32" fontFamily="serif" fontSize="10" fill="#D69103" opacity="0.6" textAnchor="end">✦</text>
+    <text x="22" y="178" fontFamily="serif" fontSize="10" fill="#D69103" opacity="0.6">✦</text>
+    <text x="172" y="178" fontFamily="serif" fontSize="10" fill="#D69103" opacity="0.6" textAnchor="end">✦</text>
+  </svg>
+);
+
+export const FleuronDivider: React.FC = () => (
+  <div className="flex items-center gap-3 my-2 w-full max-w-xs mx-auto">
+    <div className="flex-1 h-px" style={{ background: 'linear-gradient(to right, transparent, #D69103)' }} />
+    <svg width="40" height="20" viewBox="0 0 40 20" fill="none">
+      <path d="M20 10 C15 4, 5 4, 2 10 C5 16, 15 16, 20 10Z" fill="#D69103" opacity="0.8"/>
+      <path d="M20 10 C25 4, 35 4, 38 10 C35 16, 25 16, 20 10Z" fill="#D69103" opacity="0.8"/>
+      <circle cx="20" cy="10" r="2.5" fill="#062B4A"/>
+    </svg>
+    <div className="flex-1 h-px" style={{ background: 'linear-gradient(to left, transparent, #D69103)' }} />
+  </div>
+);
+
+export const SectionLabel: React.FC<{ text: string }> = ({ text }) => (
+  <span className="font-cormorant-sc text-xs tracking-[0.4em] uppercase" style={{ color: '#D69103' }}>
+    ✦ {text} ✦
+  </span>
+);
+
+export const GoldButton: React.FC<{ onClick?: () => void; label: string; outline?: boolean }> = ({
+  onClick,
+  label,
+  outline = false
+}) => (
+  <button
+    onClick={onClick}
+    className="group relative px-8 py-3 font-cormorant-sc font-semibold uppercase tracking-widest text-sm transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
+    style={{
+      background: outline ? 'transparent' : 'linear-gradient(135deg, #B8860B 0%, #D69103 50%, #E8A820 100%)',
+      color: outline ? '#062B4A' : '#F4F1EB',
+      border: '2px solid #D69103',
+      boxShadow: outline ? 'none' : '0 4px 20px rgba(214,145,3,0.4)',
+      letterSpacing: '0.15em'
+    }}
+  >
+    {label} <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
+  </button>
+);
+
+export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenSponsorshipModal, onNavigate }) => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const handleNav = (id: string) => {
+    onNavigate(id);
+    setMobileMenuOpen(false);
+  };
+
   return (
-    <section className="relative min-h-screen w-full flex flex-col justify-between overflow-x-clip bg-[#08090C] text-[#D7E2EA] select-none pb-8">
-      
-      {/* 1. Navbar */}
-      <FadeIn delay={0} y={-20} className="w-full z-20">
-        <nav className="w-full flex items-center justify-between px-6 md:px-10 pt-6 md:pt-8">
+    <>
+      {/* Fixed Header Nav */}
+      <nav
+        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-10 py-4"
+        style={{ background: 'rgba(244,241,235,0.92)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(214,145,3,0.3)' }}
+      >
+        <div className="font-mileast italic text-base font-bold cursor-pointer" onClick={() => handleNav('root')}>
+          <span className="gold-text font-playfair text-lg">Drama Arena</span>
+          <span className="ml-1 text-xs font-cormorant-sc" style={{ color: '#D69103' }}>5102</span>
+        </div>
+        <div className="hidden md:flex items-center gap-8">
           {[
-            { label: "PROFIL", id: "about" },
-            { label: "ACARA", id: "shows" },
-            { label: "PANITIA", id: "committee" },
-            { label: "SPONSOR", modal: true },
-            { label: "KONTAK", id: "footer" }
-          ].map((item) => (
+            ['PROFIL', 'about'],
+            ['TEMA', 'theme'],
+            ['ACARA', 'shows'],
+            ['PANITIA', 'committee']
+          ].map(([label, id]) => (
             <button
-              key={item.label}
-              onClick={() => {
-                if (item.modal) {
-                  onOpenTicketModal();
-                } else if (item.id) {
-                  onNavigate(item.id);
-                }
-              }}
-              className="text-[#D7E2EA] font-medium uppercase tracking-wider text-xs sm:text-sm md:text-lg lg:text-[1.3rem] hover:opacity-70 transition-opacity duration-200 cursor-pointer"
+              key={id}
+              onClick={() => handleNav(id)}
+              className="font-cormorant-sc text-xs tracking-widest uppercase transition-colors hover:text-yellow-700 cursor-pointer"
+              style={{ color: '#062B4A' }}
             >
-              {item.label}
+              {label}
             </button>
           ))}
-        </nav>
-      </FadeIn>
+          <GoldButton onClick={onOpenSponsorshipModal} label="SPONSORSHIP" />
+        </div>
+        <button
+          className="md:hidden text-2xl p-1 cursor-pointer"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          style={{ color: '#062B4A' }}
+          aria-label="Toggle Menu"
+        >
+          {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </button>
+      </nav>
 
-      {/* Tagline & Motto Banner */}
-      <div className="w-full flex flex-col items-center justify-center pt-6 px-4 z-10">
-        <FadeIn delay={0.1} y={20} className="flex flex-col items-center text-center gap-2">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#7209B7]/20 border border-[#7209B7]/50 text-[#F72585] text-xs font-bold uppercase tracking-widest">
-            <Sparkles className="w-3.5 h-3.5" /> TAGLINE: "NALURI DAN NURANI"
-          </div>
-          <p className="text-xs sm:text-sm md:text-base font-semibold text-[#A3C7E6] max-w-2xl italic">
-            "Sadar akan nilai perjuangan, tumbuhkan semangat kebersamaan"
-          </p>
+      {/* Mobile Drawer */}
+      {mobileMenuOpen && (
+        <div
+          className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-8"
+          style={{ background: 'rgba(244,241,235,0.97)' }}
+        >
+          {[
+            ['PROFIL', 'about'],
+            ['TEMA', 'theme'],
+            ['ACARA', 'shows'],
+            ['PANITIA', 'committee']
+          ].map(([label, id]) => (
+            <button
+              key={id}
+              onClick={() => handleNav(id)}
+              className="font-cormorant-sc text-2xl tracking-widest uppercase cursor-pointer"
+              style={{ color: '#062B4A' }}
+            >
+              {label}
+            </button>
+          ))}
+          <GoldButton
+            onClick={() => {
+              onOpenSponsorshipModal();
+              setMobileMenuOpen(false);
+            }}
+            label="SPONSORSHIP"
+          />
+        </div>
+      )}
+
+      {/* Main Hero Banner */}
+      <section id="root" className="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-16 px-4 overflow-hidden section-stamp">
+        {/* Background Grid Pattern */}
+        <div
+          className="absolute inset-0 pointer-events-none opacity-5"
+          style={{
+            backgroundImage:
+              'repeating-linear-gradient(0deg, #062B4A 0px, #062B4A 1px, transparent 1px, transparent 40px), repeating-linear-gradient(90deg, #062B4A 0px, #062B4A 1px, transparent 1px, transparent 40px)'
+          }}
+        />
+
+        {/* Decorative Top Label */}
+        <FadeIn delay={0} y={-20} className="flex flex-col items-center gap-2 mb-8">
+          <SectionLabel text="PAGELARAN SENI AKBAR" />
+          <FleuronDivider />
         </FadeIn>
-      </div>
 
-      {/* 2. Massive Hero Heading */}
-      <div className="w-full overflow-hidden flex flex-col justify-center items-center relative z-0 my-4 sm:my-2">
-        <FadeIn delay={0.15} y={40} className="w-full text-center">
-          <h1 className="hero-heading font-black uppercase tracking-tight leading-none whitespace-nowrap w-full text-[5.5vw] sm:text-[6.5vw] md:text-[7.2vw] lg:text-[8vw]">
-            DRAMA ARENA 5102
+        {/* Central Stamp Logo */}
+        <FadeIn delay={0.1} y={0} className="mb-6">
+          <StampLogo size={200} />
+        </FadeIn>
+
+        {/* Main Title */}
+        <FadeIn delay={0.2} y={30} className="text-center">
+          <h1
+            className="font-mileast italic font-bold leading-none tracking-tight uppercase"
+            style={{ fontSize: 'clamp(3.5rem, 12vw, 130px)', color: '#062B4A', lineHeight: 0.9 }}
+          >
+            Drama<br />
+            <span className="gold-text not-italic">Arena</span>
           </h1>
         </FadeIn>
-        <p className="text-xs sm:text-sm md:text-base font-semibold uppercase tracking-widest text-[#D7E2EA]/80 mt-2">
-          Pondok Modern Darussalam Gontor
-        </p>
-      </div>
 
-      {/* 3. Hero Centerpiece */}
-      <div className="relative left-1/2 -translate-x-1/2 z-10 w-[280px] sm:w-[360px] md:w-[440px] lg:w-[480px] pointer-events-auto flex justify-center items-end my-2">
-        <FadeIn delay={0.3} y={30} className="w-full flex justify-center">
-          <Magnet
-            padding={150}
-            strength={3}
-            className="w-full cursor-pointer"
-          >
-            <div className="relative group rounded-[30px] sm:rounded-[40px] overflow-hidden border-2 border-[#53627A]/40 shadow-[0_0_50px_rgba(163,199,230,0.2)] bg-[#08090C]/80 backdrop-blur-md">
-              <img
-                src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop"
-                alt="Pagelaran Seni Drama Arena 5102"
-                className="w-full h-[200px] sm:h-[260px] md:h-[320px] lg:h-[360px] object-cover object-center filter brightness-90 contrast-110 transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#08090C] via-transparent to-transparent opacity-80" />
-              
-              {/* Overlay Text */}
-              <div className="absolute bottom-4 left-4 right-4 text-center">
-                <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#F72585] block">
-                  KULLIYATU-L-MU'ALLIMIN AL-ISLAMIYAH
-                </span>
-                <span className="text-xs sm:text-sm font-bold text-white uppercase">
-                  Tahun Ajaran 1447-1448 / 2026-2027
-                </span>
-              </div>
-            </div>
-          </Magnet>
+        {/* Subtitle */}
+        <FadeIn delay={0.3} y={20} className="text-center mt-4">
+          <div className="font-cormorant-sc tracking-[0.5em] text-sm uppercase mb-3" style={{ color: '#D69103' }}>
+            Kelas 5 · 102 · PMDG
+          </div>
+          <p className="font-mileast italic text-base sm:text-lg max-w-xl mx-auto" style={{ color: '#062B4A', opacity: 0.8 }}>
+            "Forever Striving for an Authentic Masterpiece"
+          </p>
         </FadeIn>
-      </div>
 
-      {/* 4. Bottom Bar */}
-      <div className="w-full flex flex-col sm:flex-row items-center sm:items-end justify-between pt-4 px-6 md:px-10 z-20 gap-4">
-        <FadeIn delay={0.35} y={20}>
-          <div className="flex flex-col gap-1 text-[#D7E2EA] text-xs sm:text-sm">
-            <span className="flex items-center gap-2 font-semibold text-[#A3C7E6]">
-              <Calendar className="w-4 h-4 text-[#F72585]" /> Kamis, 20 Dzulqo'dah 1447 / 7 Mei 2026
+        <FadeIn delay={0.4} y={20} className="mt-8">
+          <FleuronDivider />
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-6 text-sm font-cormorant-sc" style={{ color: '#062B4A' }}>
+            <span className="flex items-center gap-2">
+              <Calendar className="w-4 h-4" style={{ color: '#D69103' }} />
+              Kamis, 20 Dzulqo'dah 1447 / 7 Mei 2026
             </span>
-            <span className="flex items-center gap-2 font-medium text-[#D7E2EA]/80">
-              <MapPin className="w-4 h-4 text-[#0077B6]" /> PMDG Kampus Pusat (19.30 WIB - Selesai)
+            <span className="hidden sm:block" style={{ color: '#D69103' }}>·</span>
+            <span className="flex items-center gap-2">
+              <MapPin className="w-4 h-4" style={{ color: '#D69103' }} />
+              PMDG Kampus Pusat — 19.30 WIB
             </span>
           </div>
         </FadeIn>
 
-        <FadeIn delay={0.5} y={20}>
-          <TicketButton onClick={onOpenTicketModal} label="PROPOSOL SPONSORSHIP" />
+        <FadeIn delay={0.5} y={20} className="mt-8 flex gap-4 flex-wrap justify-center">
+          <GoldButton onClick={onOpenSponsorshipModal} label="PROPOSAL SPONSORSHIP" />
+          <GoldButton onClick={() => handleNav('about')} label="SELENGKAPNYA" outline />
         </FadeIn>
-      </div>
-
-    </section>
+      </section>
+    </>
   );
 };

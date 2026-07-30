@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pagelaran Seni Drama Arena 5102 — Pondok Modern Darussalam Gontor</title>
-    <meta name="description" content="Pagelaran Seni Drama Arena 5102 Siswa Kelas 5 KMI Pondok Modern Darussalam Gontor. Moto: Sadar akan nilai perjuangan, tumbuhkan semangat kebersamaan. Tagline: Naluri dan Nurani." />
-    
-    <!-- Google Fonts: Kanit -->
+    <title>Pagelaran Seni Akbar Drama Arena 5102 — Kelas 5 KMI PMDG</title>
+    <meta name="description" content="Pagelaran Seni Akbar Drama Arena Kelas 5 102. Tema: Sadar akan Nilai-Nilai Perjuangan, Tumbuhkan Semangat Kebersamaan. Motto: Forever Striving for an Authentic Masterpiece. Tagline: Naluri dan Nurani." />
+
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cormorant+SC:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -18,121 +18,1659 @@
         theme: {
           extend: {
             colors: {
-              cyber: {
-                bg: '#08090C',
-                text: '#D7E2EA',
-                darkText: '#0C0C0C',
-                lightBg: '#FFFFFF',
-                accent: '#0077B6',
-                purple: '#7209B7',
-                pink: '#F72585'
-              }
+              navy: '#062B4A',
+              gold: '#D69103',
+              bone: '#F4F1EB',
+              'bone-dark': '#E8E3D8',
+              'navy-light': '#0D3D66',
+              'gold-light': '#E8A820',
+              'gold-pale': '#F5D98A',
+              aged: '#EDE8DE',
             },
             fontFamily: {
-              kanit: ['Kanit', 'sans-serif'],
+              sans: ['Alverata', '"Cormorant Garamond"', 'Georgia', 'serif'],
+              arabic: ['Amiri', 'Georgia', 'serif'],
+              mileast: ['Mileast', 'Georgia', 'serif'],
+              alverata: ['Alverata', 'Alverata Lt', 'Georgia', 'serif'],
+              cormorant: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+              'cormorant-sc': ['"Cormorant SC"', 'Georgia', 'serif'],
             }
           }
         }
       }
     </script>
 
-    <!-- React 18 & Babel CDN for direct browser preview -->
+    <!-- Three.js 3D Engine & GLTFLoader CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+    <!-- React 18, ReactDOM & Babel Standalone CDN -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <style>
-      *, *::before, *::after {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
+      @font-face {
+        font-family: 'Mileast';
+        src: url('/Mileast.otf') format('opentype');
+        font-weight: 400 900;
+        font-style: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'Alverata';
+        src: url('/fonnts.com-Alverata-Lt-.otf') format('opentype');
+        font-weight: 300 400;
+        font-style: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'Alverata Lt';
+        src: url('/fonnts.com-Alverata-Lt-.otf') format('opentype');
+        font-weight: 300;
+        font-style: normal;
+        font-display: swap;
       }
 
-      html, body, #root, .main-wrapper {
-        background-color: #08090C;
-        color: #D7E2EA;
-        font-family: 'Kanit', sans-serif;
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      /* Hide default cursor on desktop for custom branded arrow cursor */
+      @media (min-width: 768px) {
+        body, button, a, input, select {
+          cursor: none !important;
+        }
+      }
+
+      html, body, #root {
+        background-color: #F4F1EB;
+        color: #062B4A;
+        font-family: 'Alverata', 'Cormorant Garamond', Georgia, serif;
         min-height: 100vh;
+        scroll-behavior: smooth;
       }
 
-      .main-wrapper {
-        overflow-x: clip;
+      body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background-image:
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0;
       }
 
-      .hero-heading {
-        background: linear-gradient(180deg, #53627A 0%, #A3C7E6 100%);
+      @keyframes goldShimmer {
+        0% { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
+      }
+
+      .gold-text {
+        background: linear-gradient(120deg, #B8860B 0%, #D69103 25%, #FFF2A8 50%, #D69103 75%, #8B6914 100%);
+        background-size: 200% auto;
         -webkit-background-clip: text;
+        background-clip: text;
         -webkit-text-fill-color: transparent;
+        animation: goldShimmer 6s linear infinite;
       }
 
-      /* Custom scrollbar */
-      ::-webkit-scrollbar {
-        width: 8px;
+      .stamp-border {
+        position: relative;
+        background: #F4F1EB;
+        border: 3px solid #062B4A;
+        box-shadow:
+          0 0 0 6px #F4F1EB,
+          0 0 0 9px #062B4A,
+          4px 4px 20px rgba(6,43,74,0.2);
       }
-      ::-webkit-scrollbar-track {
-        background: #08090C;
+
+      @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+      @keyframes marquee-left { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+      @keyframes eqBar { 0%,100%{height:4px} 50%{height:18px} }
+
+      .marquee-left  { animation: marquee-left  30s linear infinite; }
+      .float-anim { animation: float 4s ease-in-out infinite; }
+      .eq-bar-1 { animation: eqBar 0.8s ease-in-out infinite; }
+      .eq-bar-2 { animation: eqBar 0.6s ease-in-out infinite 0.2s; }
+      .eq-bar-3 { animation: eqBar 0.9s ease-in-out infinite 0.4s; }
+
+      /* Classic Bento Card with 3D Parallax Tilt */
+      .bento-card {
+        background: #F4F1EB;
+        border: 1.5px solid rgba(6,43,74,0.2);
+        box-shadow: 0 4px 20px rgba(6,43,74,0.08), inset 0 0 0 1px rgba(214,145,3,0.15);
+        transition: transform 0.2s ease-out, box-shadow 0.3s ease, border-color 0.3s ease;
+        transform-style: preserve-3d;
+        perspective: 1000px;
       }
-      ::-webkit-scrollbar-thumb {
-        background: #53627A;
-        border-radius: 4px;
+      .bento-card:hover {
+        box-shadow: 0 16px 45px rgba(6,43,74,0.22), inset 0 0 0 1px rgba(214,145,3,0.5);
+        border-color: #D69103;
       }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #A3C7E6;
+
+      /* Enhanced Scroll reveal animation */
+      .reveal-on-scroll {
+        opacity: 0;
+        transform: translateY(40px) scale(0.97);
+        transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .reveal-on-scroll.is-revealed {
+        opacity: 1;
+        transform: translateY(0) scale(1);
       }
     </style>
   </head>
-  <body class="bg-[#08090C] text-[#D7E2EA]">
+  <body class="bg-[#F4F1EB] text-[#062B4A] font-sans overflow-x-hidden selection:bg-[#D69103] selection:text-[#062B4A]">
     <div id="root"></div>
 
-    <!-- Application Script mounted via React -->
     <script type="text/babel">
       const { useState, useEffect, useRef } = React;
-      const { motion, AnimatePresence, useScroll, useTransform } = window.Motion;
 
-      // 1. TicketButton Component
-      const TicketButton = ({ onClick, className = '', label = "Proposal Sponsorship" }) => (
-        <button
-          onClick={onClick}
-          style={{
-            background: 'linear-gradient(123deg, #091E3A 7%, #0077B6 37%, #7209B7 72%, #F72585 100%)',
-            boxShadow: '0px 4px 4px rgba(247, 37, 133, 0.25), inset 4px 4px 12px #7209B7',
-            outline: '2px solid #FFFFFF',
-            outlineOffset: '-3px'
-          }}
-          className={`group relative rounded-full px-8 py-3 sm:px-10 sm:py-3.5 md:px-12 md:py-4 text-xs sm:text-sm md:text-base font-medium uppercase tracking-widest text-white transition-all duration-300 hover:scale-105 hover:brightness-110 active:scale-95 flex items-center justify-center gap-2 cursor-pointer ${className}`}
-        >
-          <span className="relative z-10">{label}</span>
-          <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
-        </button>
+      // Inline SVG Icons
+      const ArrowRight = ({ className = "w-4 h-4" }) => (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      );
+      const Play = ({ className = "w-4 h-4" }) => (
+        <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      );
+      const Pause = ({ className = "w-4 h-4" }) => (
+        <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+      );
+      const Clock = ({ className = "w-6 h-6" }) => (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      );
+      const Zap = ({ className = "w-6 h-6" }) => (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      );
+      const ShieldCheck = ({ className = "w-6 h-6" }) => (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+      );
+      const Globe = ({ className = "w-6 h-6" }) => (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      );
+      const IconClose = ({ className = "w-5 h-5" }) => (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      );
+      const IconMenu = ({ className = "w-6 h-6" }) => (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+      );
+      const Sparkles = ({ className = "w-5 h-5" }) => (
+        <svg viewBox="0 0 24 24" fill="currentColor" className={className}><path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/></svg>
+      );
+      const Search = ({ className = "w-4 h-4" }) => (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      );
+      const ChevronDown = ({ className = "w-4 h-4" }) => (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="6 9 12 15 18 9"/></svg>
+      );
+      const ArrowUp = ({ className = "w-4 h-4" }) => (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
       );
 
-      // 2. WatchTrailerButton Component
-      const WatchTrailerButton = ({ onClick, className = '', label = "Prinjau Tampilan" }) => (
-        <button
-          onClick={onClick}
-          className={`group rounded-full border-2 border-[#D7E2EA] px-8 py-3 sm:px-10 sm:py-3.5 text-sm sm:text-base font-medium uppercase tracking-widest text-[#D7E2EA] transition-all duration-300 hover:bg-[#D7E2EA]/10 hover:border-white hover:scale-105 active:scale-95 flex items-center justify-center gap-2 cursor-pointer ${className}`}
-        >
-          <span>{label}</span>
-          <span className="inline-block transition-transform duration-300 group-hover:scale-125">▶</span>
-        </button>
+      // Custom Branded Metallic Arrow Pointer Cursor
+      const ThemeBrandedArrowCursor = () => {
+        const [pos, setPos] = useState({ x: -100, y: -100 });
+        const [isHovered, setIsHovered] = useState(false);
+
+        useEffect(() => {
+          const onMouseMove = (e) => {
+            setPos({ x: e.clientX, y: e.clientY });
+
+            const target = e.target;
+            const isClickable = target.closest('button, a, input, select, .bento-card, [role="button"]');
+            setIsHovered(!!isClickable);
+          };
+          window.addEventListener('mousemove', onMouseMove);
+          return () => window.removeEventListener('mousemove', onMouseMove);
+        }, []);
+
+        if (typeof window !== 'undefined' && window.innerWidth < 768) return null;
+
+        return (
+          <div
+            className="fixed pointer-events-none z-50 transition-transform duration-75 ease-out"
+            style={{
+              left: `${pos.x}px`,
+              top: `${pos.y}px`,
+              transform: `scale(${isHovered ? 1.25 : 1})`,
+              filter: isHovered ? 'drop-shadow(0 0 12px rgba(214,145,3,0.8))' : 'drop-shadow(0 2px 6px rgba(6,43,74,0.4))'
+            }}
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M3 3L10.07 20.97L13.58 13.58L20.97 10.07L3 3Z"
+                fill="#062B4A"
+                stroke="#D69103"
+                strokeWidth="2"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M3 3L9 15L12 12L15 9L3 3Z"
+                fill="#F5D98A"
+                opacity="0.8"
+              />
+            </svg>
+          </div>
+        );
+      };
+
+      // Bento Card Container with 3D Mouse Parallax Tilt Motion
+      const BentoCard = ({ children, className = "" }) => {
+        const cardRef = useRef(null);
+
+        const handleMouseMove = (e) => {
+          if (!cardRef.current) return;
+          const rect = cardRef.current.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+          const rotateX = (-y / rect.height) * 12;
+          const rotateY = (x / rect.width) * 12;
+          cardRef.current.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+        };
+
+        const handleMouseLeave = () => {
+          if (!cardRef.current) return;
+          cardRef.current.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+        };
+
+        return (
+          <div
+            ref={cardRef}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            className={`bento-card ${className}`}
+          >
+            {children}
+          </div>
+        );
+      };
+
+      const StampLogo = ({ size = 170 }) => (
+        <svg width={size} height={size} viewBox="0 0 200 200" className="float-anim">
+          <rect x="10" y="10" width="180" height="180" rx="4" fill="#F4F1EB" stroke="#062B4A" strokeWidth="3"/>
+          <rect x="20" y="20" width="160" height="160" rx="2" fill="none" stroke="#D69103" strokeWidth="1.5" strokeDasharray="4,3"/>
+          <g transform="translate(100,100)">
+            <path d="M-28,-38 L28,-38 L8,-4 L28,4 L-28,4 Z" fill="#D69103" opacity="0.25"/>
+            <path d="M-28,38 L28,38 L8,-4 L-28,4 Z" fill="none" stroke="#D69103" strokeWidth="2.5"/>
+            <path d="M28,-38 L8,-4 L28,4 L-28,4 L8,38 L-28,38" fill="none" stroke="#062B4A" strokeWidth="2.5"/>
+            <line x1="-28" y1="-38" x2="28" y2="-38" stroke="#062B4A" strokeWidth="3"/>
+            <line x1="-28" y1="38" x2="28" y2="38" stroke="#062B4A" strokeWidth="3"/>
+          </g>
+          <text x="100" y="48" textAnchor="middle" fontFamily="'Mileast', serif" fontSize="9" fontWeight="700" fill="#062B4A" letterSpacing="3">DRAMA</text>
+          <text x="100" y="165" textAnchor="middle" fontFamily="'Mileast', serif" fontSize="9" fontWeight="700" fill="#D69103" letterSpacing="3">ARENA</text>
+          <text x="100" y="178" textAnchor="middle" fontFamily="'Cormorant SC', serif" fontSize="7" fill="#062B4A" letterSpacing="2">5102</text>
+          <text x="22" y="32" fontFamily="serif" fontSize="10" fill="#D69103" opacity="0.8">✦</text>
+          <text x="172" y="32" fontFamily="serif" fontSize="10" fill="#D69103" opacity="0.8" textAnchor="end">✦</text>
+          <text x="22" y="178" fontFamily="serif" fontSize="10" fill="#D69103" opacity="0.8">✦</text>
+          <text x="172" y="178" fontFamily="serif" fontSize="10" fill="#D69103" opacity="0.8" textAnchor="end">✦</text>
+        </svg>
       );
 
-      // 3. FadeIn Component
-      const FadeIn = ({ children, delay = 0, duration = 0.7, x = 0, y = 30, className = '' }) => (
-        <motion.div
-          initial={{ opacity: 0, x, y }}
-          whileInView={{ opacity: 1, x: 0, y: 0 }}
-          viewport={{ once: true, margin: "50px", amount: 0 }}
-          transition={{ duration, delay, ease: [0.25, 0.1, 0.25, 1] }}
-          className={className}
-        >
-          {children}
-        </motion.div>
-      );
+      const CountdownTimer = () => {
+        const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
-      // Main App mount in Vite
+        useEffect(() => {
+          const targetDate = new Date('2026-05-07T19:30:00+07:00').getTime();
+          const updateCountdown = () => {
+            const now = new Date().getTime();
+            const diff = targetDate - now;
+            if (diff > 0) {
+              const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+              const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+              const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+              const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+              setTimeLeft({ days, hours, minutes, seconds });
+            }
+          };
+          updateCountdown();
+          const timer = setInterval(updateCountdown, 1000);
+          return () => clearInterval(timer);
+        }, []);
+
+        return (
+          <div className="grid grid-cols-4 gap-3 max-w-lg mx-auto pt-4">
+            {[
+              { label: 'HARI', val: timeLeft.days },
+              { label: 'JAM', val: timeLeft.hours },
+              { label: 'MENIT', val: timeLeft.minutes },
+              { label: 'DETIK', val: timeLeft.seconds },
+            ].map(({ label, val }) => (
+              <div key={label} className="p-3 rounded-2xl bg-[#062B4A] border-2 border-[#D69103] text-center shadow-lg hover:scale-105 transition-transform">
+                <div className="text-2xl sm:text-3xl font-extrabold gold-text font-serif">{String(val).padStart(2, '0')}</div>
+                <div className="text-[10px] text-[#F5D98A] font-bold tracking-widest mt-0.5">{label}</div>
+              </div>
+            ))}
+          </div>
+        );
+      };
+
+      const gontorCampuses = [
+        { id: 'pusat', code: 'PUSAT', name: 'PMDG Kampus Pusat', location: 'Gontor, Ponorogo, Jawa Timur', x: -3.5, y: 0, z: 5.8, isPusat: true },
+        { id: 'g2', code: 'G-2', name: 'Gontor 2', location: 'Madusari, Siman, Ponorogo, Jawa Timur', x: -3.3, y: 0, z: 5.8 },
+        { id: 'g3', code: 'G-3', name: 'Gontor 3 Darul Ma’rifat', location: 'Sumbercangkring, Gurah, Kediri, Jawa Timur', x: -2.5, y: 0, z: 5.7 },
+        { id: 'g4', code: 'G-4', name: 'Gontor 4 Darul Muttaqien', location: 'Kalisat, Banyuwangi, Jawa Timur', x: 0.2, y: 0, z: 6.0 },
+        { id: 'g5', code: 'G-5', name: 'Gontor 5 Darul Qiyam', location: 'Sawangan, Magelang, Jawa Tengah', x: -5.2, y: 0, z: 5.5 },
+        { id: 'g6', code: 'G-6', name: 'Gontor 6 Darul Qiyam', location: 'Tanjung Sari, Lampung Selatan, Lampung', x: -9.5, y: 0, z: 2.8 },
+        { id: 'g7', code: 'G-7', name: 'Gontor 7 Riau', location: 'Rumbio, Kampar, Riau', x: -14.5, y: 0, z: -2.5 },
+        { id: 'g8', code: 'G-8', name: 'Gontor 8 Aceh', location: 'Labuhan Haji, Aceh Besar, Aceh', x: -20.5, y: 0, z: -7.2 },
+        { id: 'g9', code: 'G-9', name: 'Gontor 9 SULSEL', location: 'Pangkep, Sulawesi Selatan', x: 6.2, y: 0, z: 2.2 },
+        { id: 'g10', code: 'G-10', name: 'Gontor 10 Jambi', location: 'Tanjung Jabung Barat, Jambi', x: -13.0, y: 0, z: -0.8 },
+        { id: 'gp1', code: 'GP-1', name: 'Gontor Putri 1', location: 'Mantingan, Ngawi, Jawa Timur', x: -4.1, y: 0, z: 5.7 },
+        { id: 'gp2', code: 'GP-2', name: 'Gontor Putri 2', location: 'Mantingan, Ngawi, Jawa Timur', x: -4.0, y: 0, z: 5.7 },
+        { id: 'gp3', code: 'GP-3', name: 'Gontor Putri 3', location: 'Widodaren, Ngawi, Jawa Timur', x: -3.9, y: 0, z: 5.7 },
+        { id: 'gp4', code: 'GP-4', name: 'Gontor Putri 4', location: 'Konawe Selatan, Sulawesi Tenggara', x: 9.8, y: 0, z: 2.0 },
+        { id: 'gp5', code: 'GP-5', name: 'Gontor Putri 5', location: 'Kandangan, Kediri, Jawa Timur', x: -2.3, y: 0, z: 5.7 },
+        { id: 'gp6', code: 'GP-6', name: 'Gontor Putri 6', location: 'Poso, Sulawesi Tengah', x: 7.8, y: 0, z: -0.8 },
+        { id: 'gp7', code: 'GP-7', name: 'Gontor Putri 7', location: 'Kampar, Riau', x: -14.8, y: 0, z: -2.6 }
+      ];
+
+      const journeyTimeline = [
+        { date: "Ramadhan 1447", title: "Musyawarah & Pembentukan Panitia", desc: "Pemilihan struktur kepanitiaan 5102 dan perancangan konsep awal mahakarya panggung." },
+        { date: "Syawwal 1447", title: "Latihan & Pembangunan Dekorasi", desc: "Latihan intensif koreografi 4 unsur seni dan perakitan ornamen backdrop 36 meter." },
+        { date: "15 Dzulqo'dah 1447", title: "Gladi Bersih & Gelar Peralatan", desc: "Pengujian sound system, lighting beam 50kW, dan kembang api cold spark." },
+        { date: "20 Dzulqo'dah 1447", title: "Malam Puncak Drama Arena 5102", desc: "Pementasan Pagelaran Seni Akbar siswa kelas 5 KMI PMDG di Lapangan Utama Gontor Pusat." }
+      ];
+
+      const showsData = [
+        {
+          id: "show-musik", number: "01", category: "SENI MUSIK",
+          title: "Harmoni Musikal 5102",
+          items: ["Hadrah", "Nasyid", "Paduan Suara", "Gema Shalawat", "Akustik", "Band 5102"],
+          img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=800&auto=format&fit=crop"
+        },
+        {
+          id: "show-teater", number: "02", category: "SENI TEATER",
+          title: "Pementasan Drama Utama",
+          items: ["Drama 5102", "Pantomim", "Teatrikal Puisi"],
+          img: "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?q=80&w=800&auto=format&fit=crop"
+        },
+        {
+          id: "show-tari", number: "03", category: "SENI TARI",
+          title: "Koreografi Nusantara & Modern",
+          items: ["Tari Saman Atjeh","Tari Campur Sari","Tari Singa Depok","Tari Timur","Tari Dayak","Tari Zapin","Tari India","Tari Modern"],
+          img: "https://images.unsplash.com/photo-1547153760-18fc86324498?q=80&w=800&auto=format&fit=crop"
+        },
+        {
+          id: "show-rupa", number: "04", category: "SENI RUPA & MULTIMEDIA",
+          title: "Visual Art & Multimedia",
+          items: ["Grand Opening","Iklan Pendidikan","Video Motivasi","Trailer DA 5102","Grand Closing"],
+          img: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800&auto=format&fit=crop"
+        }
+      ];
+
+      const stageFeatures = [
+        { title: "Konstruksi Panggung Utama 36m", desc: "Desain megah berornamen Nusantara dan ukiran stempel klasik dengan lebar bentang 36 meter." },
+        { title: "Layar Multimedia LED 3x6m", desc: "Proyeksi animasi visual resolusi tinggi untuk mendukung alur cerita pementasan." },
+        { title: "Sistem Tata Cahaya Beam 50.000W", desc: "Kombinasi Moving Head Beam, Follow Spot, dan LED Par untuk atmosfer panggung yang dramatis." },
+        { title: "Spesial Efek & Kembang Api", desc: "Efek CO2 jet, cold spark pyrotechnics, dan smoke machine untuk klimaks pertunjukan." }
+      ];
+
+      const faqsData = [
+        { q: "Kapan dan di mana Drama Arena 5102 dilaksanakan?", a: "Pagelaran Seni Akbar Drama Arena 5102 dilaksanakan pada hari Kamis malam Jumat, 20 Dzulqo’dah 1447 / 7 Mei 2026 pukul 19.30 WIB di Lapangan Utama Pondok Modern Darussalam Gontor Kampus Pusat, Ponorogo." },
+        { q: "Siapa sajakah panitia dan pengisi acara?", a: "Seluruh panitia dan pengisi acara merupakan siswa kelas 5 KMI PMDG angkatan 5102 yang berjumlah 441 santri." },
+        { q: "Bagaimana cara menjadi sponsor resmi?", a: "Anda dapat menekan tombol 'Proposal Sponsorship' pada situs ini atau menghubungi narahubung sponsorship panitia di 0813-9850-7876 (Ahmad Nur Fajar D. P.)." }
+      ];
+
+      const committeeData = [
+        { role: "Penanggung Jawab", names: ["Ahmad Nur Fajar Dwi Prakosa"] },
+        { role: "Ketua", names: ["Hammad Fida Rahman", "Adha Eka Rahmadhani", "Husai Annurani Marekhan"] },
+        { role: "Sekretaris", names: ["Luthfi Abdillah Noor Arifin", "Kaan Danang Wong Aydin", "Muhammad Irsyadil Umam", "Muhammad Nashir Azzuhri", "Sulthon Akmal Nurfathilah", "Muhammad Adib Al-Hazmi"] },
+        { role: "Bendahara", names: ["Muhammad Syauqi Romadhon", "Rafly Yarhan Sulaiman"] },
+        { role: "Kreatif Acara", names: ["Muhammad ’Azzam Asy-Syauqi", "Muhamad Ilyas Abdillah", "Muhamad Raghib Musyafa", "M Yusuf Al Qordowi Siregar", "Ridzky Amgerah Effendi", "Muhammad Fakhri As Syujai", "Muhammad Auf Zabarjadiy", "Agheea Gheelwana Huda", "Muhammad Rendy Raihan Nurdihan", "Pahmi Idris", "Reedho Muhammad Fathan", "Alfian Ramadhan", "Muhammad Syafiq Musyafa", "Rafi Kalima Guaryanto", "Muhammad Rakha Putra Satriawan"] },
+        { role: "Multimedia", names: ["Luthfi Nurfauzan", "Kurnia Akbar Auliya Lubis", "Muhammad Fathi Salim", "Muhammad Ulfa Ultimaha"] },
+        { role: "Humas", names: ["Djem Andrea Kurnia", "Rico Farizan", "Balurul Ulum Mahardika", "Muhammad Hafidz Ahsani", "Muhammad Khaerul Rizal Al Muttaqien", "Achmad Ghovva Marshandi Abi Nur Y"] },
+        { role: "Publikasi", names: ["Alwan Zahid Bibra Agusta", "Muhammad Dzulfiqar Sirajudin", "Zaky Ahmad Faisal", "M. Haidar Zaky Abdillah Latief", "Habib Al Hasyir", "Zarofi Hawari"] },
+        { role: "Konsumsi", names: ["Rizy Aditia", "Malcom Gymnastiar Gilang Ramadhan", "Brauantio Drajat Abdi Nugroho", "Muhammad Muflih Fathin"] },
+        { role: "Properti", names: ["Muhammad Ihza Ziaulliaq", "Muhammad Ali Al Khaidar", "Agus Setyo Budi", "M. Umar Hakimi Bin Musleh", "Muhammad Zaki Hisyam"] },
+        { role: "Dekorasi", names: ["Rendy Jamaluddin", "Muhammad Nabil Bachtiar", "Rahmat Isaani Farhan", "M.Iqbal Habibi Arrasyq"] },
+        { role: "Sponsorship", names: ["Ahmad Rifki Humaidi", "Ridwan Maulana", "Fairus Yudha Alfaridzi", "Muhammad Syakir Al Fadhil", "Hadi Azhari Romadhon", "Muhammad Zinedine Ihsan Zidane"] },
+        { role: "Bazaar", names: ["Muhammad Rizky", "Mazda Shofiyulloh", "Muhammad Faturrahman Faa’iz Ramadhan", "Muhammad Sukri Fuadi"] },
+        { role: "Kostum", names: ["Radhien Achmad Satya Wicaksana", "Fakhru Ramdhan Alhatami", "Ahmad Fardan Alfalaq", "Muhammad Rizqy Fahlevi", "Muhammad Yusuf Habibie"] },
+        { role: "Lighting", names: ["Abdul Karim Naufal Dafa", "Jajang Nurjaman", "Sanudin"] },
+        { role: "Sound", names: ["M. Adlan Ash-Shidiq", "Adhika Ikhsan Pratama", "Muhammad Hafidz Nurrohim", "Raihan Fatihul Ihsan", "Agio Abrah Yudha"] }
+      ];
+
+      const budgetItems = [
+        { no: 1, section: "Sekretaris", amount: "Rp 64.110.000" },
+        { no: 2, section: "Bendahara", amount: "Rp 405.000" },
+        { no: 3, section: "Properti", amount: "Rp 57.306.000" },
+        { no: 4, section: "Dekorasi", amount: "Rp 67.376.000" },
+        { no: 5, section: "Konsumsi", amount: "Rp 86.480.000" },
+        { no: 6, section: "Multimedia", amount: "Rp 37.400.000" },
+        { no: 7, section: "Kostum", amount: "Rp 101.970.000" },
+        { no: 8, section: "Pertamanan", amount: "Rp 50.545.000" },
+        { no: 9, section: "Kreatif & Acara", amount: "Rp 31.420.000" },
+        { no: 10, section: "Publikasi", amount: "Rp 3.095.000" },
+        { no: 11, section: "Elektro", amount: "Rp 31.310.000" },
+        { no: 12, section: "Humas", amount: "Rp 185.450.000" },
+        { no: 13, section: "Sound System", amount: "Rp 3.540.000" }
+      ];
+
+      const marqueeImages = [
+        "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?q=80&w=600&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=600&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1547153760-18fc86324498?q=80&w=600&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=600&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?q=80&w=600&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=600&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=600&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1465847899084-d164df4dedc6?q=80&w=600&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1469488865564-c2de10f69f96?q=80&w=600&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1460723237483-7a6dc9d0b212?q=80&w=600&auto=format&fit=crop",
+      ];
+
+      // 3D GLB Indonesia Map Component
+      const IndonesiaMap3D = () => {
+        const mountRef = useRef(null);
+        const [loading, setLoading] = useState(true);
+        const [loadingProgress, setLoadingProgress] = useState(0);
+        const [autoRotate, setAutoRotate] = useState(true);
+        const [activeCampus, setActiveCampus] = useState(gontorCampuses[0]);
+        const [searchQuery, setSearchQuery] = useState('');
+        const controlsRef = useRef(null);
+        const cameraRef = useRef(null);
+        const pinMeshesRef = useRef([]);
+
+        const filteredCampuses = gontorCampuses.filter(
+          (c) =>
+            c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            c.code.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            c.location.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+
+        const focusOnCampus = (campus) => {
+          setActiveCampus(campus);
+          if (controlsRef.current && cameraRef.current) {
+            const controls = controlsRef.current;
+            controls.target.set(campus.x, 0, campus.z);
+            cameraRef.current.position.set(campus.x, 18, campus.z + 24);
+            controls.update();
+          }
+        };
+
+        useEffect(() => {
+          let animationFrameId;
+          let renderer, scene, camera, controls, raycaster, mouse;
+
+          const loadThreeScript = async () => {
+            if (!window.THREE) {
+              await new Promise((resolve) => {
+                const script = document.createElement('script');
+                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+                script.onload = resolve;
+                document.head.appendChild(script);
+              });
+            }
+            if (!window.THREE?.GLTFLoader) {
+              await new Promise((resolve) => {
+                const script = document.createElement('script');
+                script.src = 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js';
+                script.onload = resolve;
+                document.head.appendChild(script);
+              });
+            }
+            if (!window.THREE?.OrbitControls) {
+              await new Promise((resolve) => {
+                const script = document.createElement('script');
+                script.src = 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js';
+                script.onload = resolve;
+                document.head.appendChild(script);
+              });
+            }
+
+            initThree();
+          };
+
+          const createBadgeTexture = (THREE, text, isPusat = false) => {
+            const canvas = document.createElement('canvas');
+            canvas.width = 256;
+            canvas.height = 256;
+            const ctx = canvas.getContext('2d');
+
+            ctx.shadowColor = 'rgba(214, 145, 3, 0.8)';
+            ctx.shadowBlur = 15;
+
+            ctx.beginPath();
+            ctx.arc(128, 128, 105, 0, Math.PI * 2);
+            ctx.fillStyle = '#062B4A';
+            ctx.fill();
+
+            ctx.lineWidth = 10;
+            ctx.strokeStyle = isPusat ? '#F5D98A' : '#D69103';
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(128, 128, 92, 0, Math.PI * 2);
+            ctx.lineWidth = 3;
+            ctx.setLineDash([8, 6]);
+            ctx.strokeStyle = '#F5D98A';
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            ctx.shadowBlur = 0;
+
+            if (isPusat) {
+              ctx.font = 'bold 36px Georgia, serif';
+              ctx.fillStyle = '#F5D98A';
+              ctx.textAlign = 'center';
+              ctx.fillText('👑 PUSAT', 128, 98);
+
+              ctx.font = 'bold 38px Georgia, serif';
+              ctx.fillStyle = '#FFFFFF';
+              ctx.fillText('PMDG', 128, 152);
+            } else {
+              ctx.font = 'bold 46px Georgia, serif';
+              ctx.fillStyle = '#F5D98A';
+              ctx.textAlign = 'center';
+              ctx.textBaseline = 'middle';
+              ctx.fillText(text, 128, 128);
+            }
+
+            const texture = new THREE.CanvasTexture(canvas);
+            texture.needsUpdate = true;
+            return texture;
+          };
+
+          const initThree = () => {
+            if (!mountRef.current) return;
+            const THREE = window.THREE;
+            const container = mountRef.current;
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            scene = new THREE.Scene();
+            raycaster = new THREE.Raycaster();
+            mouse = new THREE.Vector2();
+
+            camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+            camera.position.set(0, 36, 62);
+            cameraRef.current = camera;
+
+            renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(width, height);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+            while (container.firstChild) {
+              container.removeChild(container.firstChild);
+            }
+            container.appendChild(renderer.domElement);
+
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.maxPolarAngle = Math.PI / 2.15;
+            controls.minDistance = 12;
+            controls.maxDistance = 140;
+            controls.autoRotate = autoRotate;
+            controls.autoRotateSpeed = 0.35;
+            controlsRef.current = controls;
+
+            const ambientLight = new THREE.AmbientLight(0xF4F1EB, 0.95);
+            scene.add(ambientLight);
+
+            const mainLight = new THREE.DirectionalLight(0xF5D98A, 2.5);
+            mainLight.position.set(30, 50, 40);
+            mainLight.castShadow = true;
+            scene.add(mainLight);
+
+            const fillLight = new THREE.DirectionalLight(0x062B4A, 1.3);
+            fillLight.position.set(-30, 20, -30);
+            scene.add(fillLight);
+
+            const pointLight = new THREE.PointLight(0xD69103, 2.0, 100);
+            pointLight.position.set(0, 25, 10);
+            scene.add(pointLight);
+
+            const goldColors = [0xD69103, 0xE8A820, 0xB8860B, 0xF5D98A, 0xC58000];
+
+            if (THREE.GLTFLoader) {
+              const loader = new THREE.GLTFLoader();
+              loader.load(
+                '/peta_provinsi_indonesia.glb',
+                (gltf) => {
+                  const model = gltf.scene;
+
+                  const initialBox = new THREE.Box3().setFromObject(model);
+                  const initialSize = initialBox.getSize(new THREE.Vector3());
+
+                  if (initialSize.y > initialSize.z * 1.5) {
+                    model.rotation.x = -Math.PI / 2;
+                  }
+
+                  const modelWrapper = new THREE.Group();
+
+                  const box = new THREE.Box3().setFromObject(model);
+                  const center = box.getCenter(new THREE.Vector3());
+                  const size = box.getSize(new THREE.Vector3());
+
+                  model.position.set(-center.x, -center.y, -center.z);
+                  modelWrapper.add(model);
+
+                  const maxDim = Math.max(size.x, size.y, size.z);
+                  const scale = 50 / maxDim;
+                  modelWrapper.scale.set(scale, scale, scale);
+
+                  let meshIdx = 0;
+                  model.traverse((child) => {
+                    if (child.isMesh) {
+                      child.castShadow = true;
+                      child.receiveShadow = true;
+                      const colorHex = goldColors[meshIdx % goldColors.length];
+                      meshIdx++;
+
+                      child.material = new THREE.MeshStandardMaterial({
+                        color: colorHex,
+                        metalness: 0.75,
+                        roughness: 0.3,
+                        emissive: 0x1a1100,
+                        shadowSide: THREE.DoubleSide
+                      });
+                    }
+                  });
+
+                  scene.add(modelWrapper);
+                  modelWrapper.updateMatrixWorld(true);
+
+                  const findLandSurfaceY = (targetX, targetZ) => {
+                    const downRay = new THREE.Raycaster();
+                    const rayDir = new THREE.Vector3(0, -1, 0);
+
+                    downRay.set(new THREE.Vector3(targetX, 100, targetZ), rayDir);
+                    let hits = downRay.intersectObject(modelWrapper, true);
+                    if (hits.length > 0) {
+                      return { y: hits[0].point.y, posX: targetX, posZ: targetZ };
+                    }
+
+                    const radii = [0.2, 0.5, 0.8, 1.2, 1.8, 2.5];
+                    const angles = [0, Math.PI / 4, Math.PI / 2, 3 * Math.PI / 4, Math.PI, 5 * Math.PI / 4, 3 * Math.PI / 2, 7 * Math.PI / 4];
+                    for (const r of radii) {
+                      for (const a of angles) {
+                        const testX = targetX + r * Math.cos(a);
+                        const testZ = targetZ + r * Math.sin(a);
+                        downRay.set(new THREE.Vector3(testX, 100, testZ), rayDir);
+                        hits = downRay.intersectObject(modelWrapper, true);
+                        if (hits.length > 0) {
+                          return { y: hits[0].point.y, posX: testX, posZ: testZ };
+                        }
+                      }
+                    }
+
+                    const mapBox = new THREE.Box3().setFromObject(modelWrapper);
+                    return { y: mapBox.max.y, posX: targetX, posZ: targetZ };
+                  };
+
+                  const pusatCampus = gontorCampuses[0];
+                  const pusatLand = findLandSurfaceY(pusatCampus.x, pusatCampus.z);
+                  const pusatPos = new THREE.Vector3(pusatLand.posX, pusatLand.y + 0.3, pusatLand.posZ);
+
+                  const createdPinMeshes = [];
+
+                  gontorCampuses.forEach((campus) => {
+                    const land = findLandSurfaceY(campus.x, campus.z);
+                    const branchPos = new THREE.Vector3(land.posX, land.y + 0.3, land.posZ);
+
+                    if (!campus.isPusat) {
+                      const midX = (pusatPos.x + branchPos.x) / 2;
+                      const midZ = (pusatPos.z + branchPos.z) / 2;
+                      const dist = pusatPos.distanceTo(branchPos);
+                      const midY = Math.max(pusatPos.y, branchPos.y) + Math.min(dist * 0.3, 10);
+
+                      const curve = new THREE.QuadraticBezierCurve3(
+                        pusatPos,
+                        new THREE.Vector3(midX, midY, midZ),
+                        branchPos
+                      );
+
+                      const points = curve.getPoints(40);
+                      const curveGeo = new THREE.BufferGeometry().setFromPoints(points);
+                      const curveMat = new THREE.LineBasicMaterial({
+                        color: 0xF5D98A,
+                        transparent: true,
+                        opacity: 0.65,
+                        linewidth: 2
+                      });
+                      const curveLine = new THREE.Line(curveGeo, curveMat);
+                      scene.add(curveLine);
+                    }
+
+                    const pinGroup = new THREE.Group();
+                    pinGroup.position.set(land.posX, land.y, land.posZ);
+
+                    const ringGeo = new THREE.RingGeometry(0.3, 0.7, 32);
+                    const ringMat = new THREE.MeshBasicMaterial({
+                      color: campus.isPusat ? 0xFFDF73 : 0xD69103,
+                      side: THREE.DoubleSide,
+                      transparent: true,
+                      opacity: 0.95
+                    });
+                    const ringMesh = new THREE.Mesh(ringGeo, ringMat);
+                    ringMesh.rotation.x = Math.PI / 2;
+                    ringMesh.position.y = 0.05;
+                    pinGroup.add(ringMesh);
+
+                    const stemGeo = new THREE.CylinderGeometry(0.08, 0.08, 1.8, 8);
+                    const stemMat = new THREE.MeshBasicMaterial({ color: campus.isPusat ? 0xFFDF73 : 0xD69103 });
+                    const stemMesh = new THREE.Mesh(stemGeo, stemMat);
+                    stemMesh.position.y = 0.9;
+                    pinGroup.add(stemMesh);
+
+                    const badgeTexture = createBadgeTexture(THREE, campus.code, campus.isPusat);
+                    const spriteMat = new THREE.SpriteMaterial({ map: badgeTexture, transparent: true });
+                    const sprite = new THREE.Sprite(spriteMat);
+                    sprite.scale.set(campus.isPusat ? 3.2 : 2.5, campus.isPusat ? 3.2 : 2.5, 1);
+                    sprite.position.y = 2.4;
+                    sprite.userData = campus;
+                    pinGroup.add(sprite);
+                    createdPinMeshes.push(sprite);
+
+                    if (campus.isPusat) {
+                      const bigRingGeo = new THREE.RingGeometry(0.8, 1.6, 32);
+                      const bigRingMat = new THREE.MeshBasicMaterial({ color: 0xF5D98A, side: THREE.DoubleSide, transparent: true, opacity: 0.8 });
+                      const bigRingMesh = new THREE.Mesh(bigRingGeo, bigRingMat);
+                      bigRingMesh.rotation.x = Math.PI / 2;
+                      bigRingMesh.position.y = 0.06;
+                      pinGroup.add(bigRingMesh);
+
+                      const glowLight = new THREE.PointLight(0xF5D98A, 2.8, 14);
+                      glowLight.position.y = 2.4;
+                      pinGroup.add(glowLight);
+                    }
+
+                    scene.add(pinGroup);
+                  });
+                  pinMeshesRef.current = createdPinMeshes;
+
+                  setLoading(false);
+                },
+                (xhr) => {
+                  if (xhr.lengthComputable) {
+                    const percent = Math.round((xhr.loaded / xhr.total) * 100);
+                    setLoadingProgress(percent);
+                  }
+                },
+                (err) => {
+                  console.error(err);
+                  setLoading(false);
+                }
+              );
+            }
+
+            const handlePointerMove = (event) => {
+              const rect = renderer.domElement.getBoundingClientRect();
+              mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+              mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+              raycaster.setFromCamera(mouse, camera);
+              const intersects = raycaster.intersectObjects(pinMeshesRef.current);
+              if (intersects.length > 0) {
+                const campusData = intersects[0].object.userData;
+                if (campusData) {
+                  setActiveCampus(campusData);
+                }
+              }
+            };
+            renderer.domElement.addEventListener('mousemove', handlePointerMove);
+
+            const animate = () => {
+              animationFrameId = requestAnimationFrame(animate);
+              if (controls) controls.update();
+              if (renderer && scene && camera) renderer.render(scene, camera);
+            };
+            animate();
+
+            const handleResize = () => {
+              if (!container || !renderer || !camera) return;
+              const w = container.clientWidth;
+              const h = container.clientHeight;
+              camera.aspect = w / h;
+              camera.updateProjectionMatrix();
+              renderer.setSize(w, h);
+            };
+            window.addEventListener('resize', handleResize);
+
+            return () => {
+              window.addEventListener('resize', handleResize);
+              if (renderer?.domElement) {
+                renderer.domElement.removeEventListener('mousemove', handlePointerMove);
+                renderer.domElement.remove();
+              }
+              cancelAnimationFrame(animationFrameId);
+            };
+          };
+
+          initThree();
+        }, []);
+
+        const toggleAutoRotate = () => {
+          const nextState = !autoRotate;
+          setAutoRotate(nextState);
+          if (controlsRef.current) controlsRef.current.autoRotate = nextState;
+        };
+
+        const resetCameraView = () => {
+          if (controlsRef.current && cameraRef.current) {
+            controlsRef.current.target.set(0, 0, 0);
+            cameraRef.current.position.set(0, 36, 62);
+            controlsRef.current.reset();
+          }
+        };
+
+        return (
+          <section id="map" className="relative py-20 px-6 border-t border-[#D69103]/20 bg-[#062B4A] reveal-on-scroll">
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-10">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D69103]/40 bg-[#D69103]/10 text-[#F5D98A] text-xs md:text-sm mb-3">
+                  <Sparkles className="w-4 h-4 text-[#D69103] animate-pulse" />
+                  3D NUSANTARA MAP · PROPOSAL DRAMA ARENA HAL 8-9
+                </div>
+                <h2 className="text-3xl md:text-5xl font-bold tracking-tight font-mileast italic text-[#F5D98A]">
+                  Peta 3D Kampus Gontor
+                </h2>
+                <p className="font-baskerville text-gray-300 text-sm mt-3 max-w-xl mx-auto">
+                  Visualisasi 3D Interaktif Kepulauan Indonesia & Pancaran Cabang PMDG dari Kampus Pusat Ponorogo.
+                </p>
+
+                <div className="mt-6 max-w-md mx-auto relative">
+                  <Search className="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-[#D69103]" />
+                  <input
+                    type="text"
+                    placeholder="Cari Kampus atau Provinsi (cth: Aceh, Riau, Kediri, Sultra)..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full pl-11 pr-4 py-2.5 rounded-full bg-[#041B30] border border-[#D69103]/50 text-sm text-[#F4F1EB] placeholder-gray-400 focus:outline-none focus:border-[#F5D98A] transition-all shadow-inner"
+                  />
+                </div>
+              </div>
+
+              <div className="p-4 rounded-3xl bg-[#041B30] border-2 border-[#D69103]/50 relative overflow-hidden group shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
+                <div className="flex flex-wrap items-center justify-between px-4 py-3 border-b border-[#D69103]/30">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-[#D69103] animate-pulse" />
+                    <span className="text-sm font-semibold text-[#F4F1EB]">Interactive 3D GLB Model</span>
+                  </div>
+                  <div className="flex items-center gap-2 mt-2 sm:mt-0">
+                    <button
+                      onClick={toggleAutoRotate}
+                      className="bg-[#D69103] hover:bg-[#E8A820] text-[#062B4A] font-semibold px-4 py-1.5 rounded-full text-xs transition-all shadow-[0_0_15px_rgba(214,145,3,0.3)] cursor-pointer"
+                    >
+                      {autoRotate ? '⏸ Lambatkan & Putar' : '▶ Putar Lambat'}
+                    </button>
+                    <button
+                      onClick={resetCameraView}
+                      className="border border-[#D69103]/50 hover:bg-[#D69103]/20 text-[#F4F1EB] font-medium px-4 py-1.5 rounded-full text-xs transition-all cursor-pointer"
+                    >
+                      ↺ Reset View
+                    </button>
+                  </div>
+                </div>
+
+                <div className="relative w-full h-[450px] sm:h-[550px] cursor-grab active:cursor-grabbing">
+                  {loading && (
+                    <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-[#062B4A]/90 backdrop-blur-sm">
+                      <div className="w-10 h-10 rounded-full border-4 border-[#D69103] border-t-transparent animate-spin mb-4" />
+                      <div className="text-[#F5D98A] font-semibold text-base">Memuat Peta 3D Proposal...</div>
+                      <div className="text-xs text-gray-300 mt-1">{loadingProgress}% terunduh</div>
+                    </div>
+                  )}
+                  <div ref={mountRef} className="w-full h-full" />
+
+                  {activeCampus && (
+                    <div className="absolute bottom-6 left-6 z-30 max-w-sm p-5 rounded-2xl bg-[#F4F1EB] border-2 border-[#D69103] text-[#062B4A] shadow-2xl">
+                      <div className="flex items-center justify-between text-xs text-[#D69103] font-bold mb-1">
+                        <span>{activeCampus.isPusat ? '👑 KAMPUS PUSAT GONTOR' : `CABANG ${activeCampus.code}`}</span>
+                        <span className="px-2 py-0.5 rounded bg-[#062B4A] text-[#F5D98A] font-bold text-[10px]">{activeCampus.code}</span>
+                      </div>
+                      <h4 className="text-lg font-bold text-[#062B4A] leading-tight">{activeCampus.name}</h4>
+                      <p className="text-xs text-gray-700 mt-1">📍 {activeCampus.location}</p>
+                      <button
+                        onClick={() => focusOnCampus(activeCampus)}
+                        className="mt-3 text-[11px] font-bold text-[#062B4A] hover:text-[#D69103] flex items-center gap-1 cursor-pointer underline"
+                      >
+                        🎯 Fokuskan Kamera 3D Ke Sini
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                <div className="p-3 border-t border-[#D69103]/30 bg-[#062B4A]/80 overflow-x-auto flex items-center gap-2">
+                  <span className="text-xs text-[#D69103] font-semibold flex-shrink-0 mr-2 uppercase tracking-wider">KAMPUS:</span>
+                  {filteredCampuses.map((c) => (
+                    <button
+                      key={c.id}
+                      onClick={() => focusOnCampus(c)}
+                      className={`px-3 py-1 rounded-full text-xs flex-shrink-0 transition-all cursor-pointer ${
+                        activeCampus?.id === c.id
+                          ? 'bg-[#D69103] text-[#062B4A] font-bold shadow-[0_0_15px_rgba(214,145,3,0.4)]'
+                          : 'bg-[#F4F1EB]/10 hover:bg-[#F4F1EB]/20 text-[#F4F1EB] border border-[#D69103]/30'
+                      }`}
+                    >
+                      {c.isPusat ? '👑 Pusat' : `${c.code}`}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+        );
+      };
+
+      function App() {
+        const [isModalOpen, setIsModalOpen] = useState(false);
+        const [committeeTab, setCommitteeTab] = useState('panitia');
+        const [activeShow, setActiveShow] = useState(null);
+        const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+        const [isPlayingAudio, setIsPlayingAudio] = useState(false);
+        const [expandedFaq, setExpandedFaq] = useState(null);
+        const [scrollProgress, setScrollProgress] = useState(0);
+        const [showBackToTop, setShowBackToTop] = useState(false);
+        const audioRef = useRef(null);
+
+        // Autoplay MP3 OST on initial load or user first interaction
+        useEffect(() => {
+          const audio = audioRef.current;
+          if (audio) {
+            audio.volume = 0.65;
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {
+              playPromise
+                .then(() => {
+                  setIsPlayingAudio(true);
+                })
+                .catch(() => {
+                  // If browser blocked autoplay without gesture, start on first click/touch
+                  const enableAudioOnInteraction = () => {
+                    if (audioRef.current) {
+                      audioRef.current.play().then(() => setIsPlayingAudio(true)).catch(() => {});
+                    }
+                    window.removeEventListener('click', enableAudioOnInteraction);
+                    window.removeEventListener('touchstart', enableAudioOnInteraction);
+                    window.removeEventListener('keydown', enableAudioOnInteraction);
+                  };
+                  window.addEventListener('click', enableAudioOnInteraction);
+                  window.addEventListener('touchstart', enableAudioOnInteraction);
+                  window.addEventListener('keydown', enableAudioOnInteraction);
+                });
+            }
+          }
+        }, []);
+
+        const toggleAudio = () => {
+          if (audioRef.current) {
+            if (isPlayingAudio) {
+              audioRef.current.pause();
+              setIsPlayingAudio(false);
+            } else {
+              audioRef.current.play().then(() => setIsPlayingAudio(true)).catch(e => console.log(e));
+            }
+          }
+        };
+
+        useEffect(() => {
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add('is-revealed');
+                }
+              });
+            },
+            { threshold: 0.15 }
+          );
+
+          const revealElements = document.querySelectorAll('.reveal-on-scroll');
+          revealElements.forEach((el) => observer.observe(el));
+
+          return () => observer.disconnect();
+        }, []);
+
+        useEffect(() => {
+          const handleScroll = () => {
+            const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+            if (totalHeight > 0) {
+              setScrollProgress((window.scrollY / totalHeight) * 100);
+            }
+            setShowBackToTop(window.scrollY > 400);
+          };
+          window.addEventListener('scroll', handleScroll);
+          return () => window.removeEventListener('scroll', handleScroll);
+        }, []);
+
+        const navTo = (id) => {
+          if (id === 'root') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setMobileMenuOpen(false);
+            return;
+          }
+          const el = document.getElementById(id);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+          setMobileMenuOpen(false);
+        };
+
+        const row1 = [...marqueeImages, ...marqueeImages];
+
+        return (
+          <div className="min-h-screen bg-[#F4F1EB] text-[#062B4A] font-sans overflow-x-hidden selection:bg-[#D69103] selection:text-[#062B4A]">
+            
+            {/* HTML5 Audio Element loading official MP3 file */}
+            <audio
+              ref={audioRef}
+              src="/Teruslah Percaya - Official Music Video - (OST Percaya Asa Short Movie).mp3"
+              loop
+              preload="auto"
+            />
+
+            {/* Custom Branded Metallic Arrow Pointer Cursor */}
+            <ThemeBrandedArrowCursor />
+
+            {/* Scroll Progress Line */}
+            <div className="fixed top-0 left-0 right-0 h-1 z-50 bg-[#D69103]/20">
+              <div className="h-full bg-gradient-to-r from-[#B8860B] via-[#D69103] to-[#F5D98A] transition-all duration-150" style={{ width: `${scrollProgress}%` }} />
+            </div>
+
+            {/* NAVBAR */}
+            <nav className="fixed top-0 left-0 right-0 z-40 border-b border-[#062B4A]/10 bg-[#F4F1EB]/85 backdrop-blur-md">
+              <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+                
+                <div className="flex items-center gap-3 cursor-pointer" onClick={() => navTo('root')}>
+                  <div className="w-9 h-9 rounded-lg bg-[#062B4A] flex items-center justify-center font-extrabold text-[#D69103] text-sm tracking-tighter shadow-md">
+                    DA
+                  </div>
+                  <span className="font-mileast font-bold text-xl tracking-wide text-[#062B4A]">Drama Arena <span className="gold-text font-serif text-sm">5102</span></span>
+                </div>
+
+                <div className="hidden md:flex items-center gap-8 text-sm text-[#062B4A]/80 font-medium">
+                  <button onClick={() => navTo('about')} className="hover:text-[#D69103] transition-colors cursor-pointer">Profil</button>
+                  <button onClick={() => navTo('theme')} className="hover:text-[#D69103] transition-colors cursor-pointer">Tema & Filosofi</button>
+                  <button onClick={() => navTo('timeline')} className="hover:text-[#D69103] transition-colors cursor-pointer">Timeline</button>
+                  <button onClick={() => navTo('map')} className="hover:text-[#D69103] transition-colors cursor-pointer">Peta 3D</button>
+                  <button onClick={() => navTo('stage')} className="hover:text-[#D69103] transition-colors cursor-pointer">Panggung</button>
+                  <button onClick={() => navTo('shows')} className="hover:text-[#D69103] transition-colors cursor-pointer">Acara Utama</button>
+                  <button onClick={() => navTo('committee')} className="hover:text-[#D69103] transition-colors cursor-pointer">Panitia</button>
+                </div>
+
+                <div className="flex items-center gap-4">
+                  <button onClick={() => setIsModalOpen(true)} className="bg-gradient-to-r from-[#B8860B] via-[#D69103] to-[#E8A820] hover:scale-105 text-[#062B4A] font-bold px-5 py-2.5 rounded-full text-sm transition-all shadow-[0_4px_20px_rgba(214,145,3,0.4)] flex items-center gap-2 cursor-pointer">
+                    <span>Proposal Sponsorship</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                  <button className="md:hidden text-[#062B4A]" onClick={() => setMobileMenuOpen(v => !v)}>
+                    <IconMenu />
+                  </button>
+                </div>
+
+              </div>
+            </nav>
+
+            {mobileMenuOpen && (
+              <div className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-8 bg-[#F4F1EB]/98 backdrop-blur-md">
+                <button className="absolute top-6 right-6 text-[#062B4A] cursor-pointer" onClick={() => setMobileMenuOpen(false)}>
+                  <IconClose />
+                </button>
+                {[
+                  ['PROFIL','about'],
+                  ['TEMA','theme'],
+                  ['TIMELINE','timeline'],
+                  ['PETA 3D','map'],
+                  ['PANGGUNG','stage'],
+                  ['ACARA','shows'],
+                  ['PANITIA','committee']
+                ].map(([label, id]) => (
+                  <button key={id} onClick={() => navTo(id)} className="text-2xl font-bold text-[#062B4A] hover:text-[#D69103] cursor-pointer">{label}</button>
+                ))}
+                <button onClick={() => { setIsModalOpen(true); setMobileMenuOpen(false); }} className="bg-[#D69103] text-[#062B4A] font-bold px-6 py-3 rounded-full text-base flex items-center gap-2">
+                  <span>Proposal Sponsorship</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+            )}
+
+            {/* HERO SECTION */}
+            <section id="root" className="relative pt-36 pb-24 px-6 md:pt-48 md:pb-36 flex flex-col items-center justify-center text-center">
+              
+              <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-[#D69103]/10 blur-[120px] rounded-full"></div>
+                <div className="absolute inset-0 bg-[linear-gradient(to_right,#062b4a0a_1px,transparent_1px),linear-gradient(to_bottom,#062b4a0a_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
+              </div>
+
+              <div className="relative z-10 mb-4">
+                <StampLogo size={170} />
+              </div>
+
+              <div className="relative z-10 font-arabic text-2xl md:text-3xl font-bold text-[#D69103] mb-2 tracking-wide dir-rtl">
+                دراما أرينا ٥١٠٢ — الغريزة والضمير
+              </div>
+
+              <div className="relative z-10 max-w-4xl mx-auto space-y-6">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D69103]/40 bg-[#D69103]/10 text-[#D69103] text-xs md:text-sm font-semibold">
+                  <Sparkles className="w-4 h-4 text-[#D69103] animate-pulse" />
+                  PAGELARAN SENI AKBAR · KELAS 5 KMI PMDG
+                </div>
+
+                <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight font-mileast italic">
+                  Drama Arena <br />
+                  <span className="gold-text not-italic">
+                    Naluri dan Nurani
+                  </span>
+                </h1>
+
+                <p className="font-baskerville text-gray-700 max-w-xl mx-auto text-sm sm:text-base leading-relaxed italic">
+                  "Forever Striving for an Authentic Masterpiece" — Sadar akan nilai-nilai perjuangan, tumbuhkan semangat kebersamaan.
+                </p>
+
+                <CountdownTimer />
+
+                <div className="flex flex-wrap items-center justify-center gap-4 pt-6">
+                  <button onClick={() => setIsModalOpen(true)} className="bg-gradient-to-r from-[#B8860B] via-[#D69103] to-[#E8A820] hover:scale-105 text-[#062B4A] font-bold px-8 py-3.5 rounded-full text-sm transition-all shadow-[0_4px_25px_rgba(214,145,3,0.4)] flex items-center gap-2 cursor-pointer">
+                    <span>Proposal Sponsorship</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                  <button onClick={() => navTo('about')} className="border-2 border-[#062B4A]/30 hover:border-[#062B4A] bg-[#062B4A]/5 hover:bg-[#062B4A]/10 text-[#062B4A] font-bold px-8 py-3.5 rounded-full text-sm transition-all flex items-center gap-2 cursor-pointer">
+                    <Play className="w-4 h-4 fill-current text-[#D69103]" />
+                    <span>Selengkapnya</span>
+                  </button>
+                </div>
+
+                <div className="text-xs text-[#062B4A]/70 pt-4 font-semibold">
+                  📍 PMDG Kampus Pusat — Kamis, 20 Dzulqo’dah 1447 / 7 Mei 2026 (19.30 WIB)
+                </div>
+              </div>
+
+            </section>
+
+            {/* BENTO STATS SECTION */}
+            <section className="relative z-10 max-w-6xl mx-auto px-6 py-16 border-t border-[#062B4A]/10 reveal-on-scroll">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                
+                <BentoCard className="p-6 rounded-2xl group">
+                  <h3 className="text-3xl font-bold gold-text group-hover:translate-x-1 transition-transform">
+                    38 Provinsi
+                  </h3>
+                  <p className="text-sm text-[#062B4A]/80 mt-1 font-medium">Cakupan Peta 3D Nusantara</p>
+                </BentoCard>
+
+                <BentoCard className="p-6 rounded-2xl group">
+                  <h3 className="text-3xl font-bold text-[#062B4A] group-hover:translate-x-1 transition-transform">
+                    20 Kampus
+                  </h3>
+                  <p className="text-sm text-[#062B4A]/80 mt-1 font-medium">Institusi Cabang PMDG Putra & Putri</p>
+                </BentoCard>
+
+                <BentoCard className="p-6 rounded-2xl group">
+                  <h3 className="text-3xl font-bold text-[#062B4A] group-hover:translate-x-1 transition-transform">
+                    441 Santri
+                  </h3>
+                  <p className="text-sm text-[#062B4A]/80 mt-1 font-medium">Siswa Kelas 5 KMI PMDG</p>
+                </BentoCard>
+
+                <BentoCard className="p-6 rounded-2xl group">
+                  <h3 className="text-3xl font-bold gold-text group-hover:translate-x-1 transition-transform">
+                    5.000+
+                  </h3>
+                  <p className="text-sm text-[#062B4A]/80 mt-1 font-medium">Estimasi Penonton Pagelaran</p>
+                </BentoCard>
+
+              </div>
+            </section>
+
+            {/* MARQUEE SECTION */}
+            <div className="relative overflow-hidden py-8 border-y border-[#062B4A]/10 bg-[#062B4A] reveal-on-scroll">
+              <div className="flex flex-col gap-3 select-none">
+                <div className="marquee-left flex gap-3 w-max">
+                  {row1.map((src, i) => (
+                    <div key={`r1-${i}`} className="w-[260px] h-[150px] flex-shrink-0 rounded-2xl overflow-hidden border-2 border-[#D69103]/40 shadow-lg">
+                      <img src={src} alt="" loading="lazy" className="w-full h-full object-cover filter sepia-[0.2] hover:sepia-0 transition-all" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* BENTO ABOUT SECTION */}
+            <section id="about" className="max-w-6xl mx-auto px-6 py-20 border-b border-[#062B4A]/10 reveal-on-scroll">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <BentoCard className="p-8 rounded-3xl">
+                  <div className="text-xs text-[#D69103] font-bold uppercase tracking-wider mb-2">Penyelenggara</div>
+                  <h3 className="text-2xl font-bold text-[#062B4A] mb-4">Pondok Modern Darussalam Gontor</h3>
+                  <p className="text-gray-700 text-sm leading-relaxed mb-6 font-baskerville">
+                    PMDG merupakan lembaga pendidikan Islam pesantren modern bertaraf internasional yang kini dipimpin oleh Trimurti: Dr. K.H. Abdullah Syukri Zarkasyi, M.A., K.H. Hasan Abdullah Sahal, dan K.H. Syamsul Hadi Abdan, S.Ag.
+                  </p>
+                  <div className="grid grid-cols-2 gap-3 pt-2">
+                    <div className="p-3 rounded-xl bg-[#062B4A]/5 border border-[#D69103]/30 text-center">
+                      <div className="text-xl font-bold gold-text">32.000+</div>
+                      <div className="text-xs text-[#062B4A]/80 mt-0.5">Santri & Asatidz</div>
+                    </div>
+                    <div className="p-3 rounded-xl bg-[#062B4A]/5 border border-[#D69103]/30 text-center">
+                      <div className="text-xl font-bold text-[#062B4A]">20 Kampus</div>
+                      <div className="text-xs text-[#062B4A]/80 mt-0.5">Cabang PMDG</div>
+                    </div>
+                  </div>
+                </BentoCard>
+
+                <BentoCard className="p-8 rounded-3xl">
+                  <div className="text-xs text-[#D69103] font-bold uppercase tracking-wider mb-2">Maksud & Tujuan</div>
+                  <h3 className="text-2xl font-bold text-[#062B4A] mb-4">Drama Arena 5102</h3>
+                  <p className="text-gray-700 text-sm leading-relaxed mb-6 font-baskerville">
+                    Salah satu rangkaian acara utama dalam Pekan Perkenalan Khutbatu-l-’Arsy yang diselenggarakan oleh siswa kelas 5 KMI PMDG T.A. 1447-1448 / 2026-2027.
+                  </p>
+                  <div className="p-4 rounded-2xl bg-[#062B4A] border border-[#D69103] text-xs text-[#F4F1EB] leading-relaxed font-baskerville italic">
+                    "Setiap proses di pondok membentuk karakter, adab sebelum ilmu, amanah sebelum kedudukan."
+                  </div>
+                </BentoCard>
+              </div>
+            </section>
+
+            {/* BENTO TIMELINE SECTION */}
+            <section id="timeline" className="max-w-6xl mx-auto px-6 py-20 border-b border-[#062B4A]/10 reveal-on-scroll">
+              <div className="text-center mb-16">
+                <div className="text-xs text-[#D69103] font-bold uppercase tracking-widest mb-2">PERJALANAN MAHAKARYA</div>
+                <h2 className="text-3xl md:text-5xl font-bold font-mileast italic">
+                  Timeline <span className="gold-text not-italic">Persiapan 5102</span>
+                </h2>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                {journeyTimeline.map((item, idx) => (
+                  <BentoCard key={idx} className="p-6 rounded-3xl relative overflow-hidden">
+                    <div className="text-xs font-bold text-[#D69103] mb-2">{item.date}</div>
+                    <h4 className="text-lg font-bold text-[#062B4A] mb-2">{item.title}</h4>
+                    <p className="text-xs text-gray-700 leading-relaxed font-baskerville">{item.desc}</p>
+                  </BentoCard>
+                ))}
+              </div>
+            </section>
+
+            {/* BENTO THEME & FILOSOFI */}
+            <section id="theme" className="max-w-6xl mx-auto px-6 py-20 reveal-on-scroll">
+              <div className="text-center mb-16">
+                <div className="text-xs text-[#D69103] font-bold uppercase tracking-widest mb-2">TEMA & FILOSOFI ACARA</div>
+                <h2 className="text-3xl md:text-5xl font-bold font-mileast italic">
+                  Filosofi <span className="gold-text not-italic">Drama Arena 5102</span>
+                </h2>
+                <p className="text-gray-700 text-sm mt-3 max-w-xl mx-auto font-baskerville">
+                  "Sadar akan Nilai-Nilai Perjuangan, Tumbuhkan Semangat Kebersamaan."
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <BentoCard className="p-8 rounded-3xl relative overflow-hidden group">
+                  <div className="w-12 h-12 rounded-xl bg-[#062B4A] border border-[#D69103] flex items-center justify-center text-[#D69103] mb-6 group-hover:scale-110 transition-transform">
+                    <Clock className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-xl font-bold text-[#062B4A] mb-3">Educating</h3>
+                  <p className="text-gray-700 text-sm leading-relaxed font-baskerville">
+                    Setiap sajian seni mengandung nilai dan pesan moral Islami yang mendidik jiwa santri.
+                  </p>
+                </BentoCard>
+
+                <BentoCard className="p-8 rounded-3xl relative overflow-hidden group">
+                  <div className="w-12 h-12 rounded-xl bg-[#062B4A] border border-[#D69103] flex items-center justify-center text-[#D69103] mb-6 group-hover:scale-110 transition-transform">
+                    <Zap className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-xl font-bold text-[#062B4A] mb-3">Entertaining</h3>
+                  <p className="text-gray-700 text-sm leading-relaxed font-baskerville">
+                    Hiburan yang sehat, penuh semangat, dan memberikan pengalaman estetika yang luar biasa.
+                  </p>
+                </BentoCard>
+
+                <BentoCard className="p-8 rounded-3xl relative overflow-hidden group">
+                  <div className="w-12 h-12 rounded-xl bg-[#062B4A] border border-[#D69103] flex items-center justify-center text-[#D69103] mb-6 group-hover:scale-110 transition-transform">
+                    <ShieldCheck className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-xl font-bold text-[#062B4A] mb-3">Elegant</h3>
+                  <p className="text-gray-700 text-sm leading-relaxed font-baskerville">
+                    Tampilan artistik yang anggun, berkelas, dan mencerminkan kebudayaan Nusantara.
+                  </p>
+                </BentoCard>
+
+                <BentoCard className="p-8 rounded-3xl relative overflow-hidden group">
+                  <div className="w-12 h-12 rounded-xl bg-[#062B4A] border border-[#D69103] flex items-center justify-center text-[#D69103] mb-6 group-hover:scale-110 transition-transform">
+                    <Globe className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-xl font-bold text-[#062B4A] mb-3">Enjoyable</h3>
+                  <p className="text-gray-700 text-sm leading-relaxed font-baskerville">
+                    Suasana yang hangat dan penuh kegembiraan untuk seluruh sivitas pondok.
+                  </p>
+                </BentoCard>
+              </div>
+
+              <div className="mt-12 p-8 rounded-3xl bg-[#062B4A] border-2 border-[#D69103] text-center text-[#F4F1EB] shadow-2xl">
+                <div className="text-xs text-[#D69103] font-bold tracking-widest uppercase mb-2">✦ KUTIPAN PERJUANGAN ✦</div>
+                <div className="text-2xl md:text-3xl font-serif italic gold-text mb-2">
+                  "Innama-d-dunya haditsun ba'dahu, fakun haditsan hasanan liman wa'a."
+                </div>
+                <p className="text-xs text-gray-300 font-baskerville">"Sesungguhnya dunia hanyalah cerita, maka jadilah cerita yang baik bagi yang mendengarnya."</p>
+              </div>
+            </section>
+
+            {/* 3D GLB INDONESIA MAP */}
+            <IndonesiaMap3D />
+
+            {/* BENTO STAGE SHOWCASE */}
+            <section id="stage" className="max-w-6xl mx-auto px-6 py-20 border-t border-[#062B4A]/10 reveal-on-scroll">
+              <div className="text-center mb-12">
+                <div className="text-xs text-[#D69103] font-bold uppercase tracking-widest mb-2">DESAIN & ARSITEKTUR</div>
+                <h2 className="text-3xl md:text-5xl font-bold font-mileast italic">
+                  Konsep Panggung <span className="gold-text not-italic">Drama Arena 5102</span>
+                </h2>
+                <p className="text-gray-700 text-sm mt-3 max-w-xl mx-auto font-baskerville">
+                  Integrasi arsitektur ukiran stempel klasik dengan teknologi pencahayaan modern.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                {stageFeatures.map((sf, idx) => (
+                  <BentoCard key={idx} className="p-6 rounded-3xl group">
+                    <div className="w-8 h-8 rounded-full bg-[#062B4A] text-[#D69103] font-bold text-xs flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                      0{idx + 1}
+                    </div>
+                    <h4 className="font-bold text-base text-[#062B4A] mb-2">{sf.title}</h4>
+                    <p className="text-xs text-gray-700 leading-relaxed font-baskerville">{sf.desc}</p>
+                  </BentoCard>
+                ))}
+              </div>
+            </section>
+
+            {/* BENTO SHOWS & EVENTS */}
+            <section id="shows" className="max-w-6xl mx-auto px-6 py-20 border-t border-[#062B4A]/10 reveal-on-scroll">
+              <div className="text-center mb-16">
+                <div className="text-xs text-[#D69103] font-bold uppercase tracking-widest mb-2">ACARA UTAMA</div>
+                <h2 className="text-3xl md:text-5xl font-bold font-mileast italic">
+                  Ragam <span className="gold-text not-italic">Pertunjukan</span>
+                </h2>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {showsData.map((show) => (
+                  <BentoCard key={show.id} onClick={() => setActiveShow(show)} className="p-6 rounded-3xl cursor-pointer group">
+                    <div className="relative h-48 rounded-2xl overflow-hidden mb-5">
+                      <img src={show.img} alt={show.title} className="w-full h-full object-cover filter sepia-[0.2] group-hover:scale-105 transition-transform duration-500" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#062B4A] via-transparent to-transparent" />
+                      <div className="absolute top-3 left-3 text-3xl font-extrabold gold-text opacity-60">{show.number}</div>
+                      <div className="absolute bottom-3 left-4">
+                        <div className="text-xs text-[#F5D98A] font-bold tracking-wider uppercase">{show.category}</div>
+                        <h3 className="text-lg font-bold text-white">{show.title}</h3>
+                      </div>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {show.items.map(item => (
+                        <span key={item} className="px-3 py-1 rounded-full bg-[#062B4A]/10 border border-[#D69103]/40 text-xs text-[#062B4A] font-semibold">
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                  </BentoCard>
+                ))}
+              </div>
+            </section>
+
+            {/* COMMITTEE & BUDGET */}
+            <section id="committee" className="max-w-6xl mx-auto px-6 py-20 border-t border-[#062B4A]/10 reveal-on-scroll">
+              <div className="text-center mb-12">
+                <div className="text-xs text-[#D69103] font-bold uppercase tracking-widest mb-2">KEPANITIAAN RESMI</div>
+                <h2 className="text-3xl md:text-5xl font-bold font-mileast italic">
+                  Panitia & <span className="gold-text not-italic">Anggaran</span>
+                </h2>
+                
+                <div className="flex justify-center gap-3 mt-6">
+                  <button
+                    onClick={() => setCommitteeTab('panitia')}
+                    className={`px-6 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                      committeeTab === 'panitia' ? 'bg-[#062B4A] text-[#D69103] shadow-lg' : 'bg-[#062B4A]/10 text-[#062B4A] border border-[#062B4A]/20'
+                    }`}
+                  >
+                    Susunan Panitia
+                  </button>
+                  <button
+                    onClick={() => setCommitteeTab('anggaran')}
+                    className={`px-6 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                      committeeTab === 'anggaran' ? 'bg-[#062B4A] text-[#D69103] shadow-lg' : 'bg-[#062B4A]/10 text-[#062B4A] border border-[#062B4A]/20'
+                    }`}
+                  >
+                    Rencana Anggaran
+                  </button>
+                </div>
+              </div>
+
+              {committeeTab === 'panitia' ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                  {committeeData.map((group, idx) => (
+                    <BentoCard key={idx} className="p-6 rounded-3xl">
+                      <div className="flex items-center gap-2 mb-3 pb-3 border-b border-[#D69103]/30">
+                        <div className="w-6 h-6 rounded-full bg-[#062B4A] text-[#D69103] text-xs font-bold flex items-center justify-center">{idx + 1}</div>
+                        <h4 className="font-bold text-sm text-[#062B4A] uppercase">{group.role}</h4>
+                      </div>
+                      <ul className="space-y-1.5 text-xs text-gray-700 font-baskerville">
+                        {group.names.map((n, i) => (
+                          <li key={i} className="flex items-start gap-1.5"><span className="text-[#D69103]">•</span>{n}</li>
+                        ))}
+                      </ul>
+                    </BentoCard>
+                  ))}
+                </div>
+              ) : (
+                <BentoCard className="max-w-3xl mx-auto p-8 rounded-3xl">
+                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-6 mb-6 border-b border-[#062B4A]/20 gap-4">
+                    <div>
+                      <h3 className="text-xl font-bold text-[#062B4A]">Anggaran Kepanitiaan</h3>
+                      <p className="text-xs text-[#D69103] font-bold mt-1">Drama Arena 5102 · T.A. 1447-1448</p>
+                    </div>
+                    <div className="p-4 rounded-2xl bg-[#062B4A] text-[#F4F1EB] text-right">
+                      <div className="text-xs opacity-70">Total Keseluruhan</div>
+                      <div className="text-xl font-bold gold-text">Rp 500.107.000</div>
+                    </div>
+                  </div>
+
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b-2 border-[#D69103] text-xs text-[#062B4A] uppercase font-bold">
+                          <th className="py-2 text-left">No</th>
+                          <th className="py-2 text-left">Bagian</th>
+                          <th className="py-2 text-right">Nominal</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-[#062B4A]/10">
+                        {budgetItems.map((b) => (
+                          <tr key={b.no} className="hover:bg-[#062B4A]/5 transition-colors">
+                            <td className="py-2.5 text-xs text-gray-500">{b.no}.</td>
+                            <td className="py-2.5 font-bold text-[#062B4A]">{b.section}</td>
+                            <td className="py-2.5 text-right font-bold text-[#062B4A]">{b.amount}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </BentoCard>
+              )}
+            </section>
+
+            {/* BENTO FAQ SECTION */}
+            <section className="max-w-4xl mx-auto px-6 py-20 border-t border-[#062B4A]/10 reveal-on-scroll">
+              <div className="text-center mb-12">
+                <div className="text-xs text-[#D69103] font-bold uppercase tracking-widest mb-2">PERTANYAAN UMUM</div>
+                <h2 className="text-3xl md:text-4xl font-bold font-mileast italic">
+                  Pertanyaan <span className="gold-text not-italic">Populer</span>
+                </h2>
+              </div>
+
+              <div className="space-y-4">
+                {faqsData.map((faq, idx) => (
+                  <BentoCard key={idx} className="rounded-2xl overflow-hidden">
+                    <button
+                      onClick={() => setExpandedFaq(expandedFaq === idx ? null : idx)}
+                      className="w-full p-5 text-left font-bold text-[#062B4A] flex items-center justify-between gap-4 cursor-pointer"
+                    >
+                      <span>{faq.q}</span>
+                      <ChevronDown className={`w-4 h-4 text-[#D69103] transition-transform ${expandedFaq === idx ? 'rotate-180' : ''}`} />
+                    </button>
+                    {expandedFaq === idx && (
+                      <div className="p-5 pt-0 text-xs text-gray-700 leading-relaxed font-baskerville border-t border-[#062B4A]/10">
+                        {faq.a}
+                      </div>
+                    )}
+                  </BentoCard>
+                ))}
+              </div>
+            </section>
+
+            {/* FLOATING AUDIO PLAYER & BACK TO TOP */}
+            <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3">
+              {showBackToTop && (
+                <button
+                  onClick={() => navTo('root')}
+                  className="w-10 h-10 rounded-full bg-[#062B4A] text-[#D69103] border-2 border-[#D69103] flex items-center justify-center shadow-lg hover:scale-110 transition-transform cursor-pointer"
+                >
+                  <ArrowUp className="w-5 h-5" />
+                </button>
+              )}
+
+              <div className="p-3.5 rounded-2xl bg-[#062B4A] border-2 border-[#D69103] text-[#F4F1EB] shadow-[0_10px_30px_rgba(0,0,0,0.4)] flex items-center gap-3 max-w-xs">
+                <button
+                  onClick={toggleAudio}
+                  className="w-9 h-9 rounded-full bg-[#D69103] text-[#062B4A] flex items-center justify-center font-bold flex-shrink-0 cursor-pointer shadow-md hover:scale-105 transition-transform"
+                >
+                  {isPlayingAudio ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
+                </button>
+                <div className="overflow-hidden">
+                  <div className="text-[11px] font-bold text-[#F5D98A] truncate">Teruslah Percaya</div>
+                  <div className="text-[9px] text-gray-300 truncate">OST Percaya Asa Short Movie</div>
+                </div>
+                {isPlayingAudio && (
+                  <div className="flex items-end gap-0.5 h-4 px-1">
+                    <span className="w-1 bg-[#F5D98A] eq-bar-1" />
+                    <span className="w-1 bg-[#D69103] eq-bar-2" />
+                    <span className="w-1 bg-[#F5D98A] eq-bar-3" />
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* FOOTER */}
+            <footer className="border-t border-[#062B4A]/20 bg-[#062B4A] text-[#F4F1EB] pt-16 pb-12 px-6">
+              <div className="max-w-4xl mx-auto text-center mb-16">
+                <div className="text-xs text-[#D69103] font-bold uppercase tracking-widest mb-2">KEMITRAAN RESMI</div>
+                <h2 className="text-3xl md:text-5xl font-bold font-mileast italic gold-text mb-4">
+                  Dukung Mahakarya Santri Gontor
+                </h2>
+                <p className="text-gray-300 text-sm max-w-xl mx-auto mb-8 font-baskerville">
+                  Jadilah mitra sponsorship dan saksikan pagelaran seni budaya akbar siswa kelas 5 KMI PMDG.
+                </p>
+                <button onClick={() => setIsModalOpen(true)} className="bg-gradient-to-r from-[#B8860B] via-[#D69103] to-[#E8A820] hover:scale-105 text-[#062B4A] font-bold px-8 py-3.5 rounded-full text-sm transition-all shadow-[0_4px_25px_rgba(214,145,3,0.4)] flex items-center gap-2 mx-auto cursor-pointer">
+                  <span>Ajukan Sponsorship</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+
+              <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 pt-12 border-t border-white/10 text-xs text-gray-300">
+                <div>
+                  <div className="font-bold text-base gold-text mb-2">Drama Arena 5102</div>
+                  <p className="leading-relaxed font-baskerville">"Naluri dan Nurani" — Sadar akan nilai perjuangan, tumbuhkan semangat kebersamaan.</p>
+                </div>
+                <div>
+                  <div className="font-bold mb-3 uppercase tracking-wider text-[11px] text-[#D69103]">Navigasi</div>
+                  <ul className="space-y-2">
+                    {[['Profil PMDG','about'],['Tema & Filosofi','theme'],['Timeline Persiapan','timeline'],['Peta 3D Nusantara','map'],['Konsep Panggung','stage'],['Ragam Acara','shows']].map(([l,id]) => (
+                      <li key={id}><button onClick={() => navTo(id)} className="hover:text-[#D69103] cursor-pointer">{l}</button></li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <div className="font-bold mb-3 uppercase tracking-wider text-[11px] text-[#D69103]">Lokasi</div>
+                  <p className="leading-relaxed font-baskerville">Pondok Modern Darussalam Gontor<br />Ponorogo, Jawa Timur 63472<br />www.gontor.ac.id</p>
+                </div>
+                <div>
+                  <div className="font-bold mb-3 uppercase tracking-wider text-[11px] text-[#D69103]">Narahubung</div>
+                  <p>Ahmad Nur Fajar D. P.<br />0813-9850-7876</p>
+                  <p className="mt-2 font-bold text-[#D69103]">BRI: 0070-01-000315-56-7</p>
+                </div>
+              </div>
+
+              <div className="max-w-6xl mx-auto text-center text-xs text-gray-400 pt-8 mt-12 border-t border-white/10">
+                © 2026 Pagelaran Seni Drama Arena 5102 · Pondok Modern Darussalam Gontor
+              </div>
+            </footer>
+
+            {/* SPONSORSHIP MODAL */}
+            {isModalOpen && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
+                <div className="fixed inset-0 bg-[#062B4A]/80 backdrop-blur-sm" onClick={() => setIsModalOpen(false)} />
+                <div className="relative w-full max-w-2xl rounded-3xl p-6 sm:p-8 z-10 my-auto bg-[#F4F1EB] border-2 border-[#D69103] text-[#062B4A] shadow-2xl">
+                  <button onClick={() => setIsModalOpen(false)} className="absolute top-5 right-5 p-2 text-[#062B4A] hover:opacity-70 cursor-pointer">
+                    <IconClose />
+                  </button>
+                  <div className="mb-6">
+                    <div className="text-xs text-[#D69103] font-bold uppercase tracking-wider">KEMITRAAN RESMI</div>
+                    <h3 className="text-2xl font-bold text-[#062B4A] mt-1 font-mileast italic">Paket Sponsorship</h3>
+                    <p className="text-xs text-gray-700 mt-1">Total Anggaran: <strong className="gold-text">Rp 500.107.000</strong></p>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                    {[
+                      { tier: 'BRONZE', pct: '10%', amount: 'Rp 50.010.700' },
+                      { tier: 'SILVER', pct: '30%', amount: 'Rp 150.032.100' },
+                      { tier: 'GOLD', pct: '50%', amount: 'Rp 250.053.500' }
+                    ].map(({ tier, pct, amount }) => (
+                      <div key={tier} className="p-5 rounded-2xl bg-[#062B4A] text-[#F4F1EB] text-center border border-[#D69103]">
+                        <div className="text-base font-bold gold-text">{tier}</div>
+                        <div className="text-xs opacity-70 my-1">{pct} dari total</div>
+                        <div className="text-sm font-bold">{amount}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-[#062B4A]/5 border border-[#D69103] text-xs">
+                    <div className="font-bold text-[#D69103] mb-1">Rekening Resmi Sponsorship</div>
+                    <div className="text-[#062B4A] font-bold text-sm">Bank BRI: 0070-01-000315-56-7</div>
+                    <div className="text-gray-700 mt-0.5">a.n. Panitia Drama Arena Siswa Kelas 5 KMI PMDG</div>
+                  </div>
+
+                  <div className="flex justify-end mt-6">
+                    <button onClick={() => { alert('Terima kasih! Tim kami akan menghubungi Anda.'); setIsModalOpen(false); }} className="bg-[#D69103] hover:bg-[#E8A820] text-[#062B4A] font-bold px-6 py-2.5 rounded-full text-sm flex items-center gap-2 cursor-pointer shadow-lg">
+                      <span>Ajukan Sponsorship</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* SHOW MODAL */}
+            {activeShow && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+                <div className="fixed inset-0 bg-[#062B4A]/80 backdrop-blur-sm" onClick={() => setActiveShow(null)} />
+                <div className="relative w-full max-w-lg rounded-3xl overflow-hidden z-10 bg-[#F4F1EB] border-2 border-[#D69103]">
+                  <div className="relative h-48">
+                    <img src={activeShow.img} alt={activeShow.title} className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#062B4A] to-transparent" />
+                    <button onClick={() => setActiveShow(null)} className="absolute top-4 right-4 p-2 rounded-full bg-[#F4F1EB] text-[#062B4A] cursor-pointer">
+                      <IconClose />
+                    </button>
+                    <div className="absolute bottom-4 left-4">
+                      <div className="text-xs text-[#F5D98A] font-bold">{activeShow.category}</div>
+                      <h3 className="text-xl font-bold text-white">{activeShow.title}</h3>
+                    </div>
+                  </div>
+                  <div className="p-6">
+                    <div className="text-xs text-[#D69103] uppercase font-bold tracking-wider mb-3">Daftar Penampilan</div>
+                    <div className="flex flex-wrap gap-2">
+                      {activeShow.items.map(item => (
+                        <span key={item} className="px-3 py-1.5 rounded-full bg-[#062B4A] text-xs text-[#F5D98A] font-medium">
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+          </div>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById('root')).render(<App />);
     </script>
-    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

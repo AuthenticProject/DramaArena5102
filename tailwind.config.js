@@ -7,18 +7,26 @@ export default {
   theme: {
     extend: {
       colors: {
-        cyber: {
-          bg: '#08090C',
-          text: '#D7E2EA',
-          darkText: '#0C0C0C',
-          lightBg: '#FFFFFF',
-          accent: '#0077B6',
-          purple: '#7209B7',
-          pink: '#F72585'
-        }
+        navy: '#062B4A',
+        gold: '#D69103',
+        bone: '#F4F1EB',
+        'bone-dark': '#E8E3D8',
+        'navy-light': '#0D3D66',
+        'gold-light': '#E8A820',
+        'gold-pale': '#F5D98A',
+        aged: '#EDE8DE',
+        'dark-bg': '#062B4A',
+        'neon-green': '#D69103',
+        'neon-glow': '#F5D98A',
       },
       fontFamily: {
-        kanit: ['Kanit', 'sans-serif'],
+        mileast: ['Mileast', 'Georgia', 'serif'],
+        alverata: ['Alverata', 'Alverata Lt', 'Georgia', 'serif'],
+        playfair: ['Mileast', 'Georgia', 'serif'],
+        cormorant: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+        'cormorant-sc': ['"Cormorant SC"', 'Georgia', 'serif'],
+        sans: ['"Space Grotesk"', 'Alverata', 'Georgia', 'sans-serif'],
+        baskerville: ['Alverata', '"Cormorant Garamond"', 'Georgia', 'serif'],
       }
     },
   },

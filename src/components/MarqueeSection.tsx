@@ -1,111 +1,56 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React from 'react';
 
 const marqueeImages = [
-  "https://motionsites.ai/assets/hero-space-voyage-preview-eECLH3Yc.gif",
-  "https://motionsites.ai/assets/hero-codenest-preview-Cgppc2qV.gif",
-  "https://motionsites.ai/assets/hero-vex-ventures-preview-BczMFIiw.gif",
-  "https://motionsites.ai/assets/hero-stellar-ai-v2-preview-DjvxjG3C.gif",
-  "https://motionsites.ai/assets/hero-asme-preview-B_nGDnTP.gif",
-  "https://motionsites.ai/assets/hero-transform-data-preview-Cx5OU29N.gif",
-  "https://motionsites.ai/assets/hero-vitara-preview-Cjz2QYyU.gif",
-  "https://motionsites.ai/assets/hero-terra-preview-BFjrCr7T.gif",
-  "https://motionsites.ai/assets/hero-skyelite-preview-DHaZIgUv.gif",
-  "https://motionsites.ai/assets/hero-aethera-preview-DknSlcTa.gif",
-  "https://motionsites.ai/assets/hero-designpro-preview-D8c5_een.gif",
-  "https://motionsites.ai/assets/hero-stellar-ai-preview-D3HL6bw1.gif",
-  "https://motionsites.ai/assets/hero-xportfolio-preview-D4A8maiC.gif",
-  "https://motionsites.ai/assets/hero-orbit-web3-preview-BXt4OttD.gif",
-  "https://motionsites.ai/assets/hero-nexora-preview-cx5HmUgo.gif",
-  "https://motionsites.ai/assets/hero-evr-ventures-preview-DZxeVFEX.gif",
-  "https://motionsites.ai/assets/hero-planet-orbit-preview-DWAP8Z1P.gif",
-  "https://motionsites.ai/assets/hero-new-era-preview-CocuDUm9.gif",
-  "https://motionsites.ai/assets/hero-wealth-preview-B70idl_u.gif",
-  "https://motionsites.ai/assets/hero-luminex-preview-CxOP7ce6.gif",
-  "https://motionsites.ai/assets/hero-celestia-preview-0yO3jXO8.gif"
+  "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?q=80&w=600&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=600&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1547153760-18fc86324498?q=80&w=600&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=600&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?q=80&w=600&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=600&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=600&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1465847899084-d164df4dedc6?q=80&w=600&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1469488865564-c2de10f69f96?q=80&w=600&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1460723237483-7a6dc9d0b212?q=80&w=600&auto=format&fit=crop",
 ];
 
 export const MarqueeSection: React.FC = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const [scrollOffset, setScrollOffset] = useState(0);
-
-  const row1Raw = marqueeImages.slice(0, 11);
-  const row2Raw = marqueeImages.slice(11);
-
-  const row1 = [...row1Raw, ...row1Raw, ...row1Raw];
-  const row2 = [...row2Raw, ...row2Raw, ...row2Raw];
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!sectionRef.current) return;
-      const rect = sectionRef.current.getBoundingClientRect();
-      const sectionTop = window.scrollY + rect.top;
-      const offset = (window.scrollY - sectionTop + window.innerHeight) * 0.3;
-      setScrollOffset(offset);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const row1Transform = scrollOffset - 200;
-  const row2Transform = -(scrollOffset - 200);
+  const row1 = [...marqueeImages, ...marqueeImages];
+  const row2 = [...marqueeImages.slice(5), ...marqueeImages.slice(0, 5), ...marqueeImages.slice(5), ...marqueeImages.slice(0, 5)];
 
   return (
-    <section 
-      ref={sectionRef} 
-      className="w-full bg-[#08090C] pt-24 sm:pt-32 md:pt-40 pb-10 overflow-hidden"
-    >
-      <div className="flex flex-col gap-3">
-        {/* Row 1: Moves RIGHT on scroll */}
-        <div 
-          className="flex gap-3 w-max"
-          style={{
-            transform: `translateX(${row1Transform}px)`,
-            willChange: 'transform',
-            transition: 'transform 0.1s ease-out'
-          }}
-        >
-          {row1.map((imgUrl, index) => (
-            <div 
-              key={`row1-${index}`}
-              className="w-[280px] h-[180px] sm:w-[360px] sm:h-[230px] md:w-[420px] md:h-[270px] flex-shrink-0 rounded-2xl overflow-hidden bg-[#11141B] border border-[#53627A]/20 shadow-md group"
+    <div className="relative overflow-hidden py-10" style={{ background: '#062B4A' }}>
+      <div
+        className="perforated-top absolute top-0 left-0 right-0"
+        style={{ background: 'radial-gradient(circle at 50% 0%, #F4F1EB 9px, transparent 9px) top center / 20px 12px repeat-x' }}
+      />
+      <div className="flex flex-col gap-3 select-none">
+        <div className="marquee-left flex gap-3 w-max">
+          {row1.map((src, i) => (
+            <div
+              key={`r1-${i}`}
+              className="w-[260px] h-[160px] flex-shrink-0 rounded-lg overflow-hidden border"
+              style={{ borderColor: 'rgba(214,145,3,0.4)' }}
             >
-              <img
-                src={imgUrl}
-                alt={`Teaser Row 1 - ${index}`}
-                loading="lazy"
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 filter brightness-95 group-hover:brightness-110"
-              />
+              <img src={src} alt="Drama Arena Showcase" loading="lazy" className="w-full h-full object-cover filter sepia-[0.3]" />
             </div>
           ))}
         </div>
-
-        {/* Row 2: Moves LEFT on scroll */}
-        <div 
-          className="flex gap-3 w-max"
-          style={{
-            transform: `translateX(${row2Transform}px)`,
-            willChange: 'transform',
-            transition: 'transform 0.1s ease-out'
-          }}
-        >
-          {row2.map((imgUrl, index) => (
-            <div 
-              key={`row2-${index}`}
-              className="w-[280px] h-[180px] sm:w-[360px] sm:h-[230px] md:w-[420px] md:h-[270px] flex-shrink-0 rounded-2xl overflow-hidden bg-[#11141B] border border-[#53627A]/20 shadow-md group"
+        <div className="marquee-right flex gap-3 w-max">
+          {row2.map((src, i) => (
+            <div
+              key={`r2-${i}`}
+              className="w-[260px] h-[160px] flex-shrink-0 rounded-lg overflow-hidden border"
+              style={{ borderColor: 'rgba(214,145,3,0.4)' }}
             >
-              <img
-                src={imgUrl}
-                alt={`Teaser Row 2 - ${index}`}
-                loading="lazy"
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 filter brightness-95 group-hover:brightness-110"
-              />
+              <img src={src} alt="Drama Arena Showcase" loading="lazy" className="w-full h-full object-cover filter sepia-[0.3]" />
             </div>
           ))}
         </div>
       </div>
-    </section>
+      <div
+        className="perforated-bottom absolute bottom-0 left-0 right-0"
+        style={{ background: 'radial-gradient(circle at 50% 100%, #F4F1EB 9px, transparent 9px) bottom center / 20px 12px repeat-x' }}
+      />
+    </div>
   );
 };

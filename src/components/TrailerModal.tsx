@@ -1,10 +1,9 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
-import { ShowData } from './ShowsSection';
+import { ShowCategoryData } from '../types';
 
 interface TrailerModalProps {
-  show: ShowData | null;
+  show: ShowCategoryData | null;
   onClose: () => void;
 }
 
@@ -12,54 +11,55 @@ export const TrailerModal: React.FC<TrailerModalProps> = ({ show, onClose }) => 
   if (!show) return null;
 
   return (
-    <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-hidden">
-        {/* Backdrop */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={onClose}
-          className="fixed inset-0 bg-[#08090C]/95 backdrop-blur-lg"
-        />
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      {/* Backdrop */}
+      <div
+        className="fixed inset-0"
+        style={{ background: 'rgba(6,43,74,0.85)', backdropFilter: 'blur(8px)' }}
+        onClick={onClose}
+      />
 
-        {/* Modal Container */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.9, y: 20 }}
-          className="relative w-full max-w-4xl rounded-[32px] sm:rounded-[40px] border-2 border-[#D7E2EA]/40 bg-[#08090C] p-4 sm:p-6 text-[#D7E2EA] shadow-[0_0_100px_rgba(0,119,182,0.4)] z-10 my-auto flex flex-col"
-        >
-          {/* Top Bar */}
-          <div className="w-full flex items-center justify-between pb-4 border-b border-[#53627A]/30">
-            <div>
-              <span className="text-xs font-semibold uppercase tracking-widest text-[#A3C7E6]">
-                {show.category}
-              </span>
-              <h3 className="text-xl sm:text-2xl font-black uppercase text-[#D7E2EA]">
-                {show.title}
-              </h3>
+      {/* Modal Box */}
+      <div
+        className="relative w-full max-w-lg rounded-3xl overflow-hidden z-10"
+        style={{ background: '#F4F1EB', border: '2px solid rgba(214,145,3,0.4)', boxShadow: '0 20px 60px rgba(6,43,74,0.4)' }}
+      >
+        <div className="relative h-52">
+          <img src={show.img} alt={show.title} className="w-full h-full object-cover filter sepia-[0.2]" />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(6,43,74,0.9) 0%, transparent 50%)' }} />
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 p-2 rounded-full cursor-pointer transition-colors hover:bg-white/20"
+            style={{ background: 'rgba(244,241,235,0.9)', color: '#062B4A' }}
+            aria-label="Close detail modal"
+          >
+            <X className="w-4 h-4" />
+          </button>
+          <div className="absolute bottom-4 left-4 right-4">
+            <div className="font-cormorant-sc text-xs tracking-widest" style={{ color: '#D69103' }}>
+              {show.category}
             </div>
-            <button
-              onClick={onClose}
-              className="p-2 rounded-full border border-[#53627A]/40 text-[#D7E2EA] hover:bg-[#53627A]/20 transition-colors"
-            >
-              <X className="w-6 h-6" />
-            </button>
+            <h3 className="font-playfair font-bold text-xl text-white">{show.title}</h3>
           </div>
+        </div>
 
-          {/* Video Container */}
-          <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-black mt-4 border border-[#53627A]/20">
-            <iframe
-              src={show.trailerUrl}
-              title={`${show.title} Official Trailer`}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              className="w-full h-full"
-            />
+        <div className="p-6">
+          <div className="font-cormorant-sc text-xs tracking-widest uppercase mb-3" style={{ color: '#D69103' }}>
+            Daftar Penampilan
           </div>
-        </motion.div>
+          <div className="flex flex-wrap gap-2">
+            {show.items.map((item) => (
+              <span
+                key={item}
+                className="font-cormorant-sc text-sm px-3 py-1.5 rounded-full font-semibold"
+                style={{ background: 'rgba(6,43,74,0.08)', border: '1px solid rgba(214,145,3,0.3)', color: '#062B4A' }}
+              >
+                {item}
+              </span>
+            ))}
+          </div>
+        </div>
       </div>
-    </AnimatePresence>
+    </div>
   );
 };

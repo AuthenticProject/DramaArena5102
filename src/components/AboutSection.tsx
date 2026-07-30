@@ -1,156 +1,146 @@
 import React from 'react';
 import { FadeIn } from './FadeIn';
-import { CheckCircle2, Users, Building2, BookOpen, HeartHandshake, ShieldCheck } from 'lucide-react';
+import { SectionLabel, FleuronDivider, StampLogo } from './HeroSection';
+import { Star } from 'lucide-react';
+
+const pillarsData = [
+  { en: "Educating", id: "Mendidik", desc: "Setiap sajian seni mengandung nilai dan pesan moral Islami yang mendidik jiwa santri." },
+  { en: "Entertaining", id: "Menghibur", desc: "Hiburan yang sehat, penuh semangat, dan memberikan pengalaman estetika yang luar biasa." },
+  { en: "Elegant", id: "Elegan", desc: "Tampilan artistik yang anggun, berkelas, dan mencerminkan kebudayaan Nusantara." },
+  { en: "Enjoyable", id: "Menyenangkan", desc: "Suasana yang hangat dan penuh kegembiraan untuk seluruh sivitas pondok." }
+];
 
 export const AboutSection: React.FC = () => {
   return (
-    <section 
-      id="about" 
-      className="relative w-full min-h-screen bg-[#08090C] flex flex-col items-center justify-center px-5 sm:px-8 md:px-10 py-24 overflow-hidden select-none"
-    >
-      
-      {/* Decorative background glow */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#7209B7]/10 rounded-full blur-[120px] pointer-events-none" />
-
-      {/* Main Container */}
-      <div className="relative z-20 max-w-6xl w-full flex flex-col items-center gap-16">
-        
-        {/* Section Heading */}
-        <FadeIn delay={0} y={40} className="text-center max-w-3xl">
-          <span className="text-[#F72585] text-xs font-bold uppercase tracking-widest block mb-3">
-            ✦ PROFIL SINGKAT & MAKSUD TUJUAN
-          </span>
-          <h2 
-            className="hero-heading font-black uppercase leading-none tracking-tight text-center"
-            style={{ fontSize: 'clamp(2.5rem, 8vw, 110px)' }}
-          >
-            DRAMA ARENA 5102
+    <>
+      {/* ── ABOUT / PROFILE ──────────────────────────────────────────── */}
+      <section id="about" className="py-24 px-5 sm:px-8 md:px-12 max-w-6xl mx-auto">
+        <FadeIn delay={0} className="text-center mb-16">
+          <SectionLabel text="PROFIL SINGKAT" />
+          <h2 className="font-mileast italic font-bold mt-3 leading-none uppercase" style={{ fontSize: 'clamp(2rem, 6vw, 72px)', color: '#062B4A' }}>
+            Tentang Acara
           </h2>
-          <p className="text-base sm:text-lg text-[#A3C7E6] font-semibold mt-4 italic">
-            "Sadar akan nilai perjuangan, tumbuhkan semangat kebersamaan"
-          </p>
+          <FleuronDivider />
         </FadeIn>
 
-        {/* 2-Column Info Grid: Profil Drama Arena & Profil PMDG */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
-          
-          {/* Box 1: Tentang Acara */}
-          <FadeIn delay={0.15} y={30}>
-            <div className="h-full p-8 rounded-[36px] bg-[#11141B] border border-[#53627A]/30 flex flex-col justify-between shadow-xl">
-              <div>
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-3 rounded-2xl bg-[#0077B6]/20 text-[#0077B6]">
-                    <BookOpen className="w-6 h-6" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          <FadeIn delay={0.1}>
+            <div className="classic-card rounded-2xl p-8 h-full">
+              <div className="font-cormorant-sc text-xs tracking-widest uppercase mb-2" style={{ color: '#D69103' }}>Penyelenggara</div>
+              <h3 className="font-playfair font-bold text-2xl mb-4" style={{ color: '#062B4A' }}>Pondok Modern Darussalam Gontor</h3>
+              <p className="font-baskerville text-sm leading-relaxed mb-4" style={{ color: '#062B4A', opacity: 0.8 }}>
+                PMDG merupakan lembaga pendidikan Islam pesantren modern bertaraf internasional yang kini dipimpin oleh Trimurti: Dr. K.H. Abdullah Syukri Zarkasyi, M.A., K.H. Hasan Abdullah Sahal, dan K.H. Syamsul Hadi Abdan, S.Ag.
+              </p>
+              <div className="grid grid-cols-2 gap-4 mt-6">
+                {[
+                  ['32.000+', 'Santri & Asatidz'],
+                  ['20', 'Kampus PMDG'],
+                  ['441', 'Santri Kelas 5 KMI'],
+                  ['5.000+', 'Estimasi Penonton']
+                ].map(([num, label]) => (
+                  <div key={label} className="text-center p-3 rounded-lg" style={{ background: 'rgba(214,145,3,0.08)', border: '1px solid rgba(214,145,3,0.2)' }}>
+                    <div className="font-mileast text-2xl font-bold gold-text">{num}</div>
+                    <div className="font-cormorant-sc text-xs tracking-wider" style={{ color: '#062B4A', opacity: 0.7 }}>{label}</div>
                   </div>
-                  <div>
-                    <span className="text-xs font-bold uppercase text-[#F72585]">PENGENALAN ACARA</span>
-                    <h3 className="text-xl sm:text-2xl font-black text-white uppercase">Pagelaran Seni DA 5102</h3>
-                  </div>
-                </div>
-                <p className="text-sm sm:text-base text-[#D7E2EA]/80 leading-relaxed">
-                  Salah satu rangkaian acara utama dalam Pekan Perkenalan Khutbatu-l-'Arsy yang diselenggarakan oleh siswa kelas 5 Kulliyatu-l-Mu'allimin Al-Islamiyah (KMI) Pondok Modern Darussalam Gontor untuk tahun ajaran 1447-1448/2026-2027.
-                </p>
-                <p className="text-sm sm:text-base text-[#D7E2EA]/80 leading-relaxed mt-3">
-                  Drama Arena merupakan wadah kreasi seni santri yang dirancang secara apik dan menarik, dikelola dengan totalitas, profesionalisme, serta kualitas tinggi tanpa mengesampingkan nilai-nilai Islam dan unsur pendidikan.
-                </p>
-              </div>
-
-              <div className="mt-6 pt-4 border-t border-[#53627A]/20 flex items-center justify-between text-xs text-[#A3C7E6] font-semibold">
-                <span>Tagline: "Naluri dan Nurani"</span>
-                <span>T.A. 1447-1448 / 2026-2027</span>
+                ))}
               </div>
             </div>
           </FadeIn>
 
-          {/* Box 2: Profil PMDG */}
-          <FadeIn delay={0.25} y={30}>
-            <div className="h-full p-8 rounded-[36px] bg-[#11141B] border border-[#53627A]/30 flex flex-col justify-between shadow-xl">
-              <div>
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-3 rounded-2xl bg-[#7209B7]/20 text-[#7209B7]">
-                    <Building2 className="w-6 h-6" />
+          <FadeIn delay={0.15}>
+            <div className="classic-card rounded-2xl p-8 h-full">
+              <div className="font-cormorant-sc text-xs tracking-widest uppercase mb-2" style={{ color: '#D69103' }}>Maksud & Tujuan</div>
+              <h3 className="font-playfair font-bold text-2xl mb-4" style={{ color: '#062B4A' }}>Drama Arena 5102</h3>
+              <p className="font-baskerville text-sm leading-relaxed mb-4" style={{ color: '#062B4A', opacity: 0.8 }}>
+                Salah satu rangkaian acara utama dalam Pekan Perkenalan Khutbatu-l-'Arsy yang diselenggarakan oleh siswa kelas 5 KMI PMDG T.A. 1447-1448 / 2026-2027.
+              </p>
+              <hr className="gold-rule my-4" />
+              <div className="font-cormorant-sc text-xs tracking-widest uppercase mb-3" style={{ color: '#D69103' }}>4 Unsur Pertunjukan</div>
+              <div className="grid grid-cols-2 gap-3">
+                {pillarsData.map(p => (
+                  <div key={p.en} className="flex items-center gap-2">
+                    <Star className="w-3.5 h-3.5 flex-shrink-0" style={{ color: '#D69103' }} />
+                    <span className="font-cormorant-sc text-sm font-semibold" style={{ color: '#062B4A' }}>{p.en}</span>
                   </div>
-                  <div>
-                    <span className="text-xs font-bold uppercase text-[#A3C7E6]">LEMBAGA PENDIDIKAN</span>
-                    <h3 className="text-xl sm:text-2xl font-black text-white uppercase">Profil Singkat PMDG</h3>
-                  </div>
-                </div>
-                <p className="text-sm text-[#D7E2EA]/80 leading-relaxed">
-                  Didirikan pada <strong className="text-white">20 September 1926 (12 Rabi'ul Awwal 1345 H)</strong> oleh Trimurti: K.H. Ahmad Sahal, K.H. Zainudin Fannanie, dan K.H. Imam Zarkasyi di Desa Gontor, Ponorogo.
-                </p>
-                <p className="text-sm text-[#D7E2EA]/80 leading-relaxed mt-2">
-                  Dipimpin oleh K.H. Hasan Abdullah Sahal, Drs. K.H. M. Akrim Mariyat, Dipl.A.Ed., dan Prof. Dr. K.H. Amal Fathullah Zarkasyi, M.A.
-                </p>
-                <p className="text-sm text-[#D7E2EA]/80 leading-relaxed mt-2">
-                  Saat ini PMDG mendidik sekitar <strong className="text-white">32.000 santri, guru, dan keluarga besar</strong> yang tersebar di 20 kampus di seluruh Indonesia (12 kampus putra, 8 kampus putri, & UNIDA Gontor).
-                </p>
-              </div>
-
-              <div className="mt-6 pt-4 border-t border-[#53627A]/20 flex items-center justify-between text-xs text-[#A3C7E6] font-semibold">
-                <span>Gontor, Ponorogo, Jawa Timur</span>
-                <span>Usia 1 Abad PMDG</span>
+                ))}
               </div>
             </div>
           </FadeIn>
-
         </div>
+      </section>
 
-        {/* 5 Maksud dan Tujuan Section */}
-        <FadeIn delay={0.35} y={30} className="w-full">
-          <div className="w-full p-8 sm:p-10 rounded-[36px] bg-gradient-to-r from-[#11141B] via-[#091E3A]/40 to-[#11141B] border border-[#53627A]/40">
-            <h3 className="text-xl sm:text-2xl font-black uppercase text-white mb-6 text-center">
-              Maksud dan Tujuan Pagelaran
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {[
-                { num: "1", text: "Mensyukuri nikmat dan anugerah Allah SWT berupa kenaikan ke kelas 5 KMI." },
-                { num: "2", text: "Mendidik dan melatih kecakapan santri dalam kepemimpinan, kemandirian, kerja sama, tanggung jawab, berpikir keras, serta semangat berorganisasi." },
-                { num: "3", text: "Memperkenalkan kepada santri baru tentang keberadaan kesenian di PMDG." },
-                { num: "4", text: "Menggali serta meningkatkan potensi segenap Siswa Kelas 5 KMI untuk diekspresikan dalam pagelaran seni yang menghibur lagi mendidik." },
-                { num: "5", text: "Mempererat jalinan Ukhuwwah Islamiyah antar santri PMDG." }
-              ].map((item) => (
-                <div key={item.num} className="p-4 rounded-2xl bg-[#08090C]/60 border border-[#53627A]/20 flex items-start gap-3">
-                  <span className="w-7 h-7 rounded-full bg-[#F72585]/20 border border-[#F72585]/60 text-[#F72585] font-extrabold text-xs flex items-center justify-center shrink-0 mt-0.5">
-                    {item.num}
-                  </span>
-                  <p className="text-xs sm:text-sm text-[#D7E2EA]/90 leading-relaxed font-medium">
-                    {item.text}
-                  </p>
+      {/* ── BRAND IDENTITY ───────────────────────────────────────────── */}
+      <section className="py-20 px-5 sm:px-8" style={{ background: '#062B4A' }}>
+        <div className="max-w-5xl mx-auto">
+          <FadeIn delay={0} className="text-center mb-14">
+            <span className="font-cormorant-sc text-xs tracking-[0.4em] uppercase" style={{ color: '#D69103' }}>✦ BRAND IDENTITY ✦</span>
+            <h2 className="font-mileast italic font-bold mt-3 leading-none uppercase gold-text" style={{ fontSize: 'clamp(2rem, 5vw, 60px)' }}>
+              Drama Arena 5102
+            </h2>
+            <FleuronDivider />
+          </FadeIn>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Color Palette */}
+            <FadeIn delay={0.1}>
+              <div className="p-6 rounded-2xl h-full" style={{ border: '1px solid rgba(214,145,3,0.3)', background: 'rgba(244,241,235,0.05)' }}>
+                <div className="font-cormorant-sc text-xs tracking-widest uppercase mb-4" style={{ color: '#D69103' }}>Color Palette</div>
+                <div className="flex flex-col gap-3">
+                  {[
+                    { hex: '#062B4A', name: 'Navy Blue', label: '#062b4a' },
+                    { hex: '#D69103', name: 'Gold', label: '#d69103' },
+                    { hex: '#F4F1EB', name: 'Bone White', label: '#f4f1eb' }
+                  ].map(c => (
+                    <div key={c.name} className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg flex-shrink-0 border" style={{ background: c.hex, borderColor: 'rgba(214,145,3,0.4)' }} />
+                      <div>
+                        <div className="font-cormorant-sc text-sm font-bold" style={{ color: '#F4F1EB' }}>{c.name}</div>
+                        <div className="font-cormorant-sc text-xs opacity-60" style={{ color: '#F4F1EB' }}>{c.label}</div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </div>
+            </FadeIn>
+
+            {/* Branding Theme */}
+            <FadeIn delay={0.15}>
+              <div className="p-6 rounded-2xl h-full" style={{ border: '1px solid rgba(214,145,3,0.3)', background: 'rgba(244,241,235,0.05)' }}>
+                <div className="font-cormorant-sc text-xs tracking-widest uppercase mb-4" style={{ color: '#D69103' }}>Branding Theme</div>
+                {[
+                  ['🏛', 'Old Classic', 'Estetika klasik bernilai tinggi'],
+                  ['📮', 'Stamp / Prangko', 'Simbol perjalanan & pesan budaya'],
+                  ['🏯', 'Kebudayaan Indonesia', 'Akar budaya Nusantara'],
+                  ['⏳', 'Jam Pasir', 'Perjalanan waktu yang tak berhenti']
+                ].map(([ic, name, desc]) => (
+                  <div key={name} className="flex items-start gap-3 mb-4">
+                    <span className="text-2xl">{ic}</span>
+                    <div>
+                      <div className="font-cormorant-sc text-sm font-bold" style={{ color: '#D69103' }}>{name}</div>
+                      <div className="font-cormorant-sc text-xs opacity-70" style={{ color: '#F4F1EB' }}>{desc}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </FadeIn>
+
+            {/* Logo + Font */}
+            <FadeIn delay={0.2}>
+              <div className="p-6 rounded-2xl h-full" style={{ border: '1px solid rgba(214,145,3,0.3)', background: 'rgba(244,241,235,0.05)' }}>
+                <div className="font-cormorant-sc text-xs tracking-widest uppercase mb-4" style={{ color: '#D69103' }}>Main Logo</div>
+                <div className="flex justify-center mb-4">
+                  <StampLogo size={120} />
+                </div>
+                <hr className="gold-rule mb-4" />
+                <div className="font-cormorant-sc text-xs tracking-widest uppercase mb-2" style={{ color: '#D69103' }}>Font Type</div>
+                <div className="font-mileast text-3xl font-bold" style={{ color: '#F4F1EB' }}>Mileast</div>
+                <div className="font-cormorant-sc text-lg" style={{ color: '#D69103' }}>& Alverata</div>
+                <div className="text-xs mt-2 font-cormorant-sc" style={{ color: '#F4F1EB', opacity: 0.6 }}>Tipografi dekoratif klasik</div>
+              </div>
+            </FadeIn>
           </div>
-        </FadeIn>
-
-        {/* Stats Grid: Peserta & Pengunjung */}
-        <FadeIn delay={0.45} y={30} className="w-full">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full">
-            <div className="p-6 rounded-3xl bg-[#11141B] border border-[#53627A]/30 flex items-center justify-between">
-              <div>
-                <span className="text-xs font-semibold uppercase text-[#A3C7E6]">PROFIL PESERTA</span>
-                <h4 className="text-3xl sm:text-4xl font-black text-white">441 Siswa</h4>
-                <p className="text-xs text-[#D7E2EA]/70">Seluruh Siswa Kelas 5 KMI T.A. 1447-1448</p>
-              </div>
-              <div className="p-4 rounded-2xl bg-[#0077B6]/20 text-[#0077B6]">
-                <Users className="w-8 h-8" />
-              </div>
-            </div>
-
-            <div className="p-6 rounded-3xl bg-[#11141B] border border-[#53627A]/30 flex items-center justify-between">
-              <div>
-                <span className="text-xs font-semibold uppercase text-[#F72585]">PROFIL PENGUNJUNG</span>
-                <h4 className="text-3xl sm:text-4xl font-black text-white">&gt; 5.000 Penonton</h4>
-                <p className="text-xs text-[#D7E2EA]/70">Santri, Guru, Keluarga PMDG & Undangan</p>
-              </div>
-              <div className="p-4 rounded-2xl bg-[#F72585]/20 text-[#F72585]">
-                <ShieldCheck className="w-8 h-8" />
-              </div>
-            </div>
-          </div>
-        </FadeIn>
-
-      </div>
-
-    </section>
+        </div>
+      </section>
+    </>
   );
 };

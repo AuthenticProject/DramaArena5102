@@ -1,172 +1,28 @@
 import React, { useState } from 'react';
 import { FadeIn } from './FadeIn';
-import { Users, DollarSign } from 'lucide-react';
-
-interface CommitteeGroup {
-  role: string;
-  names: string[];
-  badge?: string;
-}
+import { SectionLabel, FleuronDivider } from './HeroSection';
+import { CommitteeGroup, BudgetItem } from '../types';
 
 const committeeData: CommitteeGroup[] = [
-  {
-    role: "Penanggung Jawab",
-    names: ["Ahmad Nur Fajar Dwi Prakosa"],
-    badge: "Utama"
-  },
-  {
-    role: "Ketua Pelaksana",
-    names: [
-      "M. Radja Althafa",
-      "Atsrul Iman",
-      "Mohamad Razka Al-Isfahany"
-    ]
-  },
-  {
-    role: "Sekretaris",
-    names: [
-      "Sultan Ridwan Putra Pratama",
-      "Naufal Fikri Setyawan",
-      "Sigap Dwi Aminullah",
-      "Ahmad Bimo Wiranata Yahya",
-      "Ibrahim Hidayatulloh",
-      "Muhammad Ayus Sofi",
-      "Husni Annurani Marekhan"
-    ]
-  },
-  {
-    role: "Bendahara",
-    names: [
-      "Gibran Gibraltar Zahri",
-      "Moh. Yusuf Ubaidilah"
-    ]
-  },
-  {
-    role: "Tim Kreatif & Acara",
-    names: [
-      "Ade Rezki Agesta",
-      "Muhamad Hadi Wijaya Munir",
-      "Muhammad Reynaldi Alvian Mubarak",
-      "Muhammad Rifqi Fachriyan",
-      "Muhammad Haidar Al-Wa'ie",
-      "M. Ilhamsyah Ainul Al-Imron",
-      "Afif Al Ansori Farid Hasem Al Askari",
-      "Muhammad Iqbal Rizqullah",
-      "Azzam Al-Mutawakkil Alallah",
-      "Ahmad Syirajuddin Rabbani",
-      "Rafi' Dhiya'Ulhaq",
-      "Muhammad Amin Firdaus",
-      "Agata Daniswara",
-      "Abdul Rosyid",
-      "Muhammad Nurul Faizin",
-      "Hammad Fida Rahman"
-    ]
-  },
-  {
-    role: "Publikasi",
-    names: [
-      "M. Adrian Fahlevi",
-      "Hafizh Maulana N. P. M., S.M.",
-      "Fatahna Fathan Mubina, S.H.",
-      "M. Difa Maula Alfath",
-      "Hazel Hudaya Bisri",
-      "Adha Nur Lintang"
-    ]
-  },
-  {
-    role: "Hubungan Masyarakat (Humas)",
-    names: [
-      "Dwi Wahyu Utomo",
-      "M. Idris Ramli Abdul Karim, S.Ag.",
-      "Nashrul Haq Rambe",
-      "Pedri Fauzi",
-      "Muhammad Handrey bin Rodin",
-      "Muhamad Rafli Hidayat",
-      "Haris Achmad Nursamsu"
-    ]
-  },
-  {
-    role: "Multimedia",
-    names: [
-      "Mohamad Wisnu Aji Pambayun",
-      "Imam Jahfaluddin Suyanto",
-      "Muhammad Naufal Tsabitul Azmi",
-      "Fachri Muhamad Sidiq",
-      "Azhar Rizki Anggoro Sahputro"
-    ]
-  },
-  {
-    role: "Tim Properti & Dekorasi",
-    names: [
-      "Yusuf Zidane",
-      "Luthfi Nabhani Abdul Jalil",
-      "Muhammad Iqbal Fauzan",
-      "Teguh Prasetyo",
-      "Muhammad Avisena",
-      "Azzumardi A'raaf, S.Pd.",
-      "Hilmy Mochtar, S.M.",
-      "Raihan Husain Abdat, S.M.",
-      "Muhammad Hasyim Abbas",
-      "M. Shofa Afkar",
-      "Adha Eka Rahmadhani"
-    ]
-  },
-  {
-    role: "Bagian Kostum",
-    names: [
-      "Abdul Hakim",
-      "Muhammad Nashiruddin, S.Ag.",
-      "Krisna Achmad Pasya",
-      "Hilal Al Akbar Nurainda",
-      "Muhammad Zidan Fadlullah"
-    ]
-  },
-  {
-    role: "Sponsorship",
-    names: [
-      "Ahmad Ridwan",
-      "Febri Fitrah Muliawan, S.M.",
-      "Abdillah Malik Fauzan Abrori",
-      "Muhammad Fahmi Romadlon, S.Ag."
-    ]
-  },
-  {
-    role: "Sound Engineering",
-    names: [
-      "Muhammad Syafiq Fadhlurrahman",
-      "Ega Afwan Gaffar",
-      "Sayid Wildan Al Jannatan"
-    ]
-  },
-  {
-    role: "Lightning",
-    names: [
-      "Irfan Syaukany",
-      "Attila Syah Putra Simanjuntak, S.M."
-    ]
-  },
-  {
-    role: "Bazaar",
-    names: [
-      "Zhafir Rizqy Mahardika",
-      "Affan Mahatma Wuran",
-      "Akhdan Favian Aptaputra",
-      "Tsabitul Hidayat"
-    ]
-  },
-  {
-    role: "Bagian Konsumsi",
-    names: [
-      "Arfakhsyadz Rusyana Anzaldin M.",
-      "Izzuddien Setiaji",
-      "Andika Rizaldi, S.Ag.",
-      "Nanda Shafa Imantaka",
-      "Mochammad Faiz Al Bahrain"
-    ]
-  }
+  { role: "Penanggung Jawab", names: ["Ahmad Nur Fajar Dwi Prakosa"] },
+  { role: "Ketua", names: ["Hammad Fida Rahman", "Adha Eka Rahmadhani", "Husai Annurani Marekhan"] },
+  { role: "Sekretaris", names: ["Luthfi Abdillah Noor Arifin", "Kaan Danang Wong Aydin", "Muhammad Irsyadil Umam", "Muhammad Nashir Azzuhri", "Sulthon Akmal Nurfathilah", "Muhammad Adib Al-Hazmi"] },
+  { role: "Bendahara", names: ["Muhammad Syauqi Romadhon", "Rafly Yarhan Sulaiman"] },
+  { role: "Kreatif Acara", names: ["Muhammad 'Azzam Asy-Syauqi", "Muhamad Ilyas Abdillah", "Muhamad Raghib Musyafa", "M Yusuf Al Qordowi Siregar", "Ridzky Amgerah Effendi", "Muhammad Fakhri As Syujai", "Muhammad Auf Zabarjadiy", "Agheea Gheelwana Huda", "Muhammad Rendy Raihan Nurdihan", "Pahmi Idris", "Reedho Muhammad Fathan", "Alfian Ramadhan", "Muhammad Syafiq Musyafa", "Rafi Kalima Guaryanto", "Muhammad Rakha Putra Satriawan"] },
+  { role: "Multimedia", names: ["Luthfi Nurfauzan", "Kurnia Akbar Auliya Lubis", "Muhammad Fathi Salim", "Muhammad Ulfa Ultimaha"] },
+  { role: "Humas", names: ["Djem Andrea Kurnia", "Rico Farizan", "Balurul Ulum Mahardika", "Muhammad Hafidz Ahsani", "Muhammad Khaerul Rizal Al Muttaqien", "Achmad Ghovva Marshandi Abi Nur Y"] },
+  { role: "Publikasi", names: ["Alwan Zahid Bibra Agusta", "Muhammad Dzulfiqar Sirajudin", "Zaky Ahmad Faisal", "M. Haidar Zaky Abdillah Latief", "Habib Al Hasyir", "Zarofi Hawari"] },
+  { role: "Konsumsi", names: ["Rizy Aditia", "Malcom Gymnastiar Gilang Ramadhan", "Brauantio Drajat Abdi Nugroho", "Muhammad Muflih Fathin"] },
+  { role: "Properti", names: ["Muhammad Ihza Ziaulliaq", "Muhammad Ali Al Khaidar", "Agus Setyo Budi", "M. Umar Hakimi Bin Musleh", "Muhammad Zaki Hisyam"] },
+  { role: "Dekorasi", names: ["Rendy Jamaluddin", "Muhammad Nabil Bachtiar", "Rahmat Isaani Farhan", "M.Iqbal Habibi Arrasyq"] },
+  { role: "Sponsorship", names: ["Ahmad Rifki Humaidi", "Ridwan Maulana", "Fairus Yudha Alfaridzi", "Muhammad Syakir Al Fadhil", "Hadi Azhari Romadhon", "Muhammad Zinedine Ihsan Zidane"] },
+  { role: "Bazaar", names: ["Muhammad Rizky", "Mazda Shofiyulloh", "Muhammad Faturrahman Faa'iz Ramadhan", "Muhammad Sukri Fuadi"] },
+  { role: "Kostum", names: ["Radhien Achmad Satya Wicaksana", "Fakhru Ramdhan Alhatami", "Ahmad Fardan Alfalaq", "Muhammad Rizqy Fahlevi", "Muhammad Yusuf Habibie"] },
+  { role: "Lighting", names: ["Abdul Karim Naufal Dafa", "Jajang Nurjaman", "Sanudin"] },
+  { role: "Sound", names: ["M. Adlan Ash-Shidiq", "Adhika Ikhsan Pratama", "Muhammad Hafidz Nurrohim", "Raihan Fatihul Ihsan", "Agio Abrah Yudha"] }
 ];
 
-const budgetItems = [
+const budgetItems: BudgetItem[] = [
   { no: 1, section: "Sekretaris", amount: "Rp 64.110.000" },
   { no: 2, section: "Bendahara", amount: "Rp 405.000" },
   { no: 3, section: "Properti", amount: "Rp 57.306.000" },
@@ -175,7 +31,7 @@ const budgetItems = [
   { no: 6, section: "Multimedia", amount: "Rp 37.400.000" },
   { no: 7, section: "Kostum", amount: "Rp 101.970.000" },
   { no: 8, section: "Pertamanan", amount: "Rp 50.545.000" },
-  { no: 9, section: "Kreatif dan Acara", amount: "Rp 31.420.000" },
+  { no: 9, section: "Kreatif & Acara", amount: "Rp 31.420.000" },
   { no: 10, section: "Publikasi", amount: "Rp 3.095.000" },
   { no: 11, section: "Elektro", amount: "Rp 31.310.000" },
   { no: 12, section: "Humas", amount: "Rp 185.450.000" },
@@ -183,172 +39,118 @@ const budgetItems = [
 ];
 
 export const CommitteeSection: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'panitia' | 'anggaran'>('panitia');
+  const [committeeTab, setCommitteeTab] = useState<'panitia' | 'anggaran'>('panitia');
 
   return (
-    <section id="committee" className="w-full bg-[#08090C] text-[#D7E2EA] px-5 sm:px-8 md:px-10 py-24 relative z-10 border-t border-[#53627A]/30 select-none">
-      <div className="max-w-7xl mx-auto flex flex-col items-center">
-        
-        {/* Header */}
-        <FadeIn delay={0} y={30} className="text-center mb-12">
-          <span className="text-[#F72585] text-xs font-bold uppercase tracking-widest block mb-2">
-            ✦ PANITIA PENYELENGGARA & RENCANA ANGGARAN
-          </span>
-          <h2 
-            className="hero-heading font-black uppercase tracking-tight leading-none text-center"
-            style={{ fontSize: 'clamp(2.2rem, 7vw, 90px)' }}
-          >
-            STRUKTUR & ANGGARAN
+    <section id="committee" className="py-24 px-5 sm:px-8 md:px-12">
+      <div className="max-w-6xl mx-auto">
+        <FadeIn delay={0} className="text-center mb-12">
+          <SectionLabel text="FORMASI KEPANITIAAN" />
+          <h2 className="font-mileast italic font-bold mt-3 leading-none uppercase" style={{ fontSize: 'clamp(2rem, 6vw, 72px)', color: '#062B4A' }}>
+            Panitia & Anggaran
           </h2>
-          <p className="text-sm sm:text-base text-[#D7E2EA]/70 max-w-2xl mx-auto mt-4">
-            Dikelola dengan totalitas dan profesionalisme oleh Siswa Kelas 5 KMI Pondok Modern Darussalam Gontor
-          </p>
+          <FleuronDivider />
         </FadeIn>
 
-        {/* Tab Switcher */}
-        <FadeIn delay={0.1} y={20} className="mb-12">
-          <div className="flex items-center gap-2 p-1.5 rounded-full bg-[#11141B] border border-[#53627A]/40">
-            <button
-              onClick={() => setActiveTab('panitia')}
-              className={`flex items-center gap-2 px-6 py-2.5 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-300 ${
-                activeTab === 'panitia'
-                  ? 'bg-gradient-to-r from-[#0077B6] to-[#7209B7] text-white shadow-lg'
-                  : 'text-[#D7E2EA]/70 hover:text-white'
-              }`}
-            >
-              <Users className="w-4 h-4" /> Susunan Panitia
-            </button>
-            <button
-              onClick={() => setActiveTab('anggaran')}
-              className={`flex items-center gap-2 px-6 py-2.5 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-300 ${
-                activeTab === 'anggaran'
-                  ? 'bg-gradient-to-r from-[#7209B7] to-[#F72585] text-white shadow-lg'
-                  : 'text-[#D7E2EA]/70 hover:text-white'
-              }`}
-            >
-              <DollarSign className="w-4 h-4" /> Anggaran Kepanitiaan
-            </button>
+        {/* Tab switcher */}
+        <FadeIn delay={0.1} className="flex justify-center mb-10">
+          <div className="flex gap-2 p-1 rounded-lg" style={{ background: 'rgba(6,43,74,0.08)', border: '1px solid rgba(214,145,3,0.2)' }}>
+            {[
+              ['panitia', 'Susunan Panitia'],
+              ['anggaran', 'Rencana Anggaran']
+            ].map(([key, label]) => (
+              <button
+                key={key}
+                onClick={() => setCommitteeTab(key as 'panitia' | 'anggaran')}
+                className="px-6 py-2 rounded-md font-cormorant-sc text-sm tracking-wider uppercase transition-all duration-200 cursor-pointer"
+                style={{
+                  background: committeeTab === key ? '#062B4A' : 'transparent',
+                  color: committeeTab === key ? '#D69103' : '#062B4A',
+                  fontWeight: committeeTab === key ? '700' : '400'
+                }}
+              >
+                {label}
+              </button>
+            ))}
           </div>
         </FadeIn>
 
-        {/* Content: Susunan Panitia */}
-        {activeTab === 'panitia' && (
-          <div className="w-full flex flex-col gap-10">
-            
-            {/* Top Protection & Advisors Banner */}
-            <FadeIn delay={0.15} y={20}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="p-6 sm:p-8 rounded-3xl bg-[#11141B] border border-[#53627A]/30 shadow-md">
-                  <span className="text-xs font-semibold uppercase tracking-widest text-[#A3C7E6] block mb-2">
-                    PELINDUNG ACARA
-                  </span>
-                  <h3 className="text-xl sm:text-2xl font-black text-white uppercase">
-                    Pimpinan Pondok Modern Darussalam Gontor
-                  </h3>
-                </div>
-                <div className="p-6 sm:p-8 rounded-3xl bg-[#11141B] border border-[#53627A]/30 shadow-md">
-                  <span className="text-xs font-semibold uppercase tracking-widest text-[#A3C7E6] block mb-2">
-                    PEMBIMBING
-                  </span>
-                  <p className="text-sm sm:text-base text-[#D7E2EA]/90 leading-relaxed font-medium">
-                    Staf Pengasuhan Santri, Segenap Wali Kelas 5 KMI, & Bapak-Bapak Guru KMI
-                  </p>
-                </div>
-              </div>
-            </FadeIn>
-
-            {/* Grid of Committee Roles */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+        {committeeTab === 'panitia' ? (
+          <FadeIn delay={0.1}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {committeeData.map((group, idx) => (
-                <FadeIn key={group.role} delay={0.05 * idx} y={20} className="h-full">
-                  <div className="h-full p-6 rounded-3xl bg-[#11141B]/80 border border-[#53627A]/30 hover:border-[#A3C7E6]/60 transition-all duration-300 flex flex-col justify-between group">
-                    <div>
-                      <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#53627A]/20">
-                        <h4 className="text-base sm:text-lg font-black uppercase text-[#D7E2EA] group-hover:text-white transition-colors">
-                          {group.role}
-                        </h4>
-                        {group.badge && (
-                          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-[#F72585]/20 border border-[#F72585]/50 text-[#F72585]">
-                            {group.badge}
-                          </span>
-                        )}
-                      </div>
-                      <ul className="flex flex-col gap-2">
-                        {group.names.map((name, i) => (
-                          <li key={i} className="text-xs sm:text-sm text-[#D7E2EA]/80 flex items-start gap-2">
-                            <span className="text-[#0077B6] shrink-0 mt-0.5">•</span>
-                            <span className="font-medium">{name}</span>
-                          </li>
-                        ))}
-                      </ul>
+                <div key={idx} className="classic-card rounded-2xl p-6">
+                  <div
+                    className="flex items-center gap-2 mb-3 pb-3"
+                    style={{ borderBottom: '1px solid rgba(214,145,3,0.25)' }}
+                  >
+                    <div
+                      className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
+                      style={{ background: '#062B4A', color: '#D69103' }}
+                    >
+                      {idx + 1}
                     </div>
+                    <h4 className="font-cormorant-sc font-bold text-sm uppercase tracking-wider" style={{ color: '#062B4A' }}>
+                      {group.role}
+                    </h4>
                   </div>
-                </FadeIn>
+                  <ul className="flex flex-col gap-1.5">
+                    {group.names.map((n, i) => (
+                      <li key={i} className="flex items-start gap-2 font-baskerville text-xs leading-relaxed" style={{ color: '#062B4A', opacity: 0.85 }}>
+                        <span className="mt-1 flex-shrink-0" style={{ color: '#D69103' }}>·</span>
+                        {n}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               ))}
             </div>
-
-          </div>
-        )}
-
-        {/* Content: Anggaran Kepanitiaan */}
-        {activeTab === 'anggaran' && (
-          <FadeIn delay={0.15} y={20} className="w-full max-w-4xl">
-            <div className="w-full rounded-3xl bg-[#11141B] border border-[#53627A]/30 p-6 sm:p-10 shadow-2xl">
-              
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 mb-6 border-b border-[#53627A]/30 gap-4">
+          </FadeIn>
+        ) : (
+          <FadeIn delay={0.1}>
+            <div className="classic-card rounded-3xl p-6 sm:p-10 shadow-xl max-w-3xl mx-auto">
+              <div
+                className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 mb-6 gap-4"
+                style={{ borderBottom: '1px solid rgba(214,145,3,0.3)' }}
+              >
                 <div>
-                  <h3 className="text-xl sm:text-2xl font-black uppercase text-white">
-                    Anggaran Panitia Penyelenggara
-                  </h3>
-                  <p className="text-xs sm:text-sm text-[#A3C7E6]">
-                    Pagelaran Seni Drama Arena 5102 (T.A. 1447-1448 / 2026-2027)
-                  </p>
+                  <h3 className="font-playfair font-bold text-xl" style={{ color: '#062B4A' }}>Anggaran Kepanitiaan</h3>
+                  <p className="font-cormorant-sc text-xs mt-1 tracking-wider" style={{ color: '#D69103' }}>Drama Arena 5102 · T.A. 1447-1448</p>
                 </div>
-                <div className="bg-[#7209B7]/20 border border-[#7209B7]/50 rounded-2xl px-5 py-3 text-right">
-                  <span className="text-[11px] uppercase tracking-wider text-[#A3C7E6] block">
-                    TOTAL KESELURUHAN
-                  </span>
-                  <span className="text-xl sm:text-2xl font-black text-[#F72585]">
-                    Rp 500.107.000
-                  </span>
+                <div className="text-right p-4 rounded-xl" style={{ background: '#062B4A' }}>
+                  <div className="font-cormorant-sc text-xs uppercase tracking-wider" style={{ color: 'rgba(244,241,235,0.7)' }}>Total Keseluruhan</div>
+                  <div className="font-mileast font-bold text-xl gold-text">Rp 500.107.000</div>
                 </div>
               </div>
-
-              {/* Table */}
               <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse text-xs sm:text-sm">
+                <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-[#53627A]/40 text-[#A3C7E6] uppercase font-bold tracking-wider">
-                      <th className="py-3 px-4 w-16">No</th>
-                      <th className="py-3 px-4">Bagian / Divisi</th>
-                      <th className="py-3 px-4 text-right">Nominal Anggaran</th>
+                    <tr style={{ borderBottom: '2px solid rgba(214,145,3,0.4)' }}>
+                      <th className="py-2 px-3 text-left font-cormorant-sc text-xs tracking-wider uppercase" style={{ color: '#D69103' }}>No</th>
+                      <th className="py-2 px-3 text-left font-cormorant-sc text-xs tracking-wider uppercase" style={{ color: '#D69103' }}>Bagian</th>
+                      <th className="py-2 px-3 text-right font-cormorant-sc text-xs tracking-wider uppercase" style={{ color: '#D69103' }}>Nominal</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#53627A]/20">
-                    {budgetItems.map((item) => (
-                      <tr key={item.no} className="hover:bg-[#53627A]/10 transition-colors">
-                        <td className="py-3 px-4 text-[#D7E2EA]/60 font-semibold">{item.no}.</td>
-                        <td className="py-3 px-4 text-[#D7E2EA] font-semibold uppercase">{item.section}</td>
-                        <td className="py-3 px-4 text-right font-black text-[#A3C7E6]">{item.amount}</td>
+                  <tbody>
+                    {budgetItems.map((b) => (
+                      <tr key={b.no} style={{ borderBottom: '1px solid rgba(6,43,74,0.1)' }} className="hover:bg-yellow-50/50 transition-colors">
+                        <td className="py-2.5 px-3 font-cormorant-sc text-xs opacity-60" style={{ color: '#062B4A' }}>{b.no}.</td>
+                        <td className="py-2.5 px-3 font-baskerville font-bold text-sm uppercase" style={{ color: '#062B4A' }}>{b.section}</td>
+                        <td className="py-2.5 px-3 text-right font-mileast font-bold" style={{ color: '#062B4A' }}>{b.amount}</td>
                       </tr>
                     ))}
-                    <tr className="bg-[#53627A]/20 font-black text-sm sm:text-base text-white">
-                      <td colSpan={2} className="py-4 px-4 uppercase text-right">Total Anggaran:</td>
-                      <td className="py-4 px-4 text-right text-[#F72585]">Rp 500.107.000</td>
+                    <tr style={{ background: '#062B4A' }}>
+                      <td colSpan={2} className="py-3 px-3 text-right font-cormorant-sc font-bold text-sm uppercase tracking-widest" style={{ color: '#D69103' }}>
+                        Total Anggaran:
+                      </td>
+                      <td className="py-3 px-3 text-right font-mileast font-bold text-base gold-text">Rp 500.107.000</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-
-              <div className="mt-8 pt-6 border-t border-[#53627A]/20 flex flex-col sm:flex-row items-center justify-between text-xs text-[#D7E2EA]/60 gap-4">
-                <span>Disetujui di Gontor, 18 Sya'ban 1447 / 6 Februari 2026</span>
-                <span className="font-semibold text-[#A3C7E6]">Penanggung Jawab: Ahmad Nur Fajar Dwi Prakosa</span>
-              </div>
-
             </div>
           </FadeIn>
         )}
-
       </div>
     </section>
   );
