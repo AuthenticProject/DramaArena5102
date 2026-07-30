@@ -9,6 +9,7 @@ import { CommitteeSection } from './components/CommitteeSection';
 import { TicketModal } from './components/TicketModal';
 import { TrailerModal } from './components/TrailerModal';
 import { Footer } from './components/Footer';
+import { AudioPlayer } from './components/AudioPlayer';
 
 export function App() {
   const [isSponsorshipModalOpen, setIsSponsorshipModalOpen] = useState<boolean>(false);
@@ -70,6 +71,9 @@ export function App() {
         show={activeShow}
         onClose={() => setActiveShow(null)}
       />
+
+      {/* Floating OST Music Player Widget */}
+      <AudioPlayer />
     </div>
   );
 }

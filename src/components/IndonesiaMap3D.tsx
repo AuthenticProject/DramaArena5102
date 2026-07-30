@@ -202,12 +202,143 @@ export const IndonesiaMap3D: React.FC = () => {
 
       const goldColors = [0xD69103, 0xE8A820, 0xB8860B, 0xF5D98A, 0xC58000];
 
+      const renderPinsAndConnections = (modelWrapper?: any) => {
+        const findLandSurfaceY = (targetX: number, targetZ: number) => {
+          if (!modelWrapper) return { y: 0, posX: targetX, posZ: targetZ };
+
+          const downRay = new THREE.Raycaster();
+          const rayDir = new THREE.Vector3(0, -1, 0);
+
+          downRay.set(new THREE.Vector3(targetX, 100, targetZ), rayDir);
+          let hits = downRay.intersectObject(modelWrapper, true);
+          if (hits.length > 0) {
+            return { y: hits[0].point.y, posX: targetX, posZ: targetZ };
+          }
+
+          const radii = [0.2, 0.5, 0.8, 1.2, 1.8, 2.5];
+          const angles = [0, Math.PI / 4, Math.PI / 2, 3 * Math.PI / 4, Math.PI, 5 * Math.PI / 4, 3 * Math.PI / 2, 7 * Math.PI / 4];
+          for (const r of radii) {
+            for (const a of angles) {
+              const testX = targetX + r * Math.cos(a);
+              const testZ = targetZ + r * Math.sin(a);
+              downRay.set(new THREE.Vector3(testX, 100, testZ), rayDir);
+              hits = downRay.intersectObject(modelWrapper, true);
+              if (hits.length > 0) {
+                return { y: hits[0].point.y, posX: testX, posZ: testZ };
+              }
+            }
+          }
+
+          const mapBox = new THREE.Box3().setFromObject(modelWrapper);
+          return { y: mapBox.max.y, posX: targetX, posZ: targetZ };
+        };
+
+        const pusatCampus = gontorCampuses[0];
+        const pusatLand = findLandSurfaceY(pusatCampus.x, pusatCampus.z);
+        const pusatPos = new THREE.Vector3(pusatLand.posX, pusatLand.y + 0.3, pusatLand.posZ);
+
+        const createdPinMeshes: any[] = [];
+
+        gontorCampuses.forEach((campus) => {
+          const land = findLandSurfaceY(campus.x, campus.z);
+          const branchPos = new THREE.Vector3(land.posX, land.y + 0.3, land.posZ);
+
+          if (!campus.isPusat) {
+            const midX = (pusatPos.x + branchPos.x) / 2;
+            const midZ = (pusatPos.z + branchPos.z) / 2;
+            const dist = pusatPos.distanceTo(branchPos);
+            const midY = Math.max(pusatPos.y, branchPos.y) + Math.min(dist * 0.3, 10);
+
+            const curve = new THREE.QuadraticBezierCurve3(
+              pusatPos,
+              new THREE.Vector3(midX, midY, midZ),
+              branchPos
+            );
+
+            const points = curve.getPoints(40);
+            const curveGeo = new THREE.BufferGeometry().setFromPoints(points);
+            const curveMat = new THREE.LineBasicMaterial({
+              color: 0xF5D98A,
+              transparent: true,
+              opacity: 0.65,
+              linewidth: 2
+            });
+            const curveLine = new THREE.Line(curveGeo, curveMat);
+            scene.add(curveLine);
+          }
+
+          const pinGroup = new THREE.Group();
+          pinGroup.position.set(land.posX, land.y, land.posZ);
+
+          const ringGeo = new THREE.RingGeometry(0.3, 0.7, 32);
+          const ringMat = new THREE.MeshBasicMaterial({
+            color: campus.isPusat ? 0xFFDF73 : 0xD69103,
+            side: THREE.DoubleSide,
+            transparent: true,
+            opacity: 0.95
+          });
+          const ringMesh = new THREE.Mesh(ringGeo, ringMat);
+          ringMesh.rotation.x = Math.PI / 2;
+          ringMesh.position.y = 0.05;
+          pinGroup.add(ringMesh);
+
+          const stemGeo = new THREE.CylinderGeometry(0.08, 0.08, 1.8, 8);
+          const stemMat = new THREE.MeshBasicMaterial({ color: campus.isPusat ? 0xFFDF73 : 0xD69103 });
+          const stemMesh = new THREE.Mesh(stemGeo, stemMat);
+          stemMesh.position.y = 0.9;
+          pinGroup.add(stemMesh);
+
+          const badgeTexture = createBadgeTexture(THREE, campus.code, campus.isPusat);
+          const spriteMat = new THREE.SpriteMaterial({ map: badgeTexture, transparent: true });
+          const sprite = new THREE.Sprite(spriteMat);
+          sprite.scale.set(campus.isPusat ? 3.2 : 2.5, campus.isPusat ? 3.2 : 2.5, 1);
+          sprite.position.y = 2.4;
+          (sprite as any).userData = campus;
+          pinGroup.add(sprite);
+          createdPinMeshes.push(sprite);
+
+          if (campus.isPusat) {
+            const bigRingGeo = new THREE.RingGeometry(0.8, 1.6, 32);
+            const bigRingMat = new THREE.MeshBasicMaterial({ color: 0xF5D98A, side: THREE.DoubleSide, transparent: true, opacity: 0.8 });
+            const bigRingMesh = new THREE.Mesh(bigRingGeo, bigRingMat);
+            bigRingMesh.rotation.x = Math.PI / 2;
+            bigRingMesh.position.y = 0.06;
+            pinGroup.add(bigRingMesh);
+
+            const glowLight = new THREE.PointLight(0xF5D98A, 2.8, 14);
+            glowLight.position.y = 2.4;
+            pinGroup.add(glowLight);
+          }
+
+          scene.add(pinGroup);
+        });
+        pinMeshesRef.current = createdPinMeshes;
+      };
+
+      const createFallbackGround = () => {
+        const gridHelper = new THREE.GridHelper(60, 30, 0xD69103, 0x0D3D66);
+        gridHelper.position.y = -0.1;
+        scene.add(gridHelper);
+
+        const groundGeo = new THREE.CylinderGeometry(32, 35, 1, 64);
+        const groundMat = new THREE.MeshStandardMaterial({
+          color: 0x062B4A,
+          metalness: 0.8,
+          roughness: 0.2,
+          emissive: 0x021324
+        });
+        const groundMesh = new THREE.Mesh(groundGeo, groundMat);
+        groundMesh.position.y = -0.6;
+        groundMesh.receiveShadow = true;
+        scene.add(groundMesh);
+      };
+
+      const glbPath = './peta_provinsi_indonesia.glb';
       const loader = new THREE.GLTFLoader();
       loader.load(
-        '/peta_provinsi_indonesia.glb',
+        glbPath,
         (gltf: any) => {
           const model = gltf.scene;
-
           const initialBox = new THREE.Box3().setFromObject(model);
           const initialSize = initialBox.getSize(new THREE.Vector3());
 
@@ -216,7 +347,6 @@ export const IndonesiaMap3D: React.FC = () => {
           }
 
           const modelWrapper = new THREE.Group();
-
           const box = new THREE.Box3().setFromObject(model);
           const center = box.getCenter(new THREE.Vector3());
           const size = box.getSize(new THREE.Vector3());
@@ -249,115 +379,7 @@ export const IndonesiaMap3D: React.FC = () => {
           scene.add(modelWrapper);
           modelWrapper.updateMatrixWorld(true);
 
-          const findLandSurfaceY = (targetX: number, targetZ: number) => {
-            const downRay = new THREE.Raycaster();
-            const rayDir = new THREE.Vector3(0, -1, 0);
-
-            downRay.set(new THREE.Vector3(targetX, 100, targetZ), rayDir);
-            let hits = downRay.intersectObject(modelWrapper, true);
-            if (hits.length > 0) {
-              return { y: hits[0].point.y, posX: targetX, posZ: targetZ };
-            }
-
-            const radii = [0.2, 0.5, 0.8, 1.2, 1.8, 2.5];
-            const angles = [0, Math.PI / 4, Math.PI / 2, 3 * Math.PI / 4, Math.PI, 5 * Math.PI / 4, 3 * Math.PI / 2, 7 * Math.PI / 4];
-            for (const r of radii) {
-              for (const a of angles) {
-                const testX = targetX + r * Math.cos(a);
-                const testZ = targetZ + r * Math.sin(a);
-                downRay.set(new THREE.Vector3(testX, 100, testZ), rayDir);
-                hits = downRay.intersectObject(modelWrapper, true);
-                if (hits.length > 0) {
-                  return { y: hits[0].point.y, posX: testX, posZ: testZ };
-                }
-              }
-            }
-
-            const mapBox = new THREE.Box3().setFromObject(modelWrapper);
-            return { y: mapBox.max.y, posX: targetX, posZ: targetZ };
-          };
-
-          const pusatCampus = gontorCampuses[0];
-          const pusatLand = findLandSurfaceY(pusatCampus.x, pusatCampus.z);
-          const pusatPos = new THREE.Vector3(pusatLand.posX, pusatLand.y + 0.3, pusatLand.posZ);
-
-          const createdPinMeshes: any[] = [];
-
-          gontorCampuses.forEach((campus) => {
-            const land = findLandSurfaceY(campus.x, campus.z);
-            const branchPos = new THREE.Vector3(land.posX, land.y + 0.3, land.posZ);
-
-            if (!campus.isPusat) {
-              const midX = (pusatPos.x + branchPos.x) / 2;
-              const midZ = (pusatPos.z + branchPos.z) / 2;
-              const dist = pusatPos.distanceTo(branchPos);
-              const midY = Math.max(pusatPos.y, branchPos.y) + Math.min(dist * 0.3, 10);
-
-              const curve = new THREE.QuadraticBezierCurve3(
-                pusatPos,
-                new THREE.Vector3(midX, midY, midZ),
-                branchPos
-              );
-
-              const points = curve.getPoints(40);
-              const curveGeo = new THREE.BufferGeometry().setFromPoints(points);
-              const curveMat = new THREE.LineBasicMaterial({
-                color: 0xF5D98A,
-                transparent: true,
-                opacity: 0.65,
-                linewidth: 2
-              });
-              const curveLine = new THREE.Line(curveGeo, curveMat);
-              scene.add(curveLine);
-            }
-
-            const pinGroup = new THREE.Group();
-            pinGroup.position.set(land.posX, land.y, land.posZ);
-
-            const ringGeo = new THREE.RingGeometry(0.3, 0.7, 32);
-            const ringMat = new THREE.MeshBasicMaterial({
-              color: campus.isPusat ? 0xFFDF73 : 0xD69103,
-              side: THREE.DoubleSide,
-              transparent: true,
-              opacity: 0.95
-            });
-            const ringMesh = new THREE.Mesh(ringGeo, ringMat);
-            ringMesh.rotation.x = Math.PI / 2;
-            ringMesh.position.y = 0.05;
-            pinGroup.add(ringMesh);
-
-            const stemGeo = new THREE.CylinderGeometry(0.08, 0.08, 1.8, 8);
-            const stemMat = new THREE.MeshBasicMaterial({ color: campus.isPusat ? 0xFFDF73 : 0xD69103 });
-            const stemMesh = new THREE.Mesh(stemGeo, stemMat);
-            stemMesh.position.y = 0.9;
-            pinGroup.add(stemMesh);
-
-            const badgeTexture = createBadgeTexture(THREE, campus.code, campus.isPusat);
-            const spriteMat = new THREE.SpriteMaterial({ map: badgeTexture, transparent: true });
-            const sprite = new THREE.Sprite(spriteMat);
-            sprite.scale.set(campus.isPusat ? 3.2 : 2.5, campus.isPusat ? 3.2 : 2.5, 1);
-            sprite.position.y = 2.4;
-            (sprite as any).userData = campus;
-            pinGroup.add(sprite);
-            createdPinMeshes.push(sprite);
-
-            if (campus.isPusat) {
-              const bigRingGeo = new THREE.RingGeometry(0.8, 1.6, 32);
-              const bigRingMat = new THREE.MeshBasicMaterial({ color: 0xF5D98A, side: THREE.DoubleSide, transparent: true, opacity: 0.8 });
-              const bigRingMesh = new THREE.Mesh(bigRingGeo, bigRingMat);
-              bigRingMesh.rotation.x = Math.PI / 2;
-              bigRingMesh.position.y = 0.06;
-              pinGroup.add(bigRingMesh);
-
-              const glowLight = new THREE.PointLight(0xF5D98A, 2.8, 14);
-              glowLight.position.y = 2.4;
-              pinGroup.add(glowLight);
-            }
-
-            scene.add(pinGroup);
-          });
-          pinMeshesRef.current = createdPinMeshes;
-
+          renderPinsAndConnections(modelWrapper);
           setLoading(false);
         },
         (xhr: any) => {
@@ -367,8 +389,54 @@ export const IndonesiaMap3D: React.FC = () => {
           }
         },
         (error: any) => {
-          console.error('Error loading 3D Indonesia GLB model:', error);
-          setLoading(false);
+          console.warn('GLB load failed, trying absolute path / fallback...', error);
+          loader.load(
+            '/peta_provinsi_indonesia.glb',
+            (gltf: any) => {
+              const model = gltf.scene;
+              const initialBox = new THREE.Box3().setFromObject(model);
+              const initialSize = initialBox.getSize(new THREE.Vector3());
+              if (initialSize.y > initialSize.z * 1.5) model.rotation.x = -Math.PI / 2;
+
+              const modelWrapper = new THREE.Group();
+              const box = new THREE.Box3().setFromObject(model);
+              const center = box.getCenter(new THREE.Vector3());
+              const size = box.getSize(new THREE.Vector3());
+              model.position.set(-center.x, -center.y, -center.z);
+              modelWrapper.add(model);
+              const maxDim = Math.max(size.x, size.y, size.z);
+              const scale = 50 / maxDim;
+              modelWrapper.scale.set(scale, scale, scale);
+
+              let meshIdx = 0;
+              model.traverse((child: any) => {
+                if (child.isMesh) {
+                  child.castShadow = true;
+                  child.receiveShadow = true;
+                  child.material = new THREE.MeshStandardMaterial({
+                    color: goldColors[meshIdx % goldColors.length],
+                    metalness: 0.75,
+                    roughness: 0.3,
+                    emissive: 0x1a1100,
+                    shadowSide: THREE.DoubleSide
+                  });
+                  meshIdx++;
+                }
+              });
+
+              scene.add(modelWrapper);
+              modelWrapper.updateMatrixWorld(true);
+              renderPinsAndConnections(modelWrapper);
+              setLoading(false);
+            },
+            undefined,
+            () => {
+              // Both GLB load attempts failed (e.g. file:// CORS block or offline)
+              createFallbackGround();
+              renderPinsAndConnections();
+              setLoading(false);
+            }
+          );
         }
       );
 

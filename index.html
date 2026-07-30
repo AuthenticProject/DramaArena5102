@@ -625,13 +625,144 @@
 
             const goldColors = [0xD69103, 0xE8A820, 0xB8860B, 0xF5D98A, 0xC58000];
 
+            const renderPinsAndConnections = (modelWrapper) => {
+              const findLandSurfaceY = (targetX, targetZ) => {
+                if (!modelWrapper) return { y: 0, posX: targetX, posZ: targetZ };
+
+                const downRay = new THREE.Raycaster();
+                const rayDir = new THREE.Vector3(0, -1, 0);
+
+                downRay.set(new THREE.Vector3(targetX, 100, targetZ), rayDir);
+                let hits = downRay.intersectObject(modelWrapper, true);
+                if (hits.length > 0) {
+                  return { y: hits[0].point.y, posX: targetX, posZ: targetZ };
+                }
+
+                const radii = [0.2, 0.5, 0.8, 1.2, 1.8, 2.5];
+                const angles = [0, Math.PI / 4, Math.PI / 2, 3 * Math.PI / 4, Math.PI, 5 * Math.PI / 4, 3 * Math.PI / 2, 7 * Math.PI / 4];
+                for (const r of radii) {
+                  for (const a of angles) {
+                    const testX = targetX + r * Math.cos(a);
+                    const testZ = targetZ + r * Math.sin(a);
+                    downRay.set(new THREE.Vector3(testX, 100, testZ), rayDir);
+                    hits = downRay.intersectObject(modelWrapper, true);
+                    if (hits.length > 0) {
+                      return { y: hits[0].point.y, posX: testX, posZ: testZ };
+                    }
+                  }
+                }
+
+                const mapBox = new THREE.Box3().setFromObject(modelWrapper);
+                return { y: mapBox.max.y, posX: targetX, posZ: targetZ };
+              };
+
+              const pusatCampus = gontorCampuses[0];
+              const pusatLand = findLandSurfaceY(pusatCampus.x, pusatCampus.z);
+              const pusatPos = new THREE.Vector3(pusatLand.posX, pusatLand.y + 0.3, pusatLand.posZ);
+
+              const createdPinMeshes = [];
+
+              gontorCampuses.forEach((campus) => {
+                const land = findLandSurfaceY(campus.x, campus.z);
+                const branchPos = new THREE.Vector3(land.posX, land.y + 0.3, land.posZ);
+
+                if (!campus.isPusat) {
+                  const midX = (pusatPos.x + branchPos.x) / 2;
+                  const midZ = (pusatPos.z + branchPos.z) / 2;
+                  const dist = pusatPos.distanceTo(branchPos);
+                  const midY = Math.max(pusatPos.y, branchPos.y) + Math.min(dist * 0.3, 10);
+
+                  const curve = new THREE.QuadraticBezierCurve3(
+                    pusatPos,
+                    new THREE.Vector3(midX, midY, midZ),
+                    branchPos
+                  );
+
+                  const points = curve.getPoints(40);
+                  const curveGeo = new THREE.BufferGeometry().setFromPoints(points);
+                  const curveMat = new THREE.LineBasicMaterial({
+                    color: 0xF5D98A,
+                    transparent: true,
+                    opacity: 0.65,
+                    linewidth: 2
+                  });
+                  const curveLine = new THREE.Line(curveGeo, curveMat);
+                  scene.add(curveLine);
+                }
+
+                const pinGroup = new THREE.Group();
+                pinGroup.position.set(land.posX, land.y, land.posZ);
+
+                const ringGeo = new THREE.RingGeometry(0.3, 0.7, 32);
+                const ringMat = new THREE.MeshBasicMaterial({
+                  color: campus.isPusat ? 0xFFDF73 : 0xD69103,
+                  side: THREE.DoubleSide,
+                  transparent: true,
+                  opacity: 0.95
+                });
+                const ringMesh = new THREE.Mesh(ringGeo, ringMat);
+                ringMesh.rotation.x = Math.PI / 2;
+                ringMesh.position.y = 0.05;
+                pinGroup.add(ringMesh);
+
+                const stemGeo = new THREE.CylinderGeometry(0.08, 0.08, 1.8, 8);
+                const stemMat = new THREE.MeshBasicMaterial({ color: campus.isPusat ? 0xFFDF73 : 0xD69103 });
+                const stemMesh = new THREE.Mesh(stemGeo, stemMat);
+                stemMesh.position.y = 0.9;
+                pinGroup.add(stemMesh);
+
+                const badgeTexture = createBadgeTexture(THREE, campus.code, campus.isPusat);
+                const spriteMat = new THREE.SpriteMaterial({ map: badgeTexture, transparent: true });
+                const sprite = new THREE.Sprite(spriteMat);
+                sprite.scale.set(campus.isPusat ? 3.2 : 2.5, campus.isPusat ? 3.2 : 2.5, 1);
+                sprite.position.y = 2.4;
+                sprite.userData = campus;
+                pinGroup.add(sprite);
+                createdPinMeshes.push(sprite);
+
+                if (campus.isPusat) {
+                  const bigRingGeo = new THREE.RingGeometry(0.8, 1.6, 32);
+                  const bigRingMat = new THREE.MeshBasicMaterial({ color: 0xF5D98A, side: THREE.DoubleSide, transparent: true, opacity: 0.8 });
+                  const bigRingMesh = new THREE.Mesh(bigRingGeo, bigRingMat);
+                  bigRingMesh.rotation.x = Math.PI / 2;
+                  bigRingMesh.position.y = 0.06;
+                  pinGroup.add(bigRingMesh);
+
+                  const glowLight = new THREE.PointLight(0xF5D98A, 2.8, 14);
+                  glowLight.position.y = 2.4;
+                  pinGroup.add(glowLight);
+                }
+
+                scene.add(pinGroup);
+              });
+              pinMeshesRef.current = createdPinMeshes;
+            };
+
+            const createFallbackGround = () => {
+              const gridHelper = new THREE.GridHelper(60, 30, 0xD69103, 0x0D3D66);
+              gridHelper.position.y = -0.1;
+              scene.add(gridHelper);
+
+              const groundGeo = new THREE.CylinderGeometry(32, 35, 1, 64);
+              const groundMat = new THREE.MeshStandardMaterial({
+                color: 0x062B4A,
+                metalness: 0.8,
+                roughness: 0.2,
+                emissive: 0x021324
+              });
+              const groundMesh = new THREE.Mesh(groundGeo, groundMat);
+              groundMesh.position.y = -0.6;
+              groundMesh.receiveShadow = true;
+              scene.add(groundMesh);
+            };
+
             if (THREE.GLTFLoader) {
+              const glbPath = './peta_provinsi_indonesia.glb';
               const loader = new THREE.GLTFLoader();
               loader.load(
-                '/peta_provinsi_indonesia.glb',
+                glbPath,
                 (gltf) => {
                   const model = gltf.scene;
-
                   const initialBox = new THREE.Box3().setFromObject(model);
                   const initialSize = initialBox.getSize(new THREE.Vector3());
 
@@ -640,7 +771,6 @@
                   }
 
                   const modelWrapper = new THREE.Group();
-
                   const box = new THREE.Box3().setFromObject(model);
                   const center = box.getCenter(new THREE.Vector3());
                   const size = box.getSize(new THREE.Vector3());
@@ -673,115 +803,7 @@
                   scene.add(modelWrapper);
                   modelWrapper.updateMatrixWorld(true);
 
-                  const findLandSurfaceY = (targetX, targetZ) => {
-                    const downRay = new THREE.Raycaster();
-                    const rayDir = new THREE.Vector3(0, -1, 0);
-
-                    downRay.set(new THREE.Vector3(targetX, 100, targetZ), rayDir);
-                    let hits = downRay.intersectObject(modelWrapper, true);
-                    if (hits.length > 0) {
-                      return { y: hits[0].point.y, posX: targetX, posZ: targetZ };
-                    }
-
-                    const radii = [0.2, 0.5, 0.8, 1.2, 1.8, 2.5];
-                    const angles = [0, Math.PI / 4, Math.PI / 2, 3 * Math.PI / 4, Math.PI, 5 * Math.PI / 4, 3 * Math.PI / 2, 7 * Math.PI / 4];
-                    for (const r of radii) {
-                      for (const a of angles) {
-                        const testX = targetX + r * Math.cos(a);
-                        const testZ = targetZ + r * Math.sin(a);
-                        downRay.set(new THREE.Vector3(testX, 100, testZ), rayDir);
-                        hits = downRay.intersectObject(modelWrapper, true);
-                        if (hits.length > 0) {
-                          return { y: hits[0].point.y, posX: testX, posZ: testZ };
-                        }
-                      }
-                    }
-
-                    const mapBox = new THREE.Box3().setFromObject(modelWrapper);
-                    return { y: mapBox.max.y, posX: targetX, posZ: targetZ };
-                  };
-
-                  const pusatCampus = gontorCampuses[0];
-                  const pusatLand = findLandSurfaceY(pusatCampus.x, pusatCampus.z);
-                  const pusatPos = new THREE.Vector3(pusatLand.posX, pusatLand.y + 0.3, pusatLand.posZ);
-
-                  const createdPinMeshes = [];
-
-                  gontorCampuses.forEach((campus) => {
-                    const land = findLandSurfaceY(campus.x, campus.z);
-                    const branchPos = new THREE.Vector3(land.posX, land.y + 0.3, land.posZ);
-
-                    if (!campus.isPusat) {
-                      const midX = (pusatPos.x + branchPos.x) / 2;
-                      const midZ = (pusatPos.z + branchPos.z) / 2;
-                      const dist = pusatPos.distanceTo(branchPos);
-                      const midY = Math.max(pusatPos.y, branchPos.y) + Math.min(dist * 0.3, 10);
-
-                      const curve = new THREE.QuadraticBezierCurve3(
-                        pusatPos,
-                        new THREE.Vector3(midX, midY, midZ),
-                        branchPos
-                      );
-
-                      const points = curve.getPoints(40);
-                      const curveGeo = new THREE.BufferGeometry().setFromPoints(points);
-                      const curveMat = new THREE.LineBasicMaterial({
-                        color: 0xF5D98A,
-                        transparent: true,
-                        opacity: 0.65,
-                        linewidth: 2
-                      });
-                      const curveLine = new THREE.Line(curveGeo, curveMat);
-                      scene.add(curveLine);
-                    }
-
-                    const pinGroup = new THREE.Group();
-                    pinGroup.position.set(land.posX, land.y, land.posZ);
-
-                    const ringGeo = new THREE.RingGeometry(0.3, 0.7, 32);
-                    const ringMat = new THREE.MeshBasicMaterial({
-                      color: campus.isPusat ? 0xFFDF73 : 0xD69103,
-                      side: THREE.DoubleSide,
-                      transparent: true,
-                      opacity: 0.95
-                    });
-                    const ringMesh = new THREE.Mesh(ringGeo, ringMat);
-                    ringMesh.rotation.x = Math.PI / 2;
-                    ringMesh.position.y = 0.05;
-                    pinGroup.add(ringMesh);
-
-                    const stemGeo = new THREE.CylinderGeometry(0.08, 0.08, 1.8, 8);
-                    const stemMat = new THREE.MeshBasicMaterial({ color: campus.isPusat ? 0xFFDF73 : 0xD69103 });
-                    const stemMesh = new THREE.Mesh(stemGeo, stemMat);
-                    stemMesh.position.y = 0.9;
-                    pinGroup.add(stemMesh);
-
-                    const badgeTexture = createBadgeTexture(THREE, campus.code, campus.isPusat);
-                    const spriteMat = new THREE.SpriteMaterial({ map: badgeTexture, transparent: true });
-                    const sprite = new THREE.Sprite(spriteMat);
-                    sprite.scale.set(campus.isPusat ? 3.2 : 2.5, campus.isPusat ? 3.2 : 2.5, 1);
-                    sprite.position.y = 2.4;
-                    sprite.userData = campus;
-                    pinGroup.add(sprite);
-                    createdPinMeshes.push(sprite);
-
-                    if (campus.isPusat) {
-                      const bigRingGeo = new THREE.RingGeometry(0.8, 1.6, 32);
-                      const bigRingMat = new THREE.MeshBasicMaterial({ color: 0xF5D98A, side: THREE.DoubleSide, transparent: true, opacity: 0.8 });
-                      const bigRingMesh = new THREE.Mesh(bigRingGeo, bigRingMat);
-                      bigRingMesh.rotation.x = Math.PI / 2;
-                      bigRingMesh.position.y = 0.06;
-                      pinGroup.add(bigRingMesh);
-
-                      const glowLight = new THREE.PointLight(0xF5D98A, 2.8, 14);
-                      glowLight.position.y = 2.4;
-                      pinGroup.add(glowLight);
-                    }
-
-                    scene.add(pinGroup);
-                  });
-                  pinMeshesRef.current = createdPinMeshes;
-
+                  renderPinsAndConnections(modelWrapper);
                   setLoading(false);
                 },
                 (xhr) => {
@@ -791,10 +813,60 @@
                   }
                 },
                 (err) => {
-                  console.error(err);
-                  setLoading(false);
+                  console.warn('GLB load failed, trying /peta_provinsi_indonesia.glb', err);
+                  loader.load(
+                    '/peta_provinsi_indonesia.glb',
+                    (gltf) => {
+                      const model = gltf.scene;
+                      const initialBox = new THREE.Box3().setFromObject(model);
+                      const initialSize = initialBox.getSize(new THREE.Vector3());
+                      if (initialSize.y > initialSize.z * 1.5) model.rotation.x = -Math.PI / 2;
+
+                      const modelWrapper = new THREE.Group();
+                      const box = new THREE.Box3().setFromObject(model);
+                      const center = box.getCenter(new THREE.Vector3());
+                      const size = box.getSize(new THREE.Vector3());
+                      model.position.set(-center.x, -center.y, -center.z);
+                      modelWrapper.add(model);
+
+                      const maxDim = Math.max(size.x, size.y, size.z);
+                      const scale = 50 / maxDim;
+                      modelWrapper.scale.set(scale, scale, scale);
+
+                      let meshIdx = 0;
+                      model.traverse((child) => {
+                        if (child.isMesh) {
+                          child.castShadow = true;
+                          child.receiveShadow = true;
+                          child.material = new THREE.MeshStandardMaterial({
+                            color: goldColors[meshIdx % goldColors.length],
+                            metalness: 0.75,
+                            roughness: 0.3,
+                            emissive: 0x1a1100,
+                            shadowSide: THREE.DoubleSide
+                          });
+                          meshIdx++;
+                        }
+                      });
+
+                      scene.add(modelWrapper);
+                      modelWrapper.updateMatrixWorld(true);
+                      renderPinsAndConnections(modelWrapper);
+                      setLoading(false);
+                    },
+                    undefined,
+                    () => {
+                      createFallbackGround();
+                      renderPinsAndConnections();
+                      setLoading(false);
+                    }
+                  );
                 }
               );
+            } else {
+              createFallbackGround();
+              renderPinsAndConnections();
+              setLoading(false);
             }
 
             const handlePointerMove = (event) => {
@@ -1665,6 +1737,49 @@
                 </div>
               </div>
             )}
+
+            {/* Floating Audio Control Player Widget */}
+            <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2 pointer-events-auto">
+              <div className="flex items-center gap-3 p-2.5 pl-4 rounded-full bg-[#062B4A]/90 backdrop-blur-md border-2 border-[#D69103] shadow-[0_10px_30px_rgba(6,43,74,0.5)] transition-all hover:scale-105">
+                <div className="relative flex items-center justify-center">
+                  <div className={`w-9 h-9 rounded-full bg-gradient-to-tr from-[#B8860B] via-[#D69103] to-[#F5D98A] flex items-center justify-center shadow-md ${isPlayingAudio ? 'animate-spin' : ''}`} style={{ animationDuration: '6s' }}>
+                    <Sparkles className="w-4 h-4 text-[#062B4A]" />
+                  </div>
+                  {isPlayingAudio && (
+                    <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D69103] opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-3 w-3 bg-[#F5D98A]"></span>
+                    </span>
+                  )}
+                </div>
+
+                <div className="flex flex-col pr-1 min-w-[120px]">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-xs font-bold text-[#F4F1EB] truncate max-w-[130px] font-sans">
+                      Teruslah Percaya
+                    </span>
+                    {isPlayingAudio && (
+                      <div className="flex items-end gap-0.5 h-3">
+                        <div className="w-0.5 bg-[#D69103] rounded-full eq-bar-1" />
+                        <div className="w-0.5 bg-[#F5D98A] rounded-full eq-bar-2" />
+                        <div className="w-0.5 bg-[#D69103] rounded-full eq-bar-3" />
+                      </div>
+                    )}
+                  </div>
+                  <span className="text-[10px] text-[#F5D98A] font-medium tracking-wide truncate max-w-[130px]">
+                    OST Drama Arena 5102
+                  </span>
+                </div>
+
+                <button
+                  onClick={toggleAudio}
+                  className="w-10 h-10 rounded-full bg-[#D69103] hover:bg-[#E8A820] text-[#062B4A] flex items-center justify-center transition-transform hover:scale-110 shadow-lg cursor-pointer ml-1"
+                  title={isPlayingAudio ? "Pause Musik" : "Putar Musik OST"}
+                >
+                  {isPlayingAudio ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
+                </button>
+              </div>
+            </div>
 
           </div>
         );

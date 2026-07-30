@@ -12,6 +12,13 @@
     "allowJs": true,
     "noImplicitAny": false,
     "jsx": "react",
+    "baseUrl": ".",
+    "paths": {
+      "react": ["src/types.d.ts"],
+      "react-dom": ["src/types.d.ts"],
+      "react-dom/client": ["src/types.d.ts"],
+      "lucide-react": ["src/types.d.ts"]
+    },
 
     "strict": false,
     "noUnusedLocals": false,
