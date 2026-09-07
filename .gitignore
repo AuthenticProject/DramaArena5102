@@ -1,2 +1,8 @@
 node_modules/
 *.pdf
+
+# Local backup
+index.html.backup
+*.pdf
+node_modules/
+dist/
