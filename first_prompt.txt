@@ -1,0 +1,719 @@
+<USER_REQUEST>
+# DRAMA ARENA 5102 — STRICT BRAND IDENTITY IMPLEMENTATION
+
+IMPORTANT:
+
+The attached "Draft 1 Drama Arena 5102" branding PDF is the
+PRIMARY AND AUTHORITATIVE VISUAL BRAND REFERENCE.
+
+This is NOT a request to create a website that is merely
+"inspired by" the branding.
+
+This is a request to IMPLEMENT THE EXISTING BRAND IDENTITY
+DIGITALLY.
+
+The branding must NOT be redesigned, reinterpreted,
+modernized, simplified, recolored, or replaced.
+
+============================================================
+1. BRANDING MUST REMAIN EXACT
+============================================================
+
+Use the branding exactly as presented in the PDF.
+
+The following are BRAND ASSETS, NOT DESIGN INSPIRATION:
+
+- Drama Arena vertical stamp logo
+- Drama Arena horizontal stamp logo
+- Main Drama Arena 5102 typography logo
+- DA monogram
+- 5102 graphic
+- "Naluri & Nurani"
+- "5 Sadar"
+- "Forever Striving for an Authentic Masterpiece"
+- "Head Hand Heart"
+- decorative vintage ornaments
+- postage/stamp borders
+- hourglass symbol
+- Indonesian/Nusantara architectural illustrations
+- heritage illustrations
+- archival/postage visual language
+- existing official event imagery
+- existing merchandise graphics
+- existing poster graphics
+
+DO NOT redraw these elements.
+
+DO NOT create AI-generated replacements.
+
+DO NOT create alternative versions.
+
+DO NOT change their proportions.
+
+DO NOT stretch them.
+
+DO NOT distort them.
+
+DO NOT recolor them.
+
+DO NOT change their typography.
+
+DO NOT replace them with generic SVG icons.
+
+If an official asset already exists in the project,
+USE THAT EXACT ASSET.
+
+============================================================
+2. OFFICIAL COLOR SYSTEM
+============================================================
+
+Use the exact color palette from the branding PDF:
+
+NAVY
+#062B4A
+
+GOLD
+#D69103
+
+BONE WHITE
+#F4F1EB
+
+These are the primary brand colors.
+
+Do NOT introduce a new primary color system.
+
+Do NOT make cyan, purple, pink, electric blue,
+or futuristic neon the dominant visual identity.
+
+Minor neutral colors may be used for readability,
+but the visual identity must remain Navy + Gold + Bone White.
+
+============================================================
+3. BRAND TYPOGRAPHY
+============================================================
+
+The PDF specifies:
+
+Mileast
+Alferata
+
+Use the actual font files already available in the project.
+
+Check:
+
+public/Mileast.otf
+public/fonnts.com-Alverata-Lt-.otf
+
+Do not replace the brand typography with:
+
+Inter
+Roboto
+Poppins
+Montserrat
+Arial
+system fonts
+
+unless used only as a technical fallback.
+
+The main headings should visually resemble the typography
+shown in the PDF.
+
+Especially preserve the distinctive classical,
+high-contrast, editorial appearance.
+
+============================================================
+4. PAPER / ARCHIVAL BACKGROUND
+============================================================
+
+The website background must visually reference the
+Bone White textured paper shown throughout the PDF.
+
+Implement:
+
+- warm bone-white base
+- subtle paper grain
+- subtle paper texture
+- very restrained noise
+- soft archival imperfections
+
+The texture must remain elegant and subtle.
+
+DO NOT use:
+
+- futuristic gradient backgrounds
+- black cyberpunk backgrounds
+- excessive glassmorphism
+- neon backgrounds
+- generic SaaS gradients
+
+The website should feel like a DIGITAL ARCHIVE / CLASSIC
+ART PROGRAM rather than a technology product.
+
+============================================================
+5. STAMP / POSTAGE SYSTEM
+============================================================
+
+The postage stamp is one of the strongest visual identifiers
+of Drama Arena.
+
+Use the stamp language repeatedly throughout the website.
+
+Examples:
+
+- logo container
+- section labels
+- image frames
+- event cards
+- archival cards
+- quote cards
+- historical timeline
+- campus cards
+- show cards
+- committee cards
+- sponsorship cards
+
+But DO NOT randomly put stamps everywhere.
+
+Use a consistent stamp component/system.
+
+Create reusable components such as:
+
+<StampFrame />
+<StampLogo />
+<ArchivalCard />
+<HeritageFrame />
+
+The stamp perforation must visually resemble the official
+branding.
+
+============================================================
+6. HOURGLASS SYSTEM
+============================================================
+
+The hourglass is an official conceptual element of the logo.
+
+Use the existing official hourglass/DA visual asset
+where available.
+
+Do NOT redesign the hourglass.
+
+It can appear subtly in:
+
+- Hero
+- loading transition
+- section divider
+- timeline
+- countdown
+- footer
+- decorative background
+
+The hourglass represents:
+
+TIME
+PROCESS
+JOURNEY
+GROWTH
+
+It must therefore feel intentional rather than decorative noise.
+
+============================================================
+7. OFFICIAL LOGO USAGE
+============================================================
+
+The Hero MUST prominently use the official Drama Arena logo.
+
+Preferred hierarchy:
+
+[small]
+PAGELARAN SENI AKBAR
+
+[large official logo]
+DRAMA ARENA
+
+[small]
+KELAS 5 102
+
+Use the exact existing logo asset.
+
+Do NOT recreate the logo using HTML text.
+
+Do NOT type:
+
+"DRAMA ARENA"
+
+and consider it equivalent to the official logo.
+
+The official logo image must be used.
+
+The logo must remain visually faithful to the PDF.
+
+============================================================
+8. HERO DIRECTION
+============================================================
+
+The Hero should feel like the opening page of an
+exclusive classical theatre / cultural archive.
+
+Visual hierarchy:
+
+1. subtle paper texture
+2. classical ornament
+3. official Drama Arena logo
+4. 5102
+5. event information
+6. thematic statement
+7. subtle archival motion
+
+Possible visual elements:
+
+- large faded stamp
+- hourglass
+- gold ornamental frame
+- vintage engraving
+- paper texture
+- subtle shadow
+- archival image fragments
+
+Animation must be elegant and slow.
+
+No cyberpunk animation.
+
+No glowing futuristic HUD.
+
+No excessive particle effects.
+
+============================================================
+9. ORNAMENT SYSTEM
+============================================================
+
+The PDF contains elaborate gold/navy ornaments.
+
+Use those existing ornaments wherever available.
+
+Create reusable decorative components:
+
+<OrnamentDivider />
+<CornerOrnament />
+<GoldFiligree />
+<StampBorder />
+<ArchivalFrame />
+
+These elements should establish visual continuity
+between sections.
+
+Do NOT replace the ornaments with:
+
+- generic CSS blobs
+- generic geometric shapes
+- random SVG decorations
+- futuristic lines
+
+============================================================
+10. 5102 VISUAL LANGUAGE
+============================================================
+
+"5102" is a major identity element.
+
+Do not treat 5102 as ordinary text.
+
+Use the existing 5102 graphic/asset where available.
+
+It can appear as:
+
+- Hero background watermark
+- section transition
+- large editorial number
+- stamp
+- timeline marker
+- footer element
+
+The official visual treatment must remain unchanged.
+
+============================================================
+11. NALURI & NURANI
+============================================================
+
+"Naluri & Nurani" is an official branded element.
+
+Use the existing artwork/logo from the project.
+
+Do NOT recreate it with ordinary text.
+
+It should appear as an actual branded graphic.
+
+Possible placement:
+
+- Theme section
+- philosophy section
+- thematic transition
+- dedicated content block
+
+============================================================
+12. 5 SADAR
+============================================================
+
+The "5 Sadar" visual from the PDF must be preserved.
+
+Do not replace it with a generic numbered list.
+
+Build the section around the existing visual identity.
+
+The presentation may be interactive,
+but the artwork itself must remain unchanged.
+
+============================================================
+13. HERITAGE / NUSANTARA VISUALS
+============================================================
+
+The PDF uses Indonesian/Nusantara heritage architecture
+and classical illustration.
+
+Use the available existing project assets.
+
+Visual references include:
+
+- traditional Indonesian architecture
+- mosque / Islamic architectural elements
+- classical engraving
+- heritage illustration
+- archival postage artwork
+
+Do NOT substitute them with:
+
+- generic European castles
+- generic AI fantasy architecture
+- futuristic buildings
+- generic stock photography
+
+The visual language must remain connected to Indonesian
+heritage and the Drama Arena branding.
+
+============================================================
+14. ADDITIONAL BRAND ASSETS
+============================================================
+
+The PDF includes additional branded applications:
+
+- posters
+- postage stamps
+- heritage series
+- shirt/merchandise
+- typography compositions
+- "Head Hand Heart"
+- "Forever Striving for an Authentic Masterpiece"
+- "Naluri & Nurani"
+- "5 Sadar"
+
+If these assets already exist in:
+
+public/assets/
+public/extracted_assets/
+or other project directories,
+
+USE THEM.
+
+Do not recreate them.
+
+Create an asset inventory before implementation.
+
+============================================================
+15. ASSET INVENTORY — MANDATORY
+============================================================
+
+Before coding the visual redesign:
+
+SCAN ALL ASSETS.
+
+Find:
+
+- PNG
+- JPG
+- JPEG
+- SVG
+- WEBP
+- GIF
+- OTF
+- TTF
+- GLB
+- MP3
+
+Then classify them:
+
+BRAND LOGO
+BRAND TYPOGRAPHY
+ORNAMENT
+STAMP
+ILLUSTRATION
+POSTER
+PHOTOGRAPHY
+MERCHANDISE
+MAP
+AUDIO
+DECORATIVE ASSET
+
+Create an internal mapping of which asset belongs
+to which website section.
+
+Do NOT create replacement artwork before checking
+whether the official asset already exists.
+
+============================================================
+16. EXISTING WEBSITE FUNCTIONALITY
+============================================================
+
+Keep the existing functionality from the current project.
+
+The redesign must NOT remove:
+
+- navigation
+- countdown
+- Indonesia 3D map
+- 20 Gontor campus locations
+- About
+- PMDG
+- Theme
+- Naluri & Nurani
+- 5 Sadar
+- Shows
+- Show detail modal
+- Committee
+- Sponsorship
+- Budget
+- Arena information
+- Audio player
+- Footer
+- WhatsApp CTA
+- responsive navigation
+- existing interactions
+
+The content and functionality should be migrated
+into the new architecture.
+
+============================================================
+17. 3D INDONESIA MAP
+============================================================
+
+Keep the existing Three.js Indonesia map.
+
+The map is a functional feature,
+not a decorative replacement.
+
+Use:
+
+peta_provinsi_indonesia.glb
+
+if that is the existing official asset.
+
+Maintain the 20 Gontor campus locations.
+
+Style the map so it belongs to the brand:
+
+- navy
+- gold
+- bone white
+- archival/classical interface
+
+Do NOT turn the map into a neon sci-fi hologram.
+
+============================================================
+18. WEBSITE VISUAL HIERARCHY
+============================================================
+
+The final website should feel like:
+
+DRAMA ARENA BRAND BOOK
+        ↓
+DIGITAL ARCHIVE
+        ↓
+THEATRICAL EXPERIENCE
+        ↓
+INTERACTIVE WEBSITE
+
+Not:
+
+GENERIC LANDING PAGE
+Not:
+SAAS DASHBOARD
+Not:
+CYBERPUNK WEBSITE
+
+============================================================
+19. SECTION DESIGN
+============================================================
+
+Each section should feel like another page/chapter
+of the same Drama Arena publication.
+
+For example:
+
+HERO
+→ Cover / title page
+
+ABOUT
+→ Historical archive page
+
+MAP
+→ Journey / correspondence map
+
+THEME
+→ Manifesto / editorial page
+
+5 SADAR
+→ Philosophy page
+
+SHOWS
+→ Theatre program / performance catalog
+
+COMMITTEE
+→ Production archive
+
+SPONSORSHIP
+→ Official event prospectus
+
+FOOTER
+→ Closing page / postage mark
+
+Every section must share:
+
+- same paper background
+- same navy
+- same gold
+- same typography
+- same ornament language
+- same stamp language
+- same spacing philosophy
+
+============================================================
+20. RESPONSIVE DESIGN
+============================================================
+
+On mobile:
+
+DO NOT simply shrink the desktop design.
+
+Preserve the brand hierarchy.
+
+Official logo must remain clearly recognizable.
+
+Ornaments can be reduced,
+but must not be replaced.
+
+Stamp frames can become smaller.
+
+Typography must remain classical but readable.
+
+Paper texture remains.
+
+Gold/navy relationship remains.
+
+============================================================
+21. ABSOLUTE DON'TS
+============================================================
+
+NEVER:
+
+- redesign the logo
+- redraw the logo
+- change logo colors
+- change logo proportions
+- alter official typography artwork
+- replace official graphics with text
+- replace official illustrations with AI images
+- introduce a new brand palette
+- make cyan the primary color
+- make purple the primary color
+- make black the primary background
+- turn the website into cyberpunk
+- turn the website into generic glassmorphism
+- use generic SaaS UI
+- use random decorative graphics
+- use random stock illustrations
+- create fake brand assets
+- stretch images
+- crop important logo elements
+- distort stamp borders
+- replace the hourglass
+- replace "Naluri & Nurani"
+- replace "5 Sadar"
+- replace official 5102 artwork
+
+============================================================
+22. IMPLEMENTATION PRIORITY
+============================================================
+
+Priority:
+
+1. EXACT BRAND ASSETS
+2. EXACT COLOR PALETTE
+3. EXACT TYPOGRAPHIC CHARACTER
+4. PAPER / ARCHIVAL VISUAL LANGUAGE
+5. STAMP SYSTEM
+6. ORNAMENT SYSTEM
+7. HERITAGE VISUALS
+8. INTERACTION
+9. ANIMATION
+10. MODERN UX
+
+Modern web techniques are welcome,
+but they must serve the existing brand.
+
+Do not let modern UI trends overwrite the identity.
+
+============================================================
+23. FINAL QUALITY CHECK
+============================================================
+
+Before declaring completion, compare the website
+visually against the uploaded PDF.
+
+Ask:
+
+- Does the website immediately look like Drama Arena 5102?
+- Is the Navy #062B4A dominant?
+- Is Gold #D69103 used correctly?
+- Is Bone White #F4F1EB the paper/background foundation?
+- Is the official logo clearly visible?
+- Are the official stamp elements present?
+- Is the hourglass identity visible?
+- Are the official ornaments present?
+- Are the official 5102 graphics present?
+- Is Naluri & Nurani represented using the official asset?
+- Is 5 Sadar represented using the official asset?
+- Are the heritage/Nusantara visuals represented?
+- Does the typography resemble the PDF?
+- Does the site feel archival and classical?
+- Does it feel like one coherent brand system?
+
+If the answer to these questions is NO,
+continue refining.
+
+============================================================
+FINAL PRINCIPLE
+============================================================
+
+DO NOT DESIGN A NEW DRAMA ARENA.
+
+BUILD THE DIGITAL VERSION OF THE DRAMA ARENA
+BRAND THAT ALREADY EXISTS.
+
+The PDF is the authority.
+
+Existing project assets are the authority.
+
+Preserve them.
+
+Use them.
+
+Do not reinterpret them.
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-09-08T23:34:29+07:00.
+
+The user's current state is as follows:
+Browser State:
+  Page DDD9A7CF42B73EA40FF185E6F93AAA72 (Pagelaran Seni Akbar Drama Arena 5102 — Kelas 5 KMI PMDG) - http://localhost:5173/ [ACTIVE]
+    Viewport: 1920x945, Page Height: 10421
+</ADDITIONAL_METADATA>
+<USER_SETTINGS_CHANGE>
+The user changed setting `Model Selection` from None to Claude Opus 4.6 (Thinking). No need to comment on this change if the user doesn't ask about it. If reporting what model you are, please use a human readable name instead of the exact string.
+</USER_SETTINGS_CHANGE>

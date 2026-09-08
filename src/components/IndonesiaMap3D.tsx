@@ -4,8 +4,10 @@ import { ArrowRight, Play, ShieldCheck, Zap, Globe, Clock, Search, Sparkles, Map
 interface Campus3DPin {
   id: string;
   code: string;
+  region: string;
   name: string;
   location: string;
+  dist: string;
   x: number;
   y: number;
   z: number;
@@ -13,23 +15,31 @@ interface Campus3DPin {
 }
 
 const gontorCampuses: Campus3DPin[] = [
-  { id: 'pusat', code: 'PUSAT', name: 'PMDG Kampus Pusat', location: 'Gontor, Ponorogo, Jawa Timur', x: -3.5, y: 0, z: 5.8, isPusat: true },
-  { id: 'g2', code: 'G-2', name: 'Gontor 2', location: 'Madusari, Siman, Ponorogo, Jawa Timur', x: -3.3, y: 0, z: 5.8 },
-  { id: 'g3', code: 'G-3', name: 'Gontor 3 Darul Ma\'rifat', location: 'Sumbercangkring, Gurah, Kediri, Jawa Timur', x: -2.5, y: 0, z: 5.7 },
-  { id: 'g4', code: 'G-4', name: 'Gontor 4 Darul Muttaqien', location: 'Kalisat, Banyuwangi, Jawa Timur', x: 0.2, y: 0, z: 6.0 },
-  { id: 'g5', code: 'G-5', name: 'Gontor 5 Darul Qiyam', location: 'Sawangan, Magelang, Jawa Tengah', x: -5.2, y: 0, z: 5.5 },
-  { id: 'g6', code: 'G-6', name: 'Gontor 6 Darul Qiyam', location: 'Tanjung Sari, Lampung Selatan, Lampung', x: -9.5, y: 0, z: 2.8 },
-  { id: 'g7', code: 'G-7', name: 'Gontor 7 Riau', location: 'Rumbio, Kampar, Riau', x: -14.5, y: 0, z: -2.5 },
-  { id: 'g8', code: 'G-8', name: 'Gontor 8 Aceh', location: 'Labuhan Haji, Aceh Besar, Aceh', x: -20.5, y: 0, z: -7.2 },
-  { id: 'g9', code: 'G-9', name: 'Gontor 9 SULSEL', location: 'Pangkep, Sulawesi Selatan', x: 6.2, y: 0, z: 2.2 },
-  { id: 'g10', code: 'G-10', name: 'Gontor 10 Jambi', location: 'Tanjung Jabung Barat, Jambi', x: -13.0, y: 0, z: -0.8 },
-  { id: 'gp1', code: 'GP-1', name: 'Gontor Putri 1', location: 'Mantingan, Ngawi, Jawa Timur', x: -4.1, y: 0, z: 5.7 },
-  { id: 'gp2', code: 'GP-2', name: 'Gontor Putri 2', location: 'Mantingan, Ngawi, Jawa Timur', x: -4.0, y: 0, z: 5.7 },
-  { id: 'gp3', code: 'GP-3', name: 'Gontor Putri 3', location: 'Widodaren, Ngawi, Jawa Timur', x: -3.9, y: 0, z: 5.7 },
-  { id: 'gp4', code: 'GP-4', name: 'Gontor Putri 4', location: 'Konawe Selatan, Sulawesi Tenggara', x: 9.8, y: 0, z: 2.0 },
-  { id: 'gp5', code: 'GP-5', name: 'Gontor Putri 5', location: 'Kandangan, Kediri, Jawa Timur', x: -2.3, y: 0, z: 5.7 },
-  { id: 'gp6', code: 'GP-6', name: 'Gontor Putri 6', location: 'Poso, Sulawesi Tengah', x: 7.8, y: 0, z: -0.8 },
-  { id: 'gp7', code: 'GP-7', name: 'Gontor Putri 7', location: 'Kampar, Riau', x: -14.8, y: 0, z: -2.6 }
+  // Pusat & Jawa (9 Kampus)
+  { id: 'pusat', code: 'PUSAT', region: 'Jawa', name: 'PMDG Kampus Pusat', location: 'Ds. Gontor, Kec. Mlarak, Kab. Ponorogo, Jawa Timur', dist: '0 km (Pusat)', x: -3.5, y: 0, z: 5.8, isPusat: true },
+  { id: 'g2', code: 'G-2', region: 'Jawa', name: 'PMDG Kampus 2', location: 'Ds. Madusari, Kec. Siman, Kab. Ponorogo, Jawa Timur', dist: '12 km', x: -3.3, y: 0, z: 5.8 },
+  { id: 'g3', code: 'G-3', region: 'Jawa', name: 'PMDG Kampus 3 Darul Ma’rifat', location: 'Ds. Sumbercangkring, Kec. Gurah, Kab. Kediri, Jawa Timur', dist: '85 km', x: -2.5, y: 0, z: 5.7 },
+  { id: 'g4', code: 'G-4', region: 'Jawa', name: 'PMDG Kampus 4 Darul Muttaqien', location: 'Ds. Kaligung, Kec. Blimbingsari, Kab. Banyuwangi, Jawa Timur', dist: '340 km', x: 0.2, y: 0, z: 6.0 },
+  { id: 'g5', code: 'G-5', region: 'Jawa', name: 'PMDG Kampus 5 Darul Qiyam', location: 'Dsn. Gadingsari, Ds. Mangunsari, Kec. Sawangan, Kab. Magelang, Jawa Tengah', dist: '135 km', x: -5.2, y: 0, z: 5.5 },
+  { id: 'gp1', code: 'GP-1', region: 'Jawa', name: 'PMDG Putri Kampus 1', location: 'Ds. Sambirejo, Kec. Mantingan, Kab. Ngawi, Jawa Timur', dist: '75 km', x: -4.1, y: 0, z: 5.7 },
+  { id: 'gp2', code: 'GP-2', region: 'Jawa', name: 'PMDG Putri Kampus 2', location: 'Ds. Sambirejo, Kec. Mantingan, Kab. Ngawi, Jawa Timur', dist: '76 km', x: -4.0, y: 0, z: 5.7 },
+  { id: 'gp3', code: 'GP-3', region: 'Jawa', name: 'PMDG Putri Kampus 3', location: 'Ds. Karangbanyu, Kec. Widodaren, Kab. Ngawi, Jawa Timur', dist: '72 km', x: -3.9, y: 0, z: 5.7 },
+  { id: 'gp4', code: 'GP-4', region: 'Jawa', name: 'PMDG Putri Kampus 4', location: 'Dsn. Bobosan, Ds. Kemiri, Kec. Kandangan, Kab. Kediri, Jawa Timur', dist: '92 km', x: -2.3, y: 0, z: 5.7 },
+
+  // Sumatera (7 Kampus)
+  { id: 'g8', code: 'G-8', region: 'Sumatera', name: 'PMDG Kampus 8 Darul Amin', location: 'Ds. Meunasah Baro, Kec. Seulimeum, Kab. Aceh Besar, Aceh', dist: '2.150 km', x: -20.5, y: 0, z: -7.2 },
+  { id: 'gp7', code: 'GP-7', region: 'Sumatera', name: 'PMDG Putri Kampus 7', location: 'Ds. Rimba Panjang, Kec. Tambang, Kab. Kampar, Riau', dist: '1.280 km', x: -14.8, y: 0, z: -2.6 },
+  { id: 'g12', code: 'G-12', region: 'Sumatera', name: 'PMDG Kampus 12', location: 'Ds. Lubuk Jering, Kec. Sungai Mandau, Kab. Siak, Riau', dist: '1.320 km', x: -14.2, y: 0, z: -2.2 },
+  { id: 'g9', code: 'G-9', region: 'Sumatera', name: 'PMDG Kampus 9', location: 'Ds. Sulit Air, Kec. X Koto Diatas, Kab. Solok, Sumatera Barat', dist: '1.190 km', x: -16.0, y: 0, z: -0.2 },
+  { id: 'g10', code: 'G-10', region: 'Sumatera', name: 'PMDG Kampus 10', location: 'Ds. Parit Culum I, Kec. Muara Sabak Barat, Kab. Tanjung Jabung Timur, Jambi', dist: '980 km', x: -13.0, y: 0, z: -0.8 },
+  { id: 'gp8', code: 'GP-8', region: 'Sumatera', name: 'PMDG Putri Kampus 8', location: 'Ds. Labuhan Ratu VI, Kec. Labuhan Ratu, Kab. Lampung Selatan, Lampung', dist: '680 km', x: -9.8, y: 0, z: 3.0 },
+  { id: 'g7', code: 'G-7', region: 'Sumatera', name: 'PMDG Kampus 7', location: 'Dsn. Kubu Panglima, Ds. Tajimalela, Kec. Kalianda, Kab. Lampung Selatan, Prof. Lampung', dist: '670 km', x: -9.2, y: 0, z: 3.2 },
+
+  // Sulawesi (4 Kampus)
+  { id: 'gp6', code: 'GP-6', region: 'Sulawesi', name: 'PMDG Putri Kampus 6', location: 'Ds. Tokorondo, Kec. Poso Pesisir, Kab. Poso, Sulawesi Tengah', dist: '1.420 km', x: 7.8, y: 0, z: -0.8 },
+  { id: 'g11', code: 'G-11', region: 'Sulawesi', name: 'PMDG Kampus 11', location: 'Ds. Tokorondo, Kec. Poso Pesisir, Kab. Poso, Sulawesi Tengah', dist: '1.422 km', x: 8.0, y: 0, z: -0.6 },
+  { id: 'g6', code: 'G-6', region: 'Sulawesi', name: 'PMDG Kampus 6', location: 'Ds. Pudahoa, Kec. Konda, Kab. Konawe Selatan, Sulawesi Tenggara', dist: '1.310 km', x: 9.5, y: 0, z: 2.2 },
+  { id: 'gp5', code: 'GP-5', region: 'Sulawesi', name: 'PMDG Putri Kampus 5', location: 'Ds. Lamomea, Kec. Konda, Kab. Konawe Selatan, Sulawesi Tenggara', dist: '1.315 km', x: 9.8, y: 0, z: 2.0 }
 ];
 
 export const IndonesiaMap3D: React.FC = () => {

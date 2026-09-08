@@ -1,0 +1,17 @@
+/* src/design/tokens.css */
+:root {
+  /* Brand Colors */
+  --color-navy: #062B4A;
+  --color-gold: #D69103;
+  --color-bone: #F4F1EB;
+  /* Gradients */
+  --gradient-gold: linear-gradient(135deg, #B8860B 0%, #D69103 50%, #E8A820 100%);
+}
+
+/* Utility classes */
+.bg-navy { background-color: var(--color-navy); }
+.bg-gold { background-color: var(--color-gold); }
+.bg-bone { background-color: var(--color-bone); }
+.text-navy { color: var(--color-navy); }
+.text-gold { color: var(--color-gold); }
+.text-bone { color: var(--color-bone); }

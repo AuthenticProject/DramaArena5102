@@ -96,6 +96,9 @@ declare module 'lucide-react' {
   export const Clock: any;
   export const Search: any;
   export const Target: any;
+  export const Copy: any;
+  export const CheckCheck: any;
+  export const MessageCircle: any;
   const icons: { [key: string]: any };
   export default icons;
 }

@@ -67,6 +67,56 @@ export const GoldButton: React.FC<{ onClick?: () => void; label: string; outline
   </button>
 );
 
+export const HeroCountdown: React.FC = () => {
+  const [timeLeft, setTimeLeft] = React.useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
+  React.useEffect(() => {
+    const target = new Date('2026-05-07T19:30:00+07:00').getTime();
+    const update = () => {
+      const diff = target - new Date().getTime();
+      if (diff > 0) {
+        setTimeLeft({
+          days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
+          seconds: Math.floor((diff % (1000 * 60)) / 1000),
+        });
+      }
+    };
+    update();
+    const interval = setInterval(update, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="flex items-center justify-center gap-2 sm:gap-4 mt-6">
+      {[
+        { label: 'HARI', val: timeLeft.days },
+        { label: 'JAM', val: timeLeft.hours },
+        { label: 'MENIT', val: timeLeft.minutes },
+        { label: 'DETIK', val: timeLeft.seconds },
+      ].map(({ label, val }) => (
+        <div
+          key={label}
+          className="flex flex-col items-center px-3.5 py-2.5 sm:px-5 sm:py-3 rounded-xl relative"
+          style={{
+            background: 'linear-gradient(180deg, #FBF9F5 0%, #EDE7DC 100%)',
+            border: '1.5px solid #D69103',
+            boxShadow: '0 4px 12px rgba(6,43,74,0.08), inset 0 1px 0 rgba(255,255,255,0.8)'
+          }}
+        >
+          <span className="font-mileast font-bold text-xl sm:text-2xl text-[#062B4A]">
+            {String(val).padStart(2, '0')}
+          </span>
+          <span className="font-cormorant-sc text-[9px] sm:text-[10px] tracking-[0.2em] font-semibold text-[#D69103] mt-0.5">
+            {label}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+};
+
 export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenSponsorshipModal, onNavigate }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -190,7 +240,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenSponsorshipModal
 
         <FadeIn delay={0.4} y={20} className="mt-8">
           <FleuronDivider />
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-6 text-sm font-cormorant-sc" style={{ color: '#062B4A' }}>
+          <div className="text-center my-3">
+            <p className="font-mileast italic text-base sm:text-lg" style={{ color: '#062B4A' }}>
+              “Nyalakan Api Kebersamaan, Wujudkan Idealisme Kehidupan”
+            </p>
+          </div>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-4 text-sm font-cormorant-sc" style={{ color: '#062B4A' }}>
             <span className="flex items-center gap-2">
               <Calendar className="w-4 h-4" style={{ color: '#D69103' }} />
               Kamis, 20 Dzulqo'dah 1447 / 7 Mei 2026
@@ -201,6 +256,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenSponsorshipModal
               PMDG Kampus Pusat — 19.30 WIB
             </span>
           </div>
+
+          {/* Vintage Brass Countdown Dials */}
+          <HeroCountdown />
         </FadeIn>
 
         <FadeIn delay={0.5} y={20} className="mt-8 flex gap-4 flex-wrap justify-center">

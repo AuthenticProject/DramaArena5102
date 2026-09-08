@@ -1,9 +1,9 @@
 import React from 'react';
 import { FadeIn } from './FadeIn';
 import { SectionLabel, FleuronDivider } from './HeroSection';
-import { ShowCategoryData } from '../types';
+import type { ShowCategoryData } from '../types';
 
-export { ShowCategoryData };
+export type { ShowCategoryData };
 
 const showsData: ShowCategoryData[] = [
   {

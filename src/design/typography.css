@@ -1,0 +1,28 @@
+/* src/design/typography.css */
+@font-face {
+  font-family: 'Mileast';
+  src: url('/Mileast.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Alverata';
+  src: url('/fonnts.com-Alverata-Lt-.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Utility classes */
+.font-mileast { font-family: 'Mileast', serif; }
+.font-alverata { font-family: 'Alverata', serif; }
+
+/* Headings */
+.heading-primary {
+  font-family: 'Mileast', serif;
+  color: var(--color-navy);
+  text-transform: uppercase;
+}
+.heading-secondary {
+  font-family: 'Alverata', serif;
+  color: var(--color-gold);
+}
