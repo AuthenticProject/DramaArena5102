@@ -3,6 +3,8 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+@import "./design/tokens.css";
+@import "./design/typography.css";
 
 @font-face {
   font-family: 'Mileast';
