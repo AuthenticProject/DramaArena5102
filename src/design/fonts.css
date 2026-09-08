@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap');
+
+@font-face {
+  font-family: 'Mileast';
+  src: url('../Mileast.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  font-family: 'Playfair Display', serif;
+}
+
+h1, h2, h3, .hero-title {
+  font-family: 'Mileast', serif;
+}
