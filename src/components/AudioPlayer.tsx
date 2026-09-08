@@ -7,7 +7,7 @@ export const AudioPlayer: React.FC = () => {
   const [showNotification, setShowNotification] = useState<boolean>(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const audioUrl = "/Teruslah%20Percaya%20-%20Official%20Music%20Video%20-%20(OST%20Percaya%20Asa%20Short%20Movie).mp3";
+  const audioUrl = `${import.meta.env.BASE_URL}Teruslah%20Percaya%20-%20Official%20Music%20Video%20-%20(OST%20Percaya%20Asa%20Short%20Movie).mp3`;
 
   useEffect(() => {
     const audio = audioRef.current;

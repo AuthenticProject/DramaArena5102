@@ -343,7 +343,7 @@ export const IndonesiaMap3D: React.FC = () => {
         scene.add(groundMesh);
       };
 
-      const glbPath = './peta_provinsi_indonesia.glb';
+      const glbPath = `${import.meta.env.BASE_URL}peta_provinsi_indonesia.glb`;
       const loader = new THREE.GLTFLoader();
       loader.load(
         glbPath,
@@ -399,9 +399,9 @@ export const IndonesiaMap3D: React.FC = () => {
           }
         },
         (error: any) => {
-          console.warn('GLB load failed, trying absolute path / fallback...', error);
+          console.warn('GLB load failed, trying relative path fallback...', error);
           loader.load(
-            '/peta_provinsi_indonesia.glb',
+            './peta_provinsi_indonesia.glb',
             (gltf: any) => {
               const model = gltf.scene;
               const initialBox = new THREE.Box3().setFromObject(model);

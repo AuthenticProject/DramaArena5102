@@ -137,4 +137,14 @@ declare global {
     }
     interface Element extends React.ReactElement<any, any> {}
   }
+
+  interface ImportMetaEnv {
+    readonly BASE_URL: string;
+    [key: string]: any;
+  }
+
+  interface ImportMeta {
+    readonly env: ImportMetaEnv;
+  }
 }
+

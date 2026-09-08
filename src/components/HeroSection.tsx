@@ -196,11 +196,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenSponsorshipModal
       )}
 
       {/* Main Hero Banner */}
-      <section id="root" className="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-16 px-4 overflow-hidden section-stamp">
-          {/* Hero Background Image */}
-          <div className="absolute inset-0 z-0 bg-cover bg-center" style={{ backgroundImage: "url('/assets/hero-bg.jpg')'" }}></div>
-          {/* Overlay */}
-          <div className="absolute inset-0 bg-navy opacity-60 z-0"></div>
+      <section id="hero" className="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-16 px-4 overflow-hidden section-stamp">
         {/* Background Grid Pattern */}
         <div
           className="absolute inset-0 pointer-events-none opacity-5"
@@ -218,7 +214,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenSponsorshipModal
 
         {/* Central Stamp Logo */}
         <FadeIn delay={0.1} y={0} className="mb-6 flex flex-col items-center">
-          <img src="/assets/logo.png" alt="Drama Arena 5102 Logo" className="h-20 mb-4" />
+          <img
+            src={`${import.meta.env.BASE_URL}assets/logo.png`}
+            alt="Drama Arena 5102 Logo"
+            className="h-20 mb-4 object-contain"
+          />
           <StampLogo size={200} />
         </FadeIn>
 
