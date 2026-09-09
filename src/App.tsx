@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { LoadingScreen } from './components/LoadingScreen';
 import { Header } from './components/Header';
 import { HeroSection } from './components/HeroSection';
 import { MarqueeSection } from './components/MarqueeSection';
@@ -15,9 +16,18 @@ import { AudioPlayer } from './components/AudioPlayer';
 import { MediaShowcase } from './pages/MediaShowcase';
 
 export function App() {
+  // Show loading screen once per session
+  const [isLoading, setIsLoading] = useState<boolean>(
+    () => !sessionStorage.getItem('da5102-loaded')
+  );
   const [activeSection, setActiveSection] = useState<string>('hero');
   const [isSponsorshipModalOpen, setIsSponsorshipModalOpen] = useState<boolean>(false);
   const [activeShow, setActiveShow] = useState<ShowCategoryData | null>(null);
+
+  const handleLoadingComplete = () => {
+    sessionStorage.setItem('da5102-loaded', '1');
+    setIsLoading(false);
+  };
 
   // Sync with window hash on load and hash changes
   useEffect(() => {
@@ -72,6 +82,8 @@ export function App() {
 
   return (
     <div className="main-wrapper min-h-screen bg-[#F4F1EB] text-[#062B4A] font-alverata select-none">
+      {/* Loading Screen */}
+      {isLoading && <LoadingScreen onComplete={handleLoadingComplete} />}
       {/* 1. Global Navigation Header */}
       <Header
         currentView={activeSection}
