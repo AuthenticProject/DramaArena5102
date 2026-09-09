@@ -82,6 +82,7 @@ declare module 'lucide-react' {
   export const Drama: any;
   export const Award: any;
   export const ChevronRight: any;
+  export const ChevronLeft: any;
   export const Building: any;
   export const CreditCard: any;
   export const Star: any;
@@ -93,12 +94,21 @@ declare module 'lucide-react' {
   export const VolumeX: any;
   export const Disc: any;
   export const ArrowRight: any;
+  export const ArrowLeft: any;
   export const Clock: any;
   export const Search: any;
   export const Target: any;
   export const Copy: any;
   export const CheckCheck: any;
   export const MessageCircle: any;
+  export const Shirt: any;
+  export const Maximize2: any;
+  export const ZoomIn: any;
+  export const Info: any;
+  export const Eye: any;
+  export const Image: any;
+  export const Feather: any;
+  export const Download: any;
   const icons: { [key: string]: any };
   export default icons;
 }

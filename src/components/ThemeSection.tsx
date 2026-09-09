@@ -1,6 +1,7 @@
 import React from 'react';
 import { FadeIn } from './FadeIn';
 import { SectionLabel, FleuronDivider } from './HeroSection';
+import { TypographyDecor } from './TypographyDecor';
 
 const sadarPillars = [
   {
@@ -30,11 +31,26 @@ const sadarPillars = [
   },
 ];
 
-
 export const ThemeSection: React.FC = () => {
   return (
-    <section id="theme" className="py-24 px-5 sm:px-8 md:px-12 classic-border" style={{ background: '#062B4A' }}>
-      <div className="max-w-6xl mx-auto">
+    <section id="theme" className="relative py-24 px-5 sm:px-8 md:px-12 classic-border overflow-hidden" style={{ background: '#062B4A' }}>
+      {/* Subtle Repeating Typography Background Pattern */}
+      <TypographyDecor
+        sectionId="theme"
+        variant="main"
+        mode="repeat-tile"
+        opacity={0.035}
+      />
+
+      {/* Floating typography watermark */}
+      <TypographyDecor
+        sectionId="theme"
+        variant="main"
+        mode="background-watermark"
+        opacity={0.05}
+      />
+
+      <div className="max-w-6xl mx-auto relative z-10">
         <FadeIn delay={0} className="text-center mb-14">
           <SectionLabel text="TEMA & FILOSOFI" />
           <h2
@@ -56,10 +72,10 @@ export const ThemeSection: React.FC = () => {
             {sadarPillars.map((pillar, i) => (
               <div
                 key={pillar.num}
-                className="p-6 transition-all duration-300 hover:-translate-y-1 group"
+                className="p-6 transition-all duration-300 hover:-translate-y-1 group relative rounded-lg overflow-hidden backdrop-blur-sm"
                 style={{
                   border: i === 0 ? '1.5px solid #D69103' : '1.5px solid rgba(214,145,3,0.35)',
-                  background: 'rgba(3,28,51,0.8)',
+                  background: 'rgba(3,28,51,0.85)',
                 }}
               >
                 <span
@@ -79,11 +95,14 @@ export const ThemeSection: React.FC = () => {
           </div>
         </FadeIn>
 
+        {/* Ornamental Divider */}
+        <TypographyDecor variant="4" mode="divider-banner" className="my-6 opacity-60" />
+
         {/* Arabic Quote */}
         <FadeIn delay={0.2}>
           <div
-            className="p-8 sm:p-12 text-center pulse-glow"
-            style={{ background: 'rgba(3,28,51,0.9)', border: '2px solid rgba(214,145,3,0.45)' }}
+            className="p-8 sm:p-12 text-center pulse-glow rounded-xl relative overflow-hidden"
+            style={{ background: 'rgba(3,28,51,0.92)', border: '2px solid rgba(214,145,3,0.45)' }}
           >
             <div className="font-cormorant-sc text-xs tracking-widest uppercase mb-6" style={{ color: '#D69103' }}>
               ✦ KUTIPAN ACARA ✦
@@ -105,4 +124,3 @@ export const ThemeSection: React.FC = () => {
     </section>
   );
 };
-

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Header } from './components/Header';
 import { HeroSection } from './components/HeroSection';
 import { MarqueeSection } from './components/MarqueeSection';
 import { AboutSection } from './components/AboutSection';
@@ -11,17 +12,66 @@ import { TicketModal } from './components/TicketModal';
 import { TrailerModal } from './components/TrailerModal';
 import { Footer } from './components/Footer';
 import { AudioPlayer } from './components/AudioPlayer';
+import { MediaShowcase } from './pages/MediaShowcase';
 
 export function App() {
+  const [currentView, setCurrentView] = useState<'home' | 'media-showcase'>('home');
   const [isSponsorshipModalOpen, setIsSponsorshipModalOpen] = useState<boolean>(false);
   const [activeShow, setActiveShow] = useState<ShowCategoryData | null>(null);
 
-  const handleNavigate = (sectionId: string) => {
-    if (sectionId === 'root') {
+  // Sync with window hash on load and hash changes
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace(/^#/, '');
+      if (hash === 'media-showcase' || hash === '/media-showcase') {
+        setCurrentView('media-showcase');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        setCurrentView('home');
+        if (hash && hash !== 'root') {
+          setTimeout(() => {
+            const el = document.getElementById(hash);
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }, 100);
+        }
+      }
+    };
+
+    handleHashChange();
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  const handleNavigate = (targetId: string) => {
+    if (targetId === 'media-showcase') {
+      setCurrentView('media-showcase');
+      window.location.hash = 'media-showcase';
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
-    const element = document.getElementById(sectionId);
+
+    if (currentView !== 'home') {
+      setCurrentView('home');
+      window.location.hash = targetId;
+      setTimeout(() => {
+        if (targetId === 'root' || targetId === 'hero') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          const el = document.getElementById(targetId);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+      return;
+    }
+
+    if (targetId === 'root' || targetId === 'hero') {
+      window.location.hash = '';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    window.location.hash = targetId;
+    const element = document.getElementById(targetId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
@@ -29,33 +79,50 @@ export function App() {
 
   return (
     <div className="main-wrapper min-h-screen bg-[#F4F1EB] text-[#062B4A] font-alverata select-none">
-      {/* 1. Hero Section & Header Nav */}
-      <HeroSection
+      {/* 1. Global Navigation Header */}
+      <Header
+        currentView={currentView}
         onOpenSponsorshipModal={() => setIsSponsorshipModalOpen(true)}
         onNavigate={handleNavigate}
       />
 
-      {/* 2. Marquee Photo Banner Section */}
-      <MarqueeSection />
+      {/* 2. Dynamic View Display */}
+      {currentView === 'media-showcase' ? (
+        <MediaShowcase
+          onBackToHome={() => handleNavigate('root')}
+          onOpenSponsorshipModal={() => setIsSponsorshipModalOpen(true)}
+        />
+      ) : (
+        <main>
+          {/* Hero Section */}
+          <HeroSection
+            onOpenSponsorshipModal={() => setIsSponsorshipModalOpen(true)}
+            onNavigate={handleNavigate}
+          />
 
-      {/* 3. About Section (Profil Singkat PMDG, Maksud & Tujuan, Brand Identity) */}
-      <AboutSection />
+          {/* Marquee Photo Banner Section */}
+          <MarqueeSection />
 
-      {/* 4. Theme Section (Tema & Filosofi, 5 Kesadaran Santri, Arabic Quote) */}
-      <ThemeSection />
+          {/* About Section */}
+          <AboutSection />
 
-      {/* 5. 3D Map of Indonesia Section (Peta 3D Nusantara PMDG & Sebaran Santri) */}
-      <IndonesiaMap3D />
+          {/* Theme Section */}
+          <ThemeSection />
 
-      {/* 6. Shows Section (Ragam Acara & Konsep Panggung) */}
-      <ShowsSection
-        onOpenTrailer={(show: ShowCategoryData) => setActiveShow(show)}
-      />
+          {/* 3D Map of Indonesia Section */}
+          <IndonesiaMap3D />
 
-      {/* 7. Committee Section (Susunan Panitia & Anggaran Kepanitiaan) */}
-      <CommitteeSection />
+          {/* Shows Section */}
+          <ShowsSection
+            onOpenTrailer={(show: ShowCategoryData) => setActiveShow(show)}
+          />
 
-      {/* 8. Footer & Kemitraan CTA */}
+          {/* Committee Section */}
+          <CommitteeSection onNavigate={handleNavigate} />
+        </main>
+      )}
+
+      {/* Footer & Kemitraan CTA */}
       <Footer
         onOpenSponsorshipModal={() => setIsSponsorshipModalOpen(true)}
         onNavigate={handleNavigate}

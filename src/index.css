@@ -6,6 +6,14 @@
 @import "./design/tokens.css";
 @import "./design/typography.css";
 
+:root {
+  --color-navy: #062B4A;
+  --color-gold: #D69103;
+  --color-bone: #F4F1EB;
+  --color-gold-light: #F5D98A;
+  --color-gold-dark: #8B6914;
+}
+
 @font-face {
   font-family: 'Mileast';
   src: url('/Mileast.otf') format('opentype');
@@ -37,8 +45,8 @@
 }
 
 html, body, #root, .main-wrapper {
-  background-color: #F4F1EB;
-  color: #062B4A;
+  background-color: var(--color-bone);
+  color: var(--color-navy);
   font-family: 'Alverata', 'Cormorant Garamond', Georgia, serif;
   min-height: 100vh;
 }
@@ -57,6 +65,24 @@ body::before {
   z-index: 0;
 }
 
+/* Subtle global brand watermark */
+body::after {
+  content: '';
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 600px;
+  height: 600px;
+  transform: translate(-50%, -50%);
+  background-image: url('/aset/logo.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  opacity: 0.025;
+  pointer-events: none;
+  z-index: 0;
+}
+
 .gold-text {
   background: linear-gradient(135deg, #B8860B 0%, #D69103 40%, #F5D98A 65%, #D69103 80%, #8B6914 100%);
   -webkit-background-clip: text;
@@ -65,7 +91,47 @@ body::before {
 }
 
 .navy-text {
-  color: #062B4A;
+  color: var(--color-navy);
+}
+
+/* Glass-morphism utilities */
+.glass-card {
+  background: rgba(244, 241, 235, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(214, 145, 3, 0.35);
+  box-shadow: 0 8px 32px 0 rgba(6, 43, 74, 0.08);
+}
+
+.glass-card-dark {
+  background: rgba(6, 43, 74, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(214, 145, 3, 0.45);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.3);
+}
+
+.glass-badge {
+  background: rgba(214, 145, 3, 0.15);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(214, 145, 3, 0.5);
+  color: #D69103;
+}
+
+/* Typography pattern utilities */
+.bg-typography-repeat {
+  background-image: url('/aset/typography.png');
+  background-repeat: repeat;
+  background-size: 320px auto;
+  opacity: 0.04;
+}
+
+.bg-typography-watermark {
+  background-image: url('/aset/typography%202.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  opacity: 0.05;
 }
 
 /* ─────────────────────────────────────────────────
@@ -94,8 +160,7 @@ body::before {
   z-index: 2;
 }
 
-/* Bingkai Prangko Otentik (Perforated Stamp Frame)
-   Mask-based perforated edge around the whole card */
+/* Bingkai Prangko Otentik (Perforated Stamp Frame) */
 .stamp-frame {
   position: relative;
   background: #062B4A;
@@ -130,7 +195,7 @@ body::before {
   pointer-events: none;
 }
 
-/* Ornamen Garis Ganda Klasik (Double-rule border) */
+/* Ornamen Garis Ganda Klasik */
 .classic-border {
   outline: 3px double rgba(214, 159, 3, 0.35);
   outline-offset: -8px;
@@ -138,7 +203,7 @@ body::before {
   border-bottom: 1px solid rgba(214, 159, 3, 0.25);
 }
 
-/* Teks Emas Bertekstur – foil gradient text */
+/* Teks Emas Bertekstur */
 .text-gold-foil {
   background: linear-gradient(135deg, #b8860b 0%, #d69f03 28%, #ffeaa7 55%, #d69f03 75%, #8b6914 100%);
   -webkit-background-clip: text;
@@ -148,7 +213,6 @@ body::before {
   animation: foil-shimmer 4s linear infinite;
 }
 
-/* Subtle postmark / cancellation circle overlay */
 .stamp-cancel-mark {
   position: absolute;
   width: 80px;
@@ -158,7 +222,6 @@ body::before {
   pointer-events: none;
 }
 
-/* Ornamental divider */
 .ornament {
   display: flex;
   align-items: center;
@@ -178,7 +241,6 @@ body::before {
   overflow: hidden;
 }
 
-/* Perforated edge top/bottom */
 .perforated-top {
   background: radial-gradient(circle at 50% 0%, #F4F1EB 8px, transparent 8px) top center / 20px 12px repeat-x;
   height: 12px;
@@ -196,7 +258,6 @@ body::before {
   background: linear-gradient(to right, transparent, #D69103 20%, #D69103 80%, transparent);
 }
 
-/* Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -232,14 +293,13 @@ body::before {
   100% { background-position: 200% center; }
 }
 
-@keyframes fade-up {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
 }
 
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(214,145,3,0); }
-  50% { box-shadow: 0 0 20px 4px rgba(214,145,3,0.2); }
+.animate-fadeIn {
+  animation: fadeIn 0.25s ease-out forwards;
 }
 
 .marquee-left {
@@ -258,7 +318,6 @@ body::before {
   animation: pulse-glow 3s ease-in-out infinite;
 }
 
-/* Classic card */
 .classic-card {
   background: #F4F1EB;
   border: 1.5px solid rgba(6,43,74,0.2);

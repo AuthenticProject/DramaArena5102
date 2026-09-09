@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FadeIn } from './FadeIn';
-import { Calendar, MapPin, Menu, X } from 'lucide-react';
+import { Calendar, MapPin } from 'lucide-react';
+import { importImage } from '../utils/assetHelpers';
+import { TypographyDecor } from './TypographyDecor';
 
 interface HeroSectionProps {
   onOpenSponsorshipModal: () => void;
@@ -43,7 +45,6 @@ export const StampLogo: React.FC<{ size?: number }> = ({ size = 200 }) => (
   </svg>
 );
 
-
 export const FleuronDivider: React.FC = () => (
   <div className="flex items-center gap-3 my-2 w-full max-w-xs mx-auto">
     <div className="flex-1 h-px" style={{ background: 'linear-gradient(to right, transparent, #D69103)' }} />
@@ -83,9 +84,9 @@ export const GoldButton: React.FC<{ onClick?: () => void; label: string; outline
 );
 
 export const HeroCountdown: React.FC = () => {
-  const [timeLeft, setTimeLeft] = React.useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const target = new Date('2026-05-07T19:30:00+07:00').getTime();
     const update = () => {
       const diff = target - new Date().getTime();
@@ -133,194 +134,168 @@ export const HeroCountdown: React.FC = () => {
 };
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenSponsorshipModal, onNavigate }) => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
 
-  const handleNav = (id: string) => {
-    onNavigate(id);
-    setMobileMenuOpen(false);
-  };
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const buildingUrl = importImage('building.png');
+  const logo5102Url = importImage('logo 5102.png');
 
   return (
-    <>
-      {/* Fixed Header Nav */}
-      <nav
-        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-10 py-4"
-        style={{ background: 'rgba(244,241,235,0.92)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(214,145,3,0.3)' }}
+    <section
+      id="hero"
+      className="relative min-h-screen flex flex-col items-center justify-center pt-28 pb-20 px-4 overflow-hidden section-stamp"
+    >
+      {/* 1. Hero Background with building.png & Subtle Parallax Effect */}
+      <div
+        className="absolute inset-0 pointer-events-none z-0 overflow-hidden"
+        aria-hidden="true"
       >
-        <div className="font-mileast italic text-base font-bold cursor-pointer" onClick={() => handleNav('root')}>
-          <span className="gold-text font-playfair text-lg">Drama Arena</span>
-          <span className="ml-1 text-xs font-cormorant-sc" style={{ color: '#D69103' }}>5102</span>
-        </div>
-        <div className="hidden md:flex items-center gap-8">
-          {[
-            ['PROFIL', 'about'],
-            ['TEMA', 'theme'],
-            ['ACARA', 'shows'],
-            ['PANITIA', 'committee']
-          ].map(([label, id]) => (
-            <button
-              key={id}
-              onClick={() => handleNav(id)}
-              className="font-cormorant-sc text-xs tracking-widest uppercase transition-colors hover:text-yellow-700 cursor-pointer"
-              style={{ color: '#062B4A' }}
-            >
-              {label}
-            </button>
-          ))}
-          <GoldButton onClick={onOpenSponsorshipModal} label="SPONSORSHIP" />
-        </div>
-        <button
-          className="md:hidden text-2xl p-1 cursor-pointer"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          style={{ color: '#062B4A' }}
-          aria-label="Toggle Menu"
-        >
-          {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
-      </nav>
-
-      {/* Mobile Drawer */}
-      {mobileMenuOpen && (
         <div
-          className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-8"
-          style={{ background: 'rgba(244,241,235,0.97)' }}
-        >
-          {[
-            ['PROFIL', 'about'],
-            ['TEMA', 'theme'],
-            ['ACARA', 'shows'],
-            ['PANITIA', 'committee']
-          ].map(([label, id]) => (
-            <button
-              key={id}
-              onClick={() => handleNav(id)}
-              className="font-cormorant-sc text-2xl tracking-widest uppercase cursor-pointer"
-              style={{ color: '#062B4A' }}
-            >
-              {label}
-            </button>
-          ))}
-          <GoldButton
-            onClick={() => {
-              onOpenSponsorshipModal();
-              setMobileMenuOpen(false);
-            }}
-            label="SPONSORSHIP"
-          />
-        </div>
-      )}
-
-      {/* Main Hero Banner */}
-      <section id="hero" className="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-16 px-4 overflow-hidden section-stamp">
-        {/* Background Grid Pattern */}
-        <div
-          className="absolute inset-0 pointer-events-none opacity-5"
+          className="absolute inset-0 bg-cover bg-center transition-transform duration-75 ease-out scale-105"
           style={{
-            backgroundImage:
-              'repeating-linear-gradient(0deg, #062B4A 0px, #062B4A 1px, transparent 1px, transparent 40px), repeating-linear-gradient(90deg, #062B4A 0px, #062B4A 1px, transparent 1px, transparent 40px)'
+            backgroundImage: `url("${buildingUrl}")`,
+            transform: `translateY(${scrollY * 0.22}px)`,
+            filter: 'contrast(108%) brightness(96%)',
           }}
         />
+        {/* Harmonious Parchment & Warm Navy Vignette Gradient Overlay */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'radial-gradient(ellipse at 50% 40%, rgba(244, 241, 235, 0.82) 0%, rgba(244, 241, 235, 0.94) 65%, #F4F1EB 100%)',
+          }}
+        />
+      </div>
 
-        {/* Decorative Top Label */}
-        <FadeIn delay={0} y={-20} className="flex flex-col items-center gap-2 mb-8">
-          <SectionLabel text="PAGELARAN SENI AKBAR" />
-          <FleuronDivider />
-        </FadeIn>
+      {/* 2. Top-Right Decorative Insignia (logo 5102.png) with Subtle Float & Opacity */}
+      <div
+        className="absolute top-20 sm:top-24 right-4 sm:right-10 pointer-events-none z-0 max-w-[160px] sm:max-w-[240px] opacity-25 hover:opacity-40 transition-opacity"
+        style={{
+          transform: `translateY(${scrollY * 0.1}px)`,
+        }}
+        aria-hidden="true"
+      >
+        <img
+          src={logo5102Url}
+          alt="Insignia 5102 Decorative"
+          className="w-full h-auto object-contain filter drop-shadow-lg"
+        />
+      </div>
 
-        {/* Central Stamp Logo */}
-        <FadeIn delay={0.1} y={0} className="mb-6 flex flex-col items-center">
-          {/* Tagline Badge */}
-          <div className="inline-flex items-center gap-2 px-5 py-1.5 mb-5 border border-[#D69103] bg-[#F4F1EB] shadow-sm">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#D69103] flex-shrink-0"></span>
-            <span className="font-cormorant-sc text-[10px] uppercase tracking-[0.28em] text-[#062B4A] font-bold">
-              Pagelaran Seni Akbar Kelas 5 102
-            </span>
-            <span className="w-1.5 h-1.5 rounded-full bg-[#D69103] flex-shrink-0"></span>
-          </div>
+      {/* 3. Subtle Typography Watermark in Center Background */}
+      <TypographyDecor
+        sectionId="hero"
+        variant="main"
+        opacity={0.035}
+        className="pointer-events-none"
+      />
 
-          {/* Stamp Card with perforated frame */}
-          <div className="stamp-frame max-w-[290px] md:max-w-[320px] w-full mx-auto cursor-pointer">
-            <div className="stamp-content p-6 flex flex-col items-center justify-between" style={{ minHeight: '360px' }}>
-              {/* Top label */}
-              <div className="text-[9px] font-cormorant-sc tracking-[0.4em] uppercase text-[#D69103] font-bold border-b border-[#D69103]/40 w-full pb-2 text-center">
-                DRAMA
-              </div>
+      {/* 4. Decorative Top Label */}
+      <FadeIn delay={0} y={-20} className="flex flex-col items-center gap-2 mb-6 z-10">
+        <SectionLabel text="PAGELARAN SENI AKBAR" />
+        <FleuronDivider />
+      </FadeIn>
 
-              {/* Central stamp logo */}
-              <div className="my-4 relative flex flex-col items-center">
-                {/* Postmark cancel circle */}
-                <div className="stamp-cancel-mark" style={{ top: '-10px', right: '-10px' }} />
-                <img
-                  src={`${import.meta.env.BASE_URL}assets/logo.png`}
-                  alt="Logo DA 5102"
-                  className="h-14 mb-3 object-contain opacity-90"
-                />
-                <StampLogo size={190} />
-                <span
-                  className="font-mileast font-black text-2xl tracking-[0.2em] mt-1"
-                  style={{ color: '#062B4A' }}
-                >
-                  5102
-                </span>
-              </div>
+      {/* 5. Central Stamp Logo & Card */}
+      <FadeIn delay={0.1} y={0} className="mb-6 flex flex-col items-center z-10">
+        {/* Tagline Badge */}
+        <div className="inline-flex items-center gap-2 px-5 py-1.5 mb-5 border border-[#D69103] bg-[#F4F1EB]/90 backdrop-blur-sm shadow-sm">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#D69103] flex-shrink-0"></span>
+          <span className="font-cormorant-sc text-[10px] uppercase tracking-[0.28em] text-[#062B4A] font-bold">
+            Pagelaran Seni Akbar Kelas 5 102
+          </span>
+          <span className="w-1.5 h-1.5 rounded-full bg-[#D69103] flex-shrink-0"></span>
+        </div>
 
-              {/* Bottom label */}
-              <div className="text-[9px] font-cormorant-sc tracking-[0.4em] uppercase text-[#D69103] font-bold border-t border-[#D69103]/40 w-full pt-2 text-center">
-                ARENA
-              </div>
+        {/* Stamp Card with perforated frame */}
+        <div className="stamp-frame max-w-[290px] md:max-w-[320px] w-full mx-auto cursor-pointer">
+          <div className="stamp-content p-6 flex flex-col items-center justify-between" style={{ minHeight: '360px' }}>
+            {/* Top label */}
+            <div className="text-[9px] font-cormorant-sc tracking-[0.4em] uppercase text-[#D69103] font-bold border-b border-[#D69103]/40 w-full pb-2 text-center">
+              DRAMA
+            </div>
+
+            {/* Central stamp logo */}
+            <div className="my-4 relative flex flex-col items-center">
+              <div className="stamp-cancel-mark" style={{ top: '-10px', right: '-10px' }} />
+              <img
+                src={importImage('logo.png')}
+                alt="Logo DA 5102"
+                className="h-16 mb-2 object-contain filter drop-shadow-sm"
+              />
+              <StampLogo size={180} />
+              <span
+                className="font-mileast font-black text-2xl tracking-[0.2em] mt-1"
+                style={{ color: '#062B4A' }}
+              >
+                5102
+              </span>
+            </div>
+
+            {/* Bottom label */}
+            <div className="text-[9px] font-cormorant-sc tracking-[0.4em] uppercase text-[#D69103] font-bold border-t border-[#D69103]/40 w-full pt-2 text-center">
+              ARENA
             </div>
           </div>
-        </FadeIn>
+        </div>
+      </FadeIn>
 
-        {/* Main Title */}
-        <FadeIn delay={0.2} y={30} className="text-center mt-6">
-          <h1
-            className="font-mileast italic font-bold leading-none tracking-tight uppercase"
-            style={{ fontSize: 'clamp(3.5rem, 12vw, 130px)', color: '#062B4A', lineHeight: 0.9 }}
-          >
-            Drama<br />
-            <span className="text-gold-foil not-italic">Arena</span>
-          </h1>
-        </FadeIn>
+      {/* 6. Main Title */}
+      <FadeIn delay={0.2} y={30} className="text-center mt-4 z-10">
+        <h1
+          className="font-mileast italic font-bold leading-none tracking-tight uppercase"
+          style={{ fontSize: 'clamp(3.2rem, 11vw, 125px)', color: '#062B4A', lineHeight: 0.9 }}
+        >
+          Drama<br />
+          <span className="text-gold-foil not-italic">Arena</span>
+        </h1>
+      </FadeIn>
 
-        {/* Subtitle */}
-        <FadeIn delay={0.3} y={20} className="text-center mt-4">
-          <div className="font-cormorant-sc tracking-[0.5em] text-sm uppercase mb-3" style={{ color: '#D69103' }}>
-            Kelas 5 · 102 · PMDG
-          </div>
-          <p className="font-mileast italic text-base sm:text-lg max-w-xl mx-auto" style={{ color: '#062B4A', opacity: 0.8 }}>
-            "Forever Striving for an Authentic Masterpiece"
+      {/* 7. Subtitle */}
+      <FadeIn delay={0.3} y={20} className="text-center mt-4 z-10">
+        <div className="font-cormorant-sc tracking-[0.5em] text-sm uppercase mb-2" style={{ color: '#D69103' }}>
+          Kelas 5 · 102 · PMDG
+        </div>
+        <p className="font-mileast italic text-base sm:text-lg max-w-xl mx-auto" style={{ color: '#062B4A', opacity: 0.85 }}>
+          "Forever Striving for an Authentic Masterpiece"
+        </p>
+      </FadeIn>
+
+      <FadeIn delay={0.4} y={20} className="mt-6 z-10">
+        <FleuronDivider />
+        <div className="text-center my-3">
+          <p className="font-mileast italic text-base sm:text-lg" style={{ color: '#062B4A' }}>
+            “Nyalakan Api Kebersamaan, Wujudkan Idealisme Kehidupan”
           </p>
-        </FadeIn>
+        </div>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-4 text-sm font-cormorant-sc" style={{ color: '#062B4A' }}>
+          <span className="flex items-center gap-2">
+            <Calendar className="w-4 h-4" style={{ color: '#D69103' }} />
+            Kamis, 20 Dzulqo'dah 1447 / 7 Mei 2026
+          </span>
+          <span className="hidden sm:block" style={{ color: '#D69103' }}>·</span>
+          <span className="flex items-center gap-2">
+            <MapPin className="w-4 h-4" style={{ color: '#D69103' }} />
+            PMDG Kampus Pusat — 19.30 WIB
+          </span>
+        </div>
 
-        <FadeIn delay={0.4} y={20} className="mt-8">
-          <FleuronDivider />
-          <div className="text-center my-3">
-            <p className="font-mileast italic text-base sm:text-lg" style={{ color: '#062B4A' }}>
-              “Nyalakan Api Kebersamaan, Wujudkan Idealisme Kehidupan”
-            </p>
-          </div>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-4 text-sm font-cormorant-sc" style={{ color: '#062B4A' }}>
-            <span className="flex items-center gap-2">
-              <Calendar className="w-4 h-4" style={{ color: '#D69103' }} />
-              Kamis, 20 Dzulqo'dah 1447 / 7 Mei 2026
-            </span>
-            <span className="hidden sm:block" style={{ color: '#D69103' }}>·</span>
-            <span className="flex items-center gap-2">
-              <MapPin className="w-4 h-4" style={{ color: '#D69103' }} />
-              PMDG Kampus Pusat — 19.30 WIB
-            </span>
-          </div>
+        {/* Vintage Brass Countdown Dials */}
+        <HeroCountdown />
+      </FadeIn>
 
-          {/* Vintage Brass Countdown Dials */}
-          <HeroCountdown />
-        </FadeIn>
-
-        <FadeIn delay={0.5} y={20} className="mt-8 flex gap-4 flex-wrap justify-center">
-          <GoldButton onClick={onOpenSponsorshipModal} label="PROPOSAL SPONSORSHIP" />
-          <GoldButton onClick={() => handleNav('about')} label="SELENGKAPNYA" outline />
-        </FadeIn>
-      </section>
-    </>
+      <FadeIn delay={0.5} y={20} className="mt-8 flex gap-4 flex-wrap justify-center z-10">
+        <GoldButton onClick={onOpenSponsorshipModal} label="PROPOSAL SPONSORSHIP" />
+        <GoldButton onClick={() => onNavigate('media-showcase')} label="MEDIA SHOWCASE" outline />
+      </FadeIn>
+    </section>
   );
 };

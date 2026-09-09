@@ -2,6 +2,8 @@ import React from 'react';
 import { FadeIn } from './FadeIn';
 import { SectionLabel, FleuronDivider } from './HeroSection';
 import type { ShowCategoryData } from '../types';
+import { TypographyDecor } from './TypographyDecor';
+import { importImage } from '../utils/assetHelpers';
 
 export type { ShowCategoryData };
 
@@ -38,8 +40,17 @@ interface ShowsSectionProps {
 
 export const ShowsSection: React.FC<ShowsSectionProps> = ({ onOpenTrailer }) => {
   return (
-    <section id="shows" className="py-24 px-5 sm:px-8 md:px-12 bg-aged">
-      <div className="max-w-6xl mx-auto">
+    <section id="shows" className="py-24 px-5 sm:px-8 md:px-12 bg-aged relative overflow-hidden">
+      {/* Background Typography Pattern */}
+      <TypographyDecor
+        sectionId="shows"
+        variant="4"
+        mode="corner-ornament"
+        position="top-left"
+        opacity={0.06}
+      />
+
+      <div className="max-w-6xl mx-auto relative z-10">
         <FadeIn delay={0} className="text-center mb-16">
           <SectionLabel text="RAGAM PERTUNJUKAN" />
           <h2 className="font-mileast italic font-bold mt-3 leading-none uppercase" style={{ fontSize: 'clamp(2rem, 6vw, 72px)', color: '#062B4A' }}>
@@ -86,17 +97,29 @@ export const ShowsSection: React.FC<ShowsSectionProps> = ({ onOpenTrailer }) => 
           ))}
         </div>
 
-        {/* Stage Concept */}
-        <FadeIn delay={0.3} className="mt-16">
-          <div className="classic-card rounded-3xl p-8 sm:p-12">
-            <div className="text-center mb-8">
+        {/* Divider Banner */}
+        <TypographyDecor variant="4" mode="divider-banner" className="my-12" />
+
+        {/* Stage Concept with building.png background integration */}
+        <FadeIn delay={0.3} className="mt-4">
+          <div className="classic-card rounded-3xl p-8 sm:p-12 relative overflow-hidden">
+            {/* Architectural Building backdrop accent */}
+            <div
+              className="absolute right-0 bottom-0 w-1/2 h-full opacity-10 pointer-events-none bg-cover bg-no-repeat bg-right-bottom"
+              style={{
+                backgroundImage: `url("${importImage('building.png')}")`,
+              }}
+              aria-hidden="true"
+            />
+
+            <div className="text-center mb-8 relative z-10">
               <SectionLabel text="KONSEP PANGGUNG" />
               <h3 className="font-playfair font-bold text-2xl mt-2" style={{ color: '#062B4A' }}>Arsitektur Latar Klasik Nusantara</h3>
               <p className="font-baskerville text-sm mt-2 max-w-2xl mx-auto leading-relaxed" style={{ color: '#062B4A', opacity: 0.8 }}>
                 Latar bangunan klasik Nusantara yang menggabungkan keanekaragaman arsitektur daerah — mencerminkan akar budaya bangsa dan semangat Gontor sebagai "Guru Kebangsaan".
               </p>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 text-center">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 text-center relative z-10">
               {[
                 ['12 × 26.84 m', 'Panggung Utama'],
                 ['48 Beam', 'Tata Cahaya Beam'],
@@ -107,7 +130,7 @@ export const ShowsSection: React.FC<ShowsSectionProps> = ({ onOpenTrailer }) => 
                 ['Special Effects', 'Efek Khusus'],
                 ['Pyro & Confetti', 'Grand Opening']
               ].map(([val, label]) => (
-                <div key={label} className="p-4 rounded-xl" style={{ background: 'rgba(6,43,74,0.05)', border: '1px solid rgba(214,145,3,0.2)' }}>
+                <div key={label} className="p-4 rounded-xl backdrop-blur-sm" style={{ background: 'rgba(6,43,74,0.05)', border: '1px solid rgba(214,145,3,0.2)' }}>
                   <div className="font-mileast font-bold text-base gold-text">{val}</div>
                   <div className="font-cormorant-sc text-xs mt-1 opacity-70" style={{ color: '#062B4A' }}>{label}</div>
                 </div>

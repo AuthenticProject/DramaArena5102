@@ -2,6 +2,8 @@ import React from 'react';
 import { FadeIn } from './FadeIn';
 import { SectionLabel, FleuronDivider, StampLogo } from './HeroSection';
 import { Star } from 'lucide-react';
+import { TypographyDecor } from './TypographyDecor';
+import { importImage } from '../utils/assetHelpers';
 
 const pillarsData = [
   { en: "Educating", id: "Mendidik", desc: "Setiap sajian seni mengandung nilai dan pesan moral Islami yang mendidik jiwa santri." },
@@ -14,8 +16,17 @@ export const AboutSection: React.FC = () => {
   return (
     <>
       {/* ── ABOUT / PROFILE ──────────────────────────────────────────── */}
-      <section id="about" className="py-24 px-5 sm:px-8 md:px-12 max-w-6xl mx-auto">
-        <FadeIn delay={0} className="text-center mb-16">
+      <section id="about" className="relative py-24 px-5 sm:px-8 md:px-12 max-w-6xl mx-auto overflow-hidden">
+        {/* Subtle typography accent */}
+        <TypographyDecor
+          sectionId="about"
+          variant="2"
+          mode="corner-ornament"
+          position="top-right"
+          opacity={0.06}
+        />
+
+        <FadeIn delay={0} className="text-center mb-16 relative z-10">
           <SectionLabel text="PROFIL SINGKAT" />
           <h2 className="font-mileast italic font-bold mt-3 leading-none uppercase" style={{ fontSize: 'clamp(2rem, 6vw, 72px)', color: '#062B4A' }}>
             Tentang Acara
@@ -23,7 +34,7 @@ export const AboutSection: React.FC = () => {
           <FleuronDivider />
         </FadeIn>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 relative z-10">
           <FadeIn delay={0.1}>
             <div className="classic-card rounded-2xl p-8 h-full">
               <div className="font-cormorant-sc text-xs tracking-widest uppercase mb-2" style={{ color: '#D69103' }}>Penyelenggara</div>
@@ -67,11 +78,22 @@ export const AboutSection: React.FC = () => {
             </div>
           </FadeIn>
         </div>
+
+        {/* Decorative divider banner */}
+        <TypographyDecor variant="4" mode="divider-banner" className="mt-14" />
       </section>
 
       {/* ── BRAND IDENTITY ───────────────────────────────────────────── */}
-      <section className="py-20 px-5 sm:px-8" style={{ background: '#062B4A' }}>
-        <div className="max-w-5xl mx-auto">
+      <section className="py-20 px-5 sm:px-8 relative overflow-hidden" style={{ background: '#062B4A' }}>
+        {/* Subtle typography pattern */}
+        <TypographyDecor
+          sectionId="about"
+          variant="2"
+          mode="repeat-tile"
+          opacity={0.03}
+        />
+
+        <div className="max-w-5xl mx-auto relative z-10">
           <FadeIn delay={0} className="text-center mb-14">
             <span className="font-cormorant-sc text-xs tracking-[0.4em] uppercase" style={{ color: '#D69103' }}>✦ BRAND IDENTITY ✦</span>
             <h2 className="font-mileast italic font-bold mt-3 leading-none uppercase gold-text" style={{ fontSize: 'clamp(2rem, 5vw, 60px)' }}>
@@ -83,7 +105,7 @@ export const AboutSection: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Color Palette */}
             <FadeIn delay={0.1}>
-              <div className="p-6 rounded-2xl h-full" style={{ border: '1px solid rgba(214,145,3,0.3)', background: 'rgba(244,241,235,0.05)' }}>
+              <div className="p-6 rounded-2xl h-full backdrop-blur-sm" style={{ border: '1px solid rgba(214,145,3,0.3)', background: 'rgba(244,241,235,0.06)' }}>
                 <div className="font-cormorant-sc text-xs tracking-widest uppercase mb-4" style={{ color: '#D69103' }}>Color Palette</div>
                 <div className="flex flex-col gap-3">
                   {[
@@ -105,7 +127,7 @@ export const AboutSection: React.FC = () => {
 
             {/* Branding Theme */}
             <FadeIn delay={0.15}>
-              <div className="p-6 rounded-2xl h-full" style={{ border: '1px solid rgba(214,145,3,0.3)', background: 'rgba(244,241,235,0.05)' }}>
+              <div className="p-6 rounded-2xl h-full backdrop-blur-sm" style={{ border: '1px solid rgba(214,145,3,0.3)', background: 'rgba(244,241,235,0.06)' }}>
                 <div className="font-cormorant-sc text-xs tracking-widest uppercase mb-4" style={{ color: '#D69103' }}>Branding Theme</div>
                 {[
                   ['🏛', 'Old Classic', 'Estetika klasik bernilai tinggi'],
@@ -126,9 +148,14 @@ export const AboutSection: React.FC = () => {
 
             {/* Logo */}
             <FadeIn delay={0.2}>
-              <div className="p-6 rounded-2xl h-full flex flex-col items-center justify-center" style={{ border: '1px solid rgba(214,145,3,0.3)', background: 'rgba(244,241,235,0.05)' }}>
-                <div className="font-cormorant-sc text-xs tracking-widest uppercase mb-4" style={{ color: '#D69103' }}>Main Logo</div>
-                <StampLogo size={140} />
+              <div className="p-6 rounded-2xl h-full flex flex-col items-center justify-center backdrop-blur-sm" style={{ border: '1px solid rgba(214,145,3,0.3)', background: 'rgba(244,241,235,0.06)' }}>
+                <div className="font-cormorant-sc text-xs tracking-widest uppercase mb-3" style={{ color: '#D69103' }}>Official Brand Stamp</div>
+                <img
+                  src={importImage('logo.png')}
+                  alt="Official Logo"
+                  className="h-24 w-auto object-contain filter drop-shadow-md mb-2"
+                />
+                <StampLogo size={110} />
               </div>
             </FadeIn>
           </div>
@@ -136,8 +163,16 @@ export const AboutSection: React.FC = () => {
       </section>
 
       {/* ── THE MEANING OF BRANDING ───────────────────────────────────── */}
-      <section className="py-24 px-5 sm:px-8 md:px-12" style={{ background: '#F4F1EB' }}>
-        <div className="max-w-6xl mx-auto">
+      <section className="py-24 px-5 sm:px-8 md:px-12 relative overflow-hidden" style={{ background: '#F4F1EB' }}>
+        <TypographyDecor
+          sectionId="about"
+          variant="5"
+          mode="corner-ornament"
+          position="bottom-left"
+          opacity={0.05}
+        />
+
+        <div className="max-w-6xl mx-auto relative z-10">
           <FadeIn delay={0} className="text-center mb-16">
             <SectionLabel text="THE MEANING OF BRANDING" />
             <h2
@@ -186,7 +221,6 @@ export const AboutSection: React.FC = () => {
                 <div className="mt-6 w-8 h-8 flex items-center justify-center rounded-full" style={{ background: 'rgba(214,145,3,0.12)', border: '1px solid #D69103' }}>
                   <span className="text-lg" style={{ color: '#D69103' }}>⏳</span>
                 </div>
-                {/* Gold accent corner */}
                 <div className="absolute top-0 right-0 w-0 h-0" style={{ borderTop: '40px solid #D69103', borderLeft: '40px solid transparent' }} />
               </div>
             </FadeIn>

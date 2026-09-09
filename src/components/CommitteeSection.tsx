@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { FadeIn } from './FadeIn';
 import { SectionLabel, FleuronDivider } from './HeroSection';
 import { CommitteeGroup, BudgetItem } from '../types';
+import { TypographyDecor } from './TypographyDecor';
+import { importImage } from '../utils/assetHelpers';
+import { Shirt, ArrowRight } from 'lucide-react';
 
 const committeeData: CommitteeGroup[] = [
   { role: "Penanggung Jawab", names: ["Ahmad Nur Fajar Dwi Prakosa"] },
@@ -38,12 +41,25 @@ const budgetItems: BudgetItem[] = [
   { no: 13, section: "Sound System", amount: "Rp 3.540.000" }
 ];
 
-export const CommitteeSection: React.FC = () => {
+interface CommitteeSectionProps {
+  onNavigate?: (id: string) => void;
+}
+
+export const CommitteeSection: React.FC<CommitteeSectionProps> = ({ onNavigate }) => {
   const [committeeTab, setCommitteeTab] = useState<'panitia' | 'anggaran'>('panitia');
 
   return (
-    <section id="committee" className="py-24 px-5 sm:px-8 md:px-12">
-      <div className="max-w-6xl mx-auto">
+    <section id="committee" className="py-24 px-5 sm:px-8 md:px-12 relative overflow-hidden">
+      {/* Background Typography Watermark */}
+      <TypographyDecor
+        sectionId="committee"
+        variant="5"
+        mode="corner-ornament"
+        position="bottom-right"
+        opacity={0.05}
+      />
+
+      <div className="max-w-6xl mx-auto relative z-10">
         <FadeIn delay={0} className="text-center mb-12">
           <SectionLabel text="FORMASI KEPANITIAAN" />
           <h2 className="font-mileast italic font-bold mt-3 leading-none uppercase" style={{ fontSize: 'clamp(2rem, 6vw, 72px)', color: '#062B4A' }}>
@@ -151,6 +167,41 @@ export const CommitteeSection: React.FC = () => {
             </div>
           </FadeIn>
         )}
+
+        {/* Official Workshirt Teaser Banner */}
+        <FadeIn delay={0.2} className="mt-14">
+          <div className="rounded-2xl p-6 bg-gradient-to-r from-[#062B4A] to-[#041d33] text-white border border-[#D69103]/40 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div className="flex items-center gap-4">
+              <div className="w-16 h-16 rounded-xl bg-white/10 p-2 flex items-center justify-center flex-shrink-0 border border-[#D69103]/30">
+                <img
+                  src={importImage('workshirt.png')}
+                  alt="Official Panitia Workshirt"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <div>
+                <span className="font-cormorant-sc text-[10px] tracking-widest text-[#D69103] uppercase font-bold">
+                  ✦ SERAGAM RESMI PANITIA 5102 ✦
+                </span>
+                <h4 className="font-mileast font-bold text-lg text-white">
+                  Official Committee Workshirt & Visual Identity
+                </h4>
+                <p className="font-baskerville text-xs text-[#F4F1EB]/75 max-w-lg mt-0.5">
+                  Lihat detail seragam dinas panitia dan seluruh arsip grafis di galeri Media Showcase.
+                </p>
+              </div>
+            </div>
+
+            {onNavigate && (
+              <button
+                onClick={() => onNavigate('media-showcase')}
+                className="px-5 py-2.5 rounded-lg border border-[#D69103] bg-[#D69103] text-[#062B4A] font-cormorant-sc text-xs tracking-wider uppercase font-bold hover:bg-white hover:text-[#062B4A] transition-colors flex items-center gap-2 flex-shrink-0 cursor-pointer"
+              >
+                Buka Media Showcase <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            )}
+          </div>
+        </FadeIn>
       </div>
     </section>
   );
