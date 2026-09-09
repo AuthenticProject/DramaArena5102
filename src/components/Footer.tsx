@@ -84,11 +84,20 @@ export const Footer: React.FC<FooterProps> = ({ onOpenSponsorshipModal, onNaviga
         </div>
       </div>
 
-      <div
-        className="px-5 sm:px-8 py-5 text-center text-xs font-cormorant-sc tracking-widest uppercase"
-        style={{ borderTop: '1px solid rgba(214,145,3,0.15)', color: 'rgba(244,241,235,0.4)' }}
-      >
-        © 2026 Pagelaran Seni Drama Arena 5102 · Pondok Modern Darussalam Gontor · Naluri dan Nurani
+      {/* Mahfudzot Quote */}
+      <div className="px-5 sm:px-8 py-10 text-center" style={{ borderTop: '2px solid rgba(214,145,3,0.3)' }}>
+        <div className="max-w-2xl mx-auto">
+          <p className="font-mileast italic text-lg sm:text-xl leading-relaxed mb-3" style={{ color: '#F4F1EB' }}>
+            "Innamad-dunyā ḥadītsun ba'dahū, fakun ḥadītsan ḥasanan liman wa'ā."
+          </p>
+          <p className="font-cormorant-sc text-xs tracking-[0.2em] uppercase font-semibold" style={{ color: '#D69103' }}>
+            Sesungguhnya dunia itu hanyalah cerita setelahnya, maka jadilah cerita yang baik bagi siapa saja yang memahaminya.
+          </p>
+          <div className="w-10 h-px mx-auto my-5" style={{ background: 'rgba(214,145,3,0.35)' }} />
+        </div>
+        <p className="text-[11px] tracking-widest uppercase font-cormorant-sc" style={{ color: 'rgba(244,241,235,0.4)' }}>
+          © 2026 Drama Arena 5102 · KMI Pondok Modern Darussalam Gontor 1 · Naluri dan Nurani
+        </p>
       </div>
     </footer>
   );

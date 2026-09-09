@@ -110,8 +110,8 @@ export const AboutSection: React.FC = () => {
                 {[
                   ['🏛', 'Old Classic', 'Estetika klasik bernilai tinggi'],
                   ['📮', 'Stamp / Prangko', 'Simbol perjalanan & pesan budaya'],
-                  ['🏯', 'Kebudayaan Indonesia', 'Akar budaya Nusantara'],
-                  ['⏳', 'Jam Pasir', 'Perjalanan waktu yang tak berhenti']
+                  ['⏳', 'Jam Pasir', 'Perjalanan waktu yang tak berhenti'],
+                  ['🖋', 'Monogram', 'Identitas visual DA yang menyatu']
                 ].map(([ic, name, desc]) => (
                   <div key={name} className="flex items-start gap-3 mb-4">
                     <span className="text-2xl">{ic}</span>
@@ -124,18 +124,88 @@ export const AboutSection: React.FC = () => {
               </div>
             </FadeIn>
 
-            {/* Logo + Font */}
+            {/* Logo */}
             <FadeIn delay={0.2}>
-              <div className="p-6 rounded-2xl h-full" style={{ border: '1px solid rgba(214,145,3,0.3)', background: 'rgba(244,241,235,0.05)' }}>
+              <div className="p-6 rounded-2xl h-full flex flex-col items-center justify-center" style={{ border: '1px solid rgba(214,145,3,0.3)', background: 'rgba(244,241,235,0.05)' }}>
                 <div className="font-cormorant-sc text-xs tracking-widest uppercase mb-4" style={{ color: '#D69103' }}>Main Logo</div>
-                <div className="flex justify-center mb-4">
-                  <StampLogo size={120} />
-                </div>
+                <StampLogo size={140} />
+              </div>
+            </FadeIn>
+          </div>
+        </div>
+      </section>
+
+      {/* ── THE MEANING OF BRANDING ───────────────────────────────────── */}
+      <section className="py-24 px-5 sm:px-8 md:px-12" style={{ background: '#F4F1EB' }}>
+        <div className="max-w-6xl mx-auto">
+          <FadeIn delay={0} className="text-center mb-16">
+            <SectionLabel text="THE MEANING OF BRANDING" />
+            <h2
+              className="font-mileast italic font-bold mt-3 uppercase"
+              style={{ fontSize: 'clamp(1.8rem, 5vw, 54px)', color: '#062B4A', lineHeight: 1.1 }}
+            >
+              Makna di Balik Identitas
+            </h2>
+            <p className="font-cormorant-sc text-xs uppercase tracking-[0.25em] mt-2" style={{ color: '#D69103' }}>
+              Old Classic · Stamp · Indonesian Culture · Sand Hour
+            </p>
+            <FleuronDivider />
+          </FadeIn>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Prangko */}
+            <FadeIn delay={0.1}>
+              <div
+                className="p-8 h-full classic-card relative"
+                style={{ background: 'white' }}
+              >
+                <div className="text-[#D69103] font-cormorant-sc text-xs font-bold tracking-widest uppercase mb-3">Elemen 01</div>
+                <h3 className="font-mileast italic font-bold text-xl mb-4" style={{ color: '#062B4A' }}>Prangko (Stamp)</h3>
                 <hr className="gold-rule mb-4" />
-                <div className="font-cormorant-sc text-xs tracking-widest uppercase mb-2" style={{ color: '#D69103' }}>Font Type</div>
-                <div className="font-mileast text-3xl font-bold" style={{ color: '#F4F1EB' }}>Mileast</div>
-                <div className="font-cormorant-sc text-lg" style={{ color: '#D69103' }}>& Alverata</div>
-                <div className="text-xs mt-2 font-cormorant-sc" style={{ color: '#F4F1EB', opacity: 0.6 }}>Tipografi dekoratif klasik</div>
+                <p className="font-cormorant-sc text-sm leading-relaxed" style={{ color: '#062B4A', opacity: 0.85 }}>
+                  Prangko melambangkan perjalanan, pesan, dan sejarah. Sebagaimana nilai-nilai perjuangan yang diwariskan dari satu generasi ke generasi berikutnya, sejarah selalu memiliki ruang untuk dikenang.
+                </p>
+                <div className="mt-6 w-8 h-8 flex items-center justify-center rounded-full" style={{ background: 'rgba(214,145,3,0.08)', border: '1px solid rgba(214,145,3,0.3)' }}>
+                  <span className="text-lg" style={{ color: '#D69103' }}>📮</span>
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Jam Pasir — highlighted */}
+            <FadeIn delay={0.15}>
+              <div
+                className="p-8 h-full relative shadow-lg"
+                style={{ background: 'white', border: '2px solid #D69103' }}
+              >
+                <div className="text-[#D69103] font-cormorant-sc text-xs font-bold tracking-widest uppercase mb-3">Elemen 02</div>
+                <h3 className="font-mileast italic font-bold text-xl mb-4" style={{ color: '#062B4A' }}>Jam Pasir (Sandglass)</h3>
+                <hr className="gold-rule mb-4" />
+                <p className="font-cormorant-sc text-sm leading-relaxed" style={{ color: '#062B4A', opacity: 0.85 }}>
+                  Simbol perjalanan waktu dan proses yang tidak pernah berhenti. Setiap butiran pasir melambangkan pengalaman dan nilai yang perlahan membentuk karakter santri yang tak ternilai.
+                </p>
+                <div className="mt-6 w-8 h-8 flex items-center justify-center rounded-full" style={{ background: 'rgba(214,145,3,0.12)', border: '1px solid #D69103' }}>
+                  <span className="text-lg" style={{ color: '#D69103' }}>⏳</span>
+                </div>
+                {/* Gold accent corner */}
+                <div className="absolute top-0 right-0 w-0 h-0" style={{ borderTop: '40px solid #D69103', borderLeft: '40px solid transparent' }} />
+              </div>
+            </FadeIn>
+
+            {/* Monogram */}
+            <FadeIn delay={0.2}>
+              <div
+                className="p-8 h-full classic-card relative"
+                style={{ background: 'white' }}
+              >
+                <div className="text-[#D69103] font-cormorant-sc text-xs font-bold tracking-widest uppercase mb-3">Elemen 03</div>
+                <h3 className="font-mileast italic font-bold text-xl mb-4" style={{ color: '#062B4A' }}>Monogram Huruf D & A</h3>
+                <hr className="gold-rule mb-4" />
+                <p className="font-cormorant-sc text-sm leading-relaxed" style={{ color: '#062B4A', opacity: 0.85 }}>
+                  Stilisasi huruf D dan A yang menyatu di dalam jam pasir sebagai singkatan Drama Arena, mengikat pesan dan identitas visual dalam satu kesatuan harmonis.
+                </p>
+                <div className="mt-6 w-8 h-8 flex items-center justify-center rounded-full" style={{ background: 'rgba(214,145,3,0.08)', border: '1px solid rgba(214,145,3,0.3)' }}>
+                  <span className="font-mileast font-bold text-sm" style={{ color: '#D69103' }}>DA</span>
+                </div>
               </div>
             </FadeIn>
           </div>

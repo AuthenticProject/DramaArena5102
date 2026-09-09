@@ -3,67 +3,96 @@ import { FadeIn } from './FadeIn';
 import { SectionLabel, FleuronDivider } from './HeroSection';
 
 const sadarPillars = [
-  "Sadar akan adab sebelum ilmu.",
-  "Sadar akan nilai-nilai Islam.",
-  "Sadar akan amanah sebelum kedudukan.",
-  "Sadar akan perjuangan sebelum keberhasilan.",
-  "Sadar bahwa setiap proses di pondok membentuk karakter dan jati diri."
+  {
+    num: '01',
+    title: 'Adab Sebelum Ilmu',
+    desc: 'Memahami rasa hormat dan tata krama sebagai fondasi utama sebelum menerima luasnya cakrawala pengetahuan.',
+  },
+  {
+    num: '02',
+    title: 'Nilai-Nilai Islam',
+    desc: 'Menjadikan syariat dan keikhlasan sebagai nafas di setiap denyut langkah pergerakan santri.',
+  },
+  {
+    num: '03',
+    title: 'Amanah Sebelum Kedudukan',
+    desc: 'Tanggung jawab adalah amanah suci yang wajib ditunaikan, bukan sekadar mengejar prestise posisi.',
+  },
+  {
+    num: '04',
+    title: 'Perjuangan Sebelum Keberhasilan',
+    desc: 'Meyakini bahwa keringat, proses panjang, dan kebersamaan adalah esensi dari kemenangan sejati.',
+  },
+  {
+    num: '05',
+    title: 'Proses Membentuk Jati Diri',
+    desc: 'Sadar bahwa setiap proses di pondok membentuk karakter dan jati diri yang tak ternilai harganya.',
+  },
 ];
+
 
 export const ThemeSection: React.FC = () => {
   return (
-    <section id="theme" className="py-24 px-5 sm:px-8 md:px-12">
-      <div className="max-w-4xl mx-auto">
+    <section id="theme" className="py-24 px-5 sm:px-8 md:px-12 classic-border" style={{ background: '#062B4A' }}>
+      <div className="max-w-6xl mx-auto">
         <FadeIn delay={0} className="text-center mb-14">
           <SectionLabel text="TEMA & FILOSOFI" />
           <h2
-            className="font-mileast italic font-bold mt-3 leading-tight"
-            style={{ fontSize: 'clamp(1.8rem, 5vw, 60px)', color: '#062B4A' }}
+            className="font-mileast italic font-bold mt-3 leading-tight gold-text"
+            style={{ fontSize: 'clamp(1.5rem, 4vw, 48px)' }}
           >
-            "Sadar akan Nilai-Nilai<br />Perjuangan, Tumbuhkan<br />Semangat Kebersamaan."
+            "Sadar akan Nilai-Nilai Perjuangan,<br />Tumbuhkan Semangat Kebersamaan."
           </h2>
           <FleuronDivider />
+          <p className="font-cormorant-sc text-sm mt-2 max-w-2xl mx-auto leading-relaxed" style={{ color: 'rgba(244,241,235,0.72)' }}>
+            Setiap santri menjalani perjalanan yang berbeda di setiap jenjang kehidupannya di pondok. Drama Arena 5102
+            mengangkat perjalanan tersebut sebagai sebuah proses penyadaran — perjalanan memahami siapa diri kita sebagai santri.
+          </p>
         </FadeIn>
 
+        {/* 5-Pillar Grid */}
         <FadeIn delay={0.1}>
-          <div className="classic-card rounded-3xl p-8 sm:p-12 mb-10">
-            <p className="font-baskerville text-sm sm:text-base leading-loose mb-6" style={{ color: '#062B4A', opacity: 0.85, textIndent: '2em' }}>
-              Setiap santri menjalani perjalanan yang berbeda di setiap jenjang kehidupannya di pondok. Dari langkah pertama sebagai santri baru hingga menjadi santri kelas lima, setiap fase membawa amanah, tantangan, dan pelajaran yang berbeda.
-            </p>
-            <p className="font-baskerville text-sm sm:text-base leading-loose mb-6" style={{ color: '#062B4A', opacity: 0.85, textIndent: '2em' }}>
-              Drama Arena 5102 mengangkat perjalanan tersebut sebagai sebuah proses penyadaran — bukan sekadar perjalanan bertambahnya usia atau naiknya kelas, melainkan perjalanan memahami siapa diri kita sebagai santri.
-            </p>
-            <hr className="gold-rule my-6" />
-            <div className="font-cormorant-sc text-xs tracking-widest uppercase mb-4" style={{ color: '#D69103' }}>Lima Kesadaran Santri</div>
-            <div className="flex flex-col gap-3">
-              {sadarPillars.map((item, i) => (
-                <div key={i} className="flex items-start gap-3">
-                  <span className="font-mileast font-bold text-lg flex-shrink-0 gold-text">{i + 1}.</span>
-                  <span className="font-baskerville text-sm leading-relaxed" style={{ color: '#062B4A' }}>{item}</span>
-                </div>
-              ))}
-            </div>
-            <hr className="gold-rule my-6" />
-            <p className="font-baskerville italic text-sm leading-relaxed" style={{ color: '#062B4A', opacity: 0.8 }}>
-              Ketika kesadaran itu tumbuh, lahirlah rasa memiliki terhadap pondok, tumbuh semangat kebersamaan, dan muncul keinginan untuk menjaga nilai-nilai yang diwariskan oleh para pendahulu agar tetap hidup di generasi berikutnya.
-            </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 mb-14">
+            {sadarPillars.map((pillar, i) => (
+              <div
+                key={pillar.num}
+                className="p-6 transition-all duration-300 hover:-translate-y-1 group"
+                style={{
+                  border: i === 0 ? '1.5px solid #D69103' : '1.5px solid rgba(214,145,3,0.35)',
+                  background: 'rgba(3,28,51,0.8)',
+                }}
+              >
+                <span
+                  className="font-mileast font-bold text-3xl block mb-3 transition-colors group-hover:text-[#F5D98A]"
+                  style={{ color: '#D69103' }}
+                >
+                  {pillar.num}
+                </span>
+                <h3 className="font-playfair font-bold text-sm text-white mb-2 leading-snug">
+                  {pillar.title}
+                </h3>
+                <p className="font-cormorant-sc text-xs leading-relaxed" style={{ color: 'rgba(244,241,235,0.72)' }}>
+                  {pillar.desc}
+                </p>
+              </div>
+            ))}
           </div>
         </FadeIn>
 
         {/* Arabic Quote */}
         <FadeIn delay={0.2}>
           <div
-            className="classic-card rounded-3xl p-8 sm:p-12 text-center"
-            style={{ background: '#062B4A', border: '2px solid rgba(214,145,3,0.4)' }}
+            className="p-8 sm:p-12 text-center pulse-glow"
+            style={{ background: 'rgba(3,28,51,0.9)', border: '2px solid rgba(214,145,3,0.45)' }}
           >
             <div className="font-cormorant-sc text-xs tracking-widest uppercase mb-6" style={{ color: '#D69103' }}>
               ✦ KUTIPAN ACARA ✦
             </div>
-            <div className="font-mileast italic font-bold leading-snug mb-4" style={{ fontSize: 'clamp(1.1rem, 3vw, 2rem)', color: '#D69103' }}>
-              "Innama-d-dunya haditsun ba'dahu,
+            <div className="font-mileast italic font-bold leading-snug mb-1" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.8rem)', color: '#D69103' }}>
+              "Innamad-dunyā ḥadītsun ba'dahū,
             </div>
-            <div className="font-mileast italic font-bold leading-snug mb-6" style={{ fontSize: 'clamp(1.1rem, 3vw, 2rem)', color: '#F4F1EB' }}>
-              fakun haditsan hasanan liman wa'a."
+            <div className="font-mileast italic font-bold leading-snug mb-6" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.8rem)', color: '#F4F1EB' }}>
+              fakun ḥadītsan ḥasanan liman wa'ā."
             </div>
             <p className="font-cormorant-sc text-xs tracking-widest" style={{ color: 'rgba(244,241,235,0.6)' }}>
               "Sesungguhnya dunia hanyalah cerita, maka jadilah cerita yang baik bagi yang mendengarnya."
@@ -76,3 +105,4 @@ export const ThemeSection: React.FC = () => {
     </section>
   );
 };
+
