@@ -106,19 +106,19 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Desktop Nav Items */}
         <div className="hidden md:flex items-center gap-6 lg:gap-8 z-10">
           {navItems.map((item) => {
-            const isShowcaseActive = item.id === 'media-showcase' && currentView === 'media-showcase';
+            const isActive = item.id === currentView;
             return (
               <button
                 key={item.id}
                 onClick={() => handleNav(item.id)}
                 className={`font-cormorant-sc text-xs tracking-widest uppercase transition-all duration-200 cursor-pointer relative py-1 ${
                   item.highlight
-                    ? 'font-bold px-3 py-1.5 rounded-full border border-[#D69103] bg-gradient-to-r from-[#D69103]/15 to-[#B8860B]/10 hover:bg-[#D69103] hover:text-[#062B4A]'
-                    : 'hover:text-[#D69103]'
-                } ${
-                  isShowcaseActive
-                    ? 'bg-[#D69103] text-[#062B4A] shadow-sm'
-                    : 'text-[#062B4A]'
+                    ? isActive
+                      ? 'font-bold px-3.5 py-1.5 rounded-full bg-[#D69103] text-[#F4F1EB] shadow-md border border-[#B8860B]'
+                      : 'font-bold px-3 py-1.5 rounded-full border border-[#D69103] bg-gradient-to-r from-[#D69103]/15 to-[#B8860B]/10 hover:bg-[#D69103] hover:text-[#062B4A] text-[#062B4A]'
+                    : isActive
+                    ? 'text-[#D69103] font-bold border-b-2 border-[#D69103]'
+                    : 'text-[#062B4A] hover:text-[#D69103]'
                 }`}
               >
                 {item.highlight && <Sparkles className="w-3 h-3 inline mr-1 text-[#D69103]" />}

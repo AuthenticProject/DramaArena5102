@@ -9,41 +9,22 @@ interface HeroSectionProps {
   onNavigate: (sectionId: string) => void;
 }
 
-export const StampLogo: React.FC<{ size?: number }> = ({ size = 200 }) => (
-  <svg width={size} height={size} viewBox="0 0 200 200" className="float-anim">
-    {/* Outer frame */}
-    <rect x="10" y="10" width="180" height="180" rx="4" fill="none" stroke="#062B4A" strokeWidth="3"/>
-    {/* Inner dashed gold border */}
-    <rect x="20" y="20" width="160" height="160" rx="2" fill="none" stroke="#D69103" strokeWidth="1.5" strokeDasharray="4,3"/>
-    {/* Hourglass / D&A monogram */}
-    <g transform="translate(100,100)">
-      {/* fill shapes */}
-      <path d="M-28,-38 L28,-38 L8,-4 L28,4 L-28,4 Z" fill="#D69103" opacity="0.13"/>
-      <path d="M-28,38 L28,38 L8,4 L-28,4 Z" fill="#062B4A" opacity="0.10"/>
-      {/* Gold outline top half */}
-      <path d="M-28,-38 L28,-38 L8,-4 L28,4 L-28,4 Z" fill="none" stroke="#D69103" strokeWidth="2.5" strokeLinejoin="round"/>
-      {/* Navy outline bottom half */}
-      <path d="M28,-38 L8,-4 L28,4 L-28,4 L8,38 L-28,38" fill="none" stroke="#062B4A" strokeWidth="2.5" strokeLinejoin="round"/>
-      {/* Top & bottom caps */}
-      <line x1="-28" y1="-38" x2="28" y2="-38" stroke="#062B4A" strokeWidth="3"/>
-      <line x1="-28" y1="38" x2="28" y2="38" stroke="#D69103" strokeWidth="3"/>
-      {/* Centre dot */}
-      <circle cx="0" cy="0" r="3" fill="#062B4A"/>
-    </g>
-    {/* Labels */}
-    <text x="100" y="46" textAnchor="middle" fontFamily="'Mileast', serif" fontSize="9" fontWeight="700" fill="#062B4A" letterSpacing="3">DRAMA</text>
-    <text x="100" y="163" textAnchor="middle" fontFamily="'Mileast', serif" fontSize="9" fontWeight="700" fill="#D69103" letterSpacing="3">ARENA</text>
-    <text x="100" y="175" textAnchor="middle" fontFamily="'Cormorant SC', serif" fontSize="7" fill="#062B4A" letterSpacing="2">5102</text>
-    {/* Corner ornaments */}
-    <text x="24" y="34" fontFamily="serif" fontSize="9" fill="#D69103" opacity="0.7">✦</text>
-    <text x="176" y="34" fontFamily="serif" fontSize="9" fill="#D69103" opacity="0.7" textAnchor="end">✦</text>
-    <text x="24" y="176" fontFamily="serif" fontSize="9" fill="#D69103" opacity="0.7">✦</text>
-    <text x="176" y="176" fontFamily="serif" fontSize="9" fill="#D69103" opacity="0.7" textAnchor="end">✦</text>
-    {/* Postmark arc – decorative */}
-    <path d="M 60 38 A 40 40 0 0 1 140 38" stroke="rgba(6,43,74,0.15)" strokeWidth="1" fill="none" strokeDasharray="2,3"/>
-    <path d="M 60 162 A 40 40 0 0 0 140 162" stroke="rgba(214,145,3,0.2)" strokeWidth="1" fill="none" strokeDasharray="2,3"/>
-  </svg>
-);
+export const StampLogo: React.FC<{ size?: number; className?: string }> = ({ size = 200, className = '' }) => {
+  const logo2Url = importImage('logo 2.png');
+  return (
+    <div
+      className={`relative flex items-center justify-center float-anim group cursor-pointer ${className}`}
+      style={{ width: size, height: 'auto' }}
+    >
+      <img
+        src={logo2Url}
+        alt="Logo Resmi Drama Arena 5102"
+        className="w-full h-auto object-contain filter drop-shadow-[0_10px_24px_rgba(6,43,74,0.2)] transition-all duration-500 group-hover:scale-105 group-hover:drop-shadow-[0_18px_36px_rgba(6,43,74,0.32)]"
+        style={{ maxHeight: size }}
+      />
+    </div>
+  );
+};
 
 export const FleuronDivider: React.FC = () => (
   <div className="flex items-center gap-3 my-2 w-full max-w-xs mx-auto">
@@ -204,10 +185,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenSponsorshipModal
         <FleuronDivider />
       </FadeIn>
 
-      {/* 5. Central Stamp Logo & Card */}
-      <FadeIn delay={0.1} y={0} className="mb-6 flex flex-col items-center z-10">
+      {/* 5. Central Official Logo 2.png */}
+      <FadeIn delay={0.1} y={0} className="mb-4 sm:mb-6 flex flex-col items-center z-10">
         {/* Tagline Badge */}
-        <div className="inline-flex items-center gap-2 px-5 py-1.5 mb-5 border border-[#D69103] bg-[#F4F1EB]/90 backdrop-blur-sm shadow-sm">
+        <div className="inline-flex items-center gap-2 px-5 py-1.5 mb-6 border border-[#D69103] bg-[#F4F1EB]/90 backdrop-blur-sm shadow-sm">
           <span className="w-1.5 h-1.5 rounded-full bg-[#D69103] flex-shrink-0"></span>
           <span className="font-cormorant-sc text-[10px] uppercase tracking-[0.28em] text-[#062B4A] font-bold">
             Pagelaran Seni Akbar Kelas 5 102
@@ -215,36 +196,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenSponsorshipModal
           <span className="w-1.5 h-1.5 rounded-full bg-[#D69103] flex-shrink-0"></span>
         </div>
 
-        {/* Stamp Card with perforated frame */}
-        <div className="stamp-frame max-w-[290px] md:max-w-[320px] w-full mx-auto cursor-pointer">
-          <div className="stamp-content p-6 flex flex-col items-center justify-between" style={{ minHeight: '360px' }}>
-            {/* Top label */}
-            <div className="text-[9px] font-cormorant-sc tracking-[0.4em] uppercase text-[#D69103] font-bold border-b border-[#D69103]/40 w-full pb-2 text-center">
-              DRAMA
-            </div>
-
-            {/* Central stamp logo */}
-            <div className="my-4 relative flex flex-col items-center">
-              <div className="stamp-cancel-mark" style={{ top: '-10px', right: '-10px' }} />
-              <img
-                src={importImage('logo.png')}
-                alt="Logo DA 5102"
-                className="h-16 mb-2 object-contain filter drop-shadow-sm"
-              />
-              <StampLogo size={180} />
-              <span
-                className="font-mileast font-black text-2xl tracking-[0.2em] mt-1"
-                style={{ color: '#062B4A' }}
-              >
-                5102
-              </span>
-            </div>
-
-            {/* Bottom label */}
-            <div className="text-[9px] font-cormorant-sc tracking-[0.4em] uppercase text-[#D69103] font-bold border-t border-[#D69103]/40 w-full pt-2 text-center">
-              ARENA
-            </div>
-          </div>
+        {/* Authentic Official Logo 2.png with original smooth floating & interactive motion */}
+        <div className="relative group cursor-pointer float-anim">
+          <img
+            src={importImage('logo 2.png')}
+            alt="Logo Resmi Drama Arena 5102"
+            className="w-44 sm:w-52 md:w-60 max-w-[240px] h-auto object-contain transition-all duration-500 group-hover:scale-105 group-hover:-rotate-1 filter drop-shadow-[0_14px_30px_rgba(6,43,74,0.22)] group-hover:drop-shadow-[0_22px_45px_rgba(6,43,74,0.38)] active:scale-95"
+          />
         </div>
       </FadeIn>
 

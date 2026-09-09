@@ -6,8 +6,8 @@ import { TypographyDecor } from '../components/TypographyDecor';
 import { FleuronDivider, SectionLabel, GoldButton } from '../components/HeroSection';
 
 interface MediaShowcaseProps {
-  onBackToHome: () => void;
-  onOpenSponsorshipModal: () => void;
+  onBackToHome?: () => void;
+  onOpenSponsorshipModal?: () => void;
 }
 
 export const MediaShowcase: React.FC<MediaShowcaseProps> = ({
@@ -35,7 +35,10 @@ export const MediaShowcase: React.FC<MediaShowcaseProps> = ({
   }, [isCarouselPaused, logoAssets.length]);
 
   return (
-    <div className="min-h-screen bg-[#F4F1EB] text-[#062B4A] pt-24 pb-20 px-4 sm:px-6 md:px-12 relative overflow-hidden">
+    <section
+      id="media-showcase"
+      className="relative py-24 px-4 sm:px-6 md:px-12 overflow-hidden bg-[#F4F1EB] text-[#062B4A] border-t border-[#D69103]/25 scroll-mt-14"
+    >
       {/* Repeating subtle typography background pattern */}
       <TypographyDecor
         sectionId="media"
@@ -49,11 +52,17 @@ export const MediaShowcase: React.FC<MediaShowcaseProps> = ({
         <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-[#D69103]/30">
           <div className="flex items-center gap-3">
             <button
-              onClick={onBackToHome}
+              onClick={() => {
+                if (onBackToHome) {
+                  onBackToHome();
+                } else {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+              }}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-[#D69103] bg-white/70 hover:bg-[#D69103] hover:text-white text-[#062B4A] font-cormorant-sc text-xs tracking-widest uppercase transition-all duration-200 shadow-sm cursor-pointer"
             >
               <ArrowLeft className="w-4 h-4" />
-              Kembali ke Beranda
+              Ke Atas / Beranda
             </button>
             <span className="text-xs font-mono text-[#062B4A]/40 hidden sm:inline">/</span>
             <span className="font-cormorant-sc text-xs tracking-widest text-[#D69103] uppercase font-bold hidden sm:inline">
@@ -506,6 +515,6 @@ export const MediaShowcase: React.FC<MediaShowcaseProps> = ({
           </div>
         </div>
       )}
-    </div>
+    </section>
   );
 };

@@ -150,12 +150,7 @@ export const AboutSection: React.FC = () => {
             <FadeIn delay={0.2}>
               <div className="p-6 rounded-2xl h-full flex flex-col items-center justify-center backdrop-blur-sm" style={{ border: '1px solid rgba(214,145,3,0.3)', background: 'rgba(244,241,235,0.06)' }}>
                 <div className="font-cormorant-sc text-xs tracking-widest uppercase mb-3" style={{ color: '#D69103' }}>Official Brand Stamp</div>
-                <img
-                  src={importImage('logo.png')}
-                  alt="Official Logo"
-                  className="h-24 w-auto object-contain filter drop-shadow-md mb-2"
-                />
-                <StampLogo size={110} />
+                <StampLogo size={135} />
               </div>
             </FadeIn>
           </div>
