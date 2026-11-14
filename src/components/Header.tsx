@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Menu, X, ArrowUpRight, Sparkles } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Menu, X, ArrowUpRight } from 'lucide-react';
 import { importImage } from '../utils/assetHelpers';
 
 interface HeaderProps {
@@ -14,6 +14,15 @@ export const Header: React.FC<HeaderProps> = ({
   currentView = 'hero',
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMobileMenuOpen(false);
+    };
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, [mobileMenuOpen]);
 
   const handleNav = (id: string) => {
     onNavigate(id);
@@ -44,12 +53,12 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="hidden md:flex items-center justify-between px-6 lg:px-12 py-1.5 bg-[#0B151F] text-[#EDE8E2] border-b border-[#B58A3C]/20 text-[11px] font-mono tracking-wider">
         <div className="flex items-center gap-3">
           <span className="inline-block w-2 h-2 rounded-full bg-[#D4AF37] animate-pulse" />
-          <span className="font-semibold text-[#F3E1B8]">PORTAL RESMI PAGELARAN SENI AKBAR · KMI PMDG</span>
+          <span className="font-semibold text-[#F3E1B8]">ARSIP DIGITAL PAGELARAN SENI AKBAR · KMI PMDG</span>
           <span className="text-[#B58A3C]/40">|</span>
           <span className="text-[#EDE8E2]/75">DRAMA ARENA 5102</span>
         </div>
         <div className="flex items-center gap-3 text-[#EDE8E2]/80">
-          <span>Kamis, 7 Mei 2026 · 19.30 WIB</span>
+          <span>ARSIP · KAMIS, 7 MEI 2026</span>
           <span className="text-[#D4AF37]">✦</span>
           <span className="font-bold text-[#F3E1B8]">Kampus Pusat Ponorogo</span>
         </div>
@@ -61,7 +70,9 @@ export const Header: React.FC<HeaderProps> = ({
         <button
           onClick={() => handleNav('hero')}
           className="flex items-center gap-3 text-left group cursor-pointer focus:outline-none"
+          type="button"
           title="Drama Arena 5102"
+          aria-label="Kembali ke halaman utama Drama Arena 5102"
         >
           <div className="w-10 h-10 rounded-xl bg-[#192E41] p-1.5 border border-[#B58A3C]/50 flex items-center justify-center transition-all duration-300 group-hover:scale-105 group-hover:border-[#D4AF37] shadow-lg">
             <img
@@ -87,12 +98,14 @@ export const Header: React.FC<HeaderProps> = ({
         </button>
 
         {/* Desktop Navigation Links (Pill Bar) */}
-        <nav className="hidden lg:flex items-center gap-1 bg-[#0B151F]/60 p-1.5 rounded-2xl border border-white/10 backdrop-blur-md">
+        <nav aria-label="Navigasi utama" className="hidden lg:flex items-center gap-1 bg-[#0B151F]/60 p-1.5 rounded-2xl border border-white/10 backdrop-blur-md">
           {navItems.map((item) => {
             const isActive = currentView === item.id;
             return (
               <button
                 key={item.id}
+                type="button"
+                aria-current={isActive ? 'location' : undefined}
                 onClick={() => handleNav(item.id)}
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold tracking-wide transition-all duration-200 cursor-pointer ${
                   isActive
@@ -109,6 +122,7 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Action Button */}
         <div className="hidden sm:flex items-center gap-3">
           <button
+            type="button"
             onClick={onOpenSponsorshipModal}
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-jakarta font-bold text-xs tracking-wide text-[#192E41] bg-gradient-to-r from-[#F3E1B8] via-[#D4A853] to-[#B58A3C] hover:from-[#D4A853] hover:to-[#B58A3C] shadow-lg hover:shadow-[0_0_20px_rgba(212,175,55,0.4)] hover:-translate-y-0.5 transition-all cursor-pointer font-semibold"
           >
@@ -122,7 +136,10 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="p-2 rounded-xl text-[#EDE8E2] hover:bg-white/10 transition-colors cursor-pointer"
-            aria-label="Toggle Menu"
+            type="button"
+            aria-label={mobileMenuOpen ? "Tutup menu navigasi" : "Buka menu navigasi"}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="da-mobile-navigation"
           >
             {mobileMenuOpen ? <X className="w-6 h-6 text-[#D4AF37]" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -131,10 +148,12 @@ export const Header: React.FC<HeaderProps> = ({
 
       {/* Mobile Dropdown */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-[#B58A3C]/20 px-6 py-5 bg-[#101D2A] flex flex-col gap-2 shadow-2xl font-jakarta">
+        <nav id="da-mobile-navigation" aria-label="Navigasi mobile" className="lg:hidden border-t border-[#B58A3C]/20 px-6 py-5 bg-[#101D2A] flex flex-col gap-2 shadow-2xl font-jakarta">
           {navItems.map((item) => (
             <button
               key={item.id}
+              type="button"
+              aria-current={currentView === item.id ? "location" : undefined}
               onClick={() => handleNav(item.id)}
               className="text-left py-2.5 text-sm font-semibold tracking-wide text-[#EDE8E2] border-b border-white/5 flex items-center justify-between hover:text-[#D4AF37]"
             >
@@ -143,6 +162,7 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
           ))}
           <button
+            type="button"
             onClick={() => {
               setMobileMenuOpen(false);
               onOpenSponsorshipModal();
@@ -151,7 +171,7 @@ export const Header: React.FC<HeaderProps> = ({
           >
             Proposal Kemitraan
           </button>
-        </div>
+        </nav>
       )}
     </header>
   );
