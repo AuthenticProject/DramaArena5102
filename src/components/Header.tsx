@@ -53,12 +53,12 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="hidden md:flex items-center justify-between px-6 lg:px-12 py-1.5 bg-[#0B151F] text-[#EDE8E2] border-b border-[#B58A3C]/20 text-[11px] font-mono tracking-wider">
         <div className="flex items-center gap-3">
           <span className="inline-block w-2 h-2 rounded-full bg-[#D4AF37] animate-pulse" />
-          <span className="font-semibold text-[#F3E1B8]">PORTAL RESMI PAGELARAN SENI AKBAR · KMI PMDG</span>
+          <span className="font-semibold text-[#F3E1B8]">ARSIP DIGITAL PAGELARAN SENI AKBAR · KMI PMDG</span>
           <span className="text-[#B58A3C]/40">|</span>
           <span className="text-[#EDE8E2]/75">DRAMA ARENA 5102</span>
         </div>
         <div className="flex items-center gap-3 text-[#EDE8E2]/80">
-          <span>Kamis, 7 Mei 2026 · 19.30 WIB</span>
+          <span>ARSIP · KAMIS, 7 MEI 2026</span>
           <span className="text-[#D4AF37]">✦</span>
           <span className="font-bold text-[#F3E1B8]">Kampus Pusat Ponorogo</span>
         </div>
@@ -70,7 +70,9 @@ export const Header: React.FC<HeaderProps> = ({
         <button
           onClick={() => handleNav('hero')}
           className="flex items-center gap-3 text-left group cursor-pointer focus:outline-none"
+          type="button"
           title="Drama Arena 5102"
+          aria-label="Kembali ke halaman utama Drama Arena 5102"
         >
           <div className="w-10 h-10 rounded-xl bg-[#192E41] p-1.5 border border-[#B58A3C]/50 flex items-center justify-center transition-all duration-300 group-hover:scale-105 group-hover:border-[#D4AF37] shadow-lg">
             <img
@@ -120,6 +122,7 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Action Button */}
         <div className="hidden sm:flex items-center gap-3">
           <button
+            type="button"
             onClick={onOpenSponsorshipModal}
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-jakarta font-bold text-xs tracking-wide text-[#192E41] bg-gradient-to-r from-[#F3E1B8] via-[#D4A853] to-[#B58A3C] hover:from-[#D4A853] hover:to-[#B58A3C] shadow-lg hover:shadow-[0_0_20px_rgba(212,175,55,0.4)] hover:-translate-y-0.5 transition-all cursor-pointer font-semibold"
           >
@@ -159,6 +162,7 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
           ))}
           <button
+            type="button"
             onClick={() => {
               setMobileMenuOpen(false);
               onOpenSponsorshipModal();
