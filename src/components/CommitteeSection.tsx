@@ -4,7 +4,7 @@ import { SectionLabel, FleuronDivider } from './HeroSection';
 import { CommitteeGroup, BudgetItem } from '../types';
 import { TypographyDecor } from './TypographyDecor';
 import { importImage } from '../utils/assetHelpers';
-import { ArrowRight, Search, Users, Wallet, ChevronDown, AlertTriangle, Shirt } from 'lucide-react';
+import { ArrowRight, Search, Users, Wallet, ChevronDown } from 'lucide-react';
 
 const committeeData: CommitteeGroup[] = [
   { role: "Penanggung Jawab", names: ["Ahmad Nur Fajar Dwi Prakosa"] },
