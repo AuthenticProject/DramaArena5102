@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Menu, X, ArrowUpRight, Sparkles } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Menu, X, ArrowUpRight } from 'lucide-react';
 import { importImage } from '../utils/assetHelpers';
 
 interface HeaderProps {
@@ -14,6 +14,15 @@ export const Header: React.FC<HeaderProps> = ({
   currentView = 'hero',
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMobileMenuOpen(false);
+    };
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, [mobileMenuOpen]);
 
   const handleNav = (id: string) => {
     onNavigate(id);
@@ -87,12 +96,14 @@ export const Header: React.FC<HeaderProps> = ({
         </button>
 
         {/* Desktop Navigation Links (Pill Bar) */}
-        <nav className="hidden lg:flex items-center gap-1 bg-[#0B151F]/60 p-1.5 rounded-2xl border border-white/10 backdrop-blur-md">
+        <nav aria-label="Navigasi utama" className="hidden lg:flex items-center gap-1 bg-[#0B151F]/60 p-1.5 rounded-2xl border border-white/10 backdrop-blur-md">
           {navItems.map((item) => {
             const isActive = currentView === item.id;
             return (
               <button
                 key={item.id}
+                type="button"
+                aria-current={isActive ? 'location' : undefined}
                 onClick={() => handleNav(item.id)}
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold tracking-wide transition-all duration-200 cursor-pointer ${
                   isActive
@@ -122,7 +133,10 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="p-2 rounded-xl text-[#EDE8E2] hover:bg-white/10 transition-colors cursor-pointer"
-            aria-label="Toggle Menu"
+            type="button"
+            aria-label={mobileMenuOpen ? "Tutup menu navigasi" : "Buka menu navigasi"}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="da-mobile-navigation"
           >
             {mobileMenuOpen ? <X className="w-6 h-6 text-[#D4AF37]" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -131,10 +145,12 @@ export const Header: React.FC<HeaderProps> = ({
 
       {/* Mobile Dropdown */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-[#B58A3C]/20 px-6 py-5 bg-[#101D2A] flex flex-col gap-2 shadow-2xl font-jakarta">
+        <nav id="da-mobile-navigation" aria-label="Navigasi mobile" className="lg:hidden border-t border-[#B58A3C]/20 px-6 py-5 bg-[#101D2A] flex flex-col gap-2 shadow-2xl font-jakarta">
           {navItems.map((item) => (
             <button
               key={item.id}
+              type="button"
+              aria-current={currentView === item.id ? "location" : undefined}
               onClick={() => handleNav(item.id)}
               className="text-left py-2.5 text-sm font-semibold tracking-wide text-[#EDE8E2] border-b border-white/5 flex items-center justify-between hover:text-[#D4AF37]"
             >
@@ -151,7 +167,7 @@ export const Header: React.FC<HeaderProps> = ({
           >
             Proposal Kemitraan
           </button>
-        </div>
+        </nav>
       )}
     </header>
   );
