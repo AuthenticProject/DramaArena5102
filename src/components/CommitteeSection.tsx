@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { FadeIn } from './FadeIn';
 import { SectionLabel, FleuronDivider } from './HeroSection';
 import { CommitteeGroup, BudgetItem } from '../types';
 import { TypographyDecor } from './TypographyDecor';
 import { importImage } from '../utils/assetHelpers';
-import { Shirt, ArrowRight, ShieldCheck, DollarSign, Users } from 'lucide-react';
+import { ArrowRight, Search, Users, Wallet, ChevronDown, AlertTriangle, Shirt } from 'lucide-react';
 
 const committeeData: CommitteeGroup[] = [
   { role: "Penanggung Jawab", names: ["Ahmad Nur Fajar Dwi Prakosa"] },
@@ -26,217 +26,124 @@ const committeeData: CommitteeGroup[] = [
 ];
 
 const budgetItems: BudgetItem[] = [
-  { no: 1, section: "Sekretaris", amount: "Rp 64.110.000" },
-  { no: 2, section: "Bendahara", amount: "Rp 405.000" },
-  { no: 3, section: "Properti", amount: "Rp 57.306.000" },
-  { no: 4, section: "Dekorasi", amount: "Rp 67.376.000" },
-  { no: 5, section: "Konsumsi", amount: "Rp 86.480.000" },
-  { no: 6, section: "Multimedia", amount: "Rp 37.400.000" },
-  { no: 7, section: "Kostum", amount: "Rp 101.970.000" },
-  { no: 8, section: "Pertamanan", amount: "Rp 50.545.000" },
-  { no: 9, section: "Kreatif & Acara", amount: "Rp 31.420.000" },
-  { no: 10, section: "Publikasi", amount: "Rp 3.095.000" },
-  { no: 11, section: "Elektro", amount: "Rp 31.310.000" },
-  { no: 12, section: "Humas", amount: "Rp 185.450.000" },
-  { no: 13, section: "Sound System", amount: "Rp 3.540.000" }
+  { no: 1, section: "Sekretaris", amount: "Rp 64.110.000", raw: 64110000 },
+  { no: 2, section: "Bendahara", amount: "Rp 405.000", raw: 405000 },
+  { no: 3, section: "Properti", amount: "Rp 57.306.000", raw: 57306000 },
+  { no: 4, section: "Dekorasi", amount: "Rp 67.376.000", raw: 67376000 },
+  { no: 5, section: "Konsumsi", amount: "Rp 86.480.000", raw: 86480000 },
+  { no: 6, section: "Multimedia", amount: "Rp 37.400.000", raw: 37400000 },
+  { no: 7, section: "Kostum", amount: "Rp 101.970.000", raw: 101970000 },
+  { no: 8, section: "Pertamanan", amount: "Rp 50.545.000", raw: 50545000 },
+  { no: 9, section: "Kreatif & Acara", amount: "Rp 31.420.000", raw: 31420000 },
+  { no: 10, section: "Publikasi", amount: "Rp 3.095.000", raw: 3095000 },
+  { no: 11, section: "Elektro", amount: "Rp 31.310.000", raw: 31310000 },
+  { no: 12, section: "Humas", amount: "Rp 185.450.000", raw: 185450000 },
+  { no: 13, section: "Sound System", amount: "Rp 3.540.000", raw: 3540000 }
 ];
 
-interface CommitteeSectionProps {
-  onNavigate?: (id: string) => void;
-}
+const statedBudgetTotal = 500107000;
+const formatRupiah = (value: number) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(value);
+
+interface CommitteeSectionProps { onNavigate?: (id: string) => void; }
 
 export const CommitteeSection: React.FC<CommitteeSectionProps> = ({ onNavigate }) => {
-  const [committeeTab, setCommitteeTab] = useState<'panitia' | 'anggaran'>('panitia');
-  const [searchRole, setSearchRole] = useState<string>('');
+  const [activeTab, setActiveTab] = useState<'panitia' | 'anggaran'>('panitia');
+  const [search, setSearch] = useState('');
+  const [expandedRoles, setExpandedRoles] = useState<string[]>(['Ketua']);
+  const filteredCommittee = useMemo(() => committeeData.filter(group =>
+    group.role.toLowerCase().includes(search.toLowerCase()) ||
+    group.names.some(name => name.toLowerCase().includes(search.toLowerCase()))
+  ), [search]);
+  const totalPeople = committeeData.reduce((sum, group) => sum + group.names.length, 0);
+  const listedBudgetTotal = budgetItems.reduce((sum, item) => sum + (item.raw || 0), 0);
+  const largestAllocation = Math.max(...budgetItems.map(item => item.raw || 0));
 
-  const filteredCommittee = committeeData.filter(g =>
-    g.role.toLowerCase().includes(searchRole.toLowerCase()) ||
-    g.names.some(n => n.toLowerCase().includes(searchRole.toLowerCase()))
+  const toggleRole = (role: string) => setExpandedRoles(current =>
+    current.includes(role) ? current.filter(item => item !== role) : [...current, role]
   );
 
   return (
-    <section id="committee" className="py-24 px-4 sm:px-6 md:px-12 bg-[#EDE8E2] text-[#192E41] relative overflow-hidden">
-      {/* Background Typography Watermark */}
-      <TypographyDecor
-        sectionId="committee"
-        variant="5"
-        mode="corner-ornament"
-        position="bottom-right"
-        opacity={0.04}
-      />
-
-      <div className="max-w-6xl mx-auto relative z-10">
-        <FadeIn delay={0} className="text-center mb-12">
-          <SectionLabel text="06. FORMASI KEPANITIAAN" />
-          <h2 className="font-mileast italic font-bold mt-2 leading-none uppercase text-[#192E41]" style={{ fontSize: 'clamp(2.2rem, 5.5vw, 68px)' }}>
-            Panitia & Anggaran
-          </h2>
+    <section id="committee" className="da-committee-section relative overflow-hidden py-24 px-4 sm:px-6 md:px-12">
+      <TypographyDecor sectionId="committee" variant="5" mode="corner-ornament" position="bottom-right" opacity={0.035} />
+      <div className="da-committee-shell relative z-10 mx-auto max-w-6xl">
+        <FadeIn className="da-committee-intro text-center">
+          <SectionLabel text="06. FORMASI & TATA KELOLA" />
+          <p className="da-kicker da-kicker-dark mt-5">THE PRODUCTION DOSSIER · 5102</p>
+          <h2 className="da-committee-title">Di balik <em>panggung</em>,<br/>ada sebuah tim.</h2>
           <FleuronDivider />
-          <p className="font-cormorant-sc text-xs sm:text-sm tracking-widest text-[#325956] uppercase max-w-xl mx-auto mt-2 font-semibold">
-            Struktur Amanah dan Akuntabilitas Perhelatan Drama Arena 5102
-          </p>
+          <p className="da-committee-lead">Setiap pertunjukan berdiri di atas kerja kolektif. Kenali orang-orang di balik Drama Arena 5102, sekaligus rencana anggaran yang tercantum dalam dokumen kepanitiaan.</p>
         </FadeIn>
 
-        {/* Tab switcher */}
-        <FadeIn delay={0.1} className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
-          <div className="flex gap-1.5 p-1.5 rounded-full bg-[#192E41]/10 border border-[#B58A3C]/35 shadow-inner backdrop-blur-sm">
-            {[
-              ['panitia', 'Susunan Panitia Mandiri'],
-              ['anggaran', 'Rencana Anggaran Biaya']
-            ].map(([key, label]) => (
-              <button
-                key={key}
-                onClick={() => setCommitteeTab(key as 'panitia' | 'anggaran')}
-                className={`px-6 py-2.5 rounded-full font-cormorant-sc text-xs sm:text-sm tracking-wider uppercase transition-all duration-300 cursor-pointer font-bold ${
-                  committeeTab === key
-                    ? 'bg-[#192E41] text-[#EDE8E2] shadow-lg border border-[#B58A3C]/50'
-                    : 'text-[#192E41]/80 hover:text-[#192E41] hover:bg-[#192E41]/5'
-                }`}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
+        <div className="da-committee-switch" role="tablist" aria-label="Dokumen kepanitiaan">
+          <button type="button" role="tab" aria-selected={activeTab === 'panitia'} className={activeTab === 'panitia' ? 'is-active' : ''} onClick={() => setActiveTab('panitia')}>
+            <Users size={15}/> <span>Susunan Panitia</span><small>01</small>
+          </button>
+          <button type="button" role="tab" aria-selected={activeTab === 'anggaran'} className={activeTab === 'anggaran' ? 'is-active' : ''} onClick={() => setActiveTab('anggaran')}>
+            <Wallet size={15}/> <span>Rencana Anggaran</span><small>02</small>
+          </button>
+        </div>
 
-          {committeeTab === 'panitia' && (
-            <div className="w-full sm:w-64">
-              <input
-                type="text"
-                placeholder="Cari bagian / nama santri..."
-                value={searchRole}
-                onChange={(e) => setSearchRole(e.target.value)}
-                className="w-full px-4 py-2 rounded-full bg-[#FAF8F5] border border-[#B58A3C]/40 text-xs text-[#192E41] placeholder-gray-500 focus:outline-none focus:border-[#B58A3C] shadow-inner font-dm"
-              />
+        {activeTab === 'panitia' ? (
+          <FadeIn>
+            <div className="da-committee-overview">
+              <div><strong>{committeeData.length.toString().padStart(2, '0')}</strong><span>Bidang & unsur</span></div>
+              <div><strong>{totalPeople.toString().padStart(2, '0')}</strong><span>Nama tercantum</span></div>
+              <div><strong>5102</strong><span>Drama Arena</span></div>
             </div>
-          )}
-        </FadeIn>
-
-        {committeeTab === 'panitia' ? (
-          <FadeIn delay={0.1}>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {filteredCommittee.map((group, idx) => (
-                <div key={idx} className="bg-[#FAF8F5] rounded-3xl p-6 border border-[#B58A3C]/35 shadow-md hover:shadow-xl transition-all interactive-card group">
-                  <div className="flex items-center justify-between mb-3 pb-3 border-b border-[#B58A3C]/25">
-                    <div className="flex items-center gap-2.5">
-                      <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 bg-[#192E41] text-[#EDE8E2] border border-[#B58A3C] group-hover:scale-110 transition-transform">
-                        {idx + 1}
-                      </div>
-                      <h4 className="font-mileast font-bold text-base text-[#192E41] tracking-wide group-hover:text-[#325956] transition-colors">
-                        {group.role}
-                      </h4>
-                    </div>
-                    <span className="text-[10px] font-mono text-[#B58A3C] font-bold px-2 py-0.5 rounded bg-[#192E41]/5">
-                      {group.names.length} Santri
-                    </span>
-                  </div>
-                  <ul className="flex flex-col gap-1.5">
-                    {group.names.map((n, i) => (
-                      <li key={i} className="flex items-start gap-2 font-alverata text-xs leading-relaxed text-[#192E41]/85">
-                        <span className="mt-1 flex-shrink-0 text-[#B58A3C] font-bold">·</span>
-                        {n}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
+            <div className="da-committee-tools">
+              <div><span>DIRECTORY / 01—16</span><span>{filteredCommittee.length} dari {committeeData.length} bidang</span></div>
+              <label className="da-committee-search"><Search size={15}/><input value={search} onChange={event => setSearch(event.target.value)} placeholder="Cari nama atau bidang..." aria-label="Cari nama atau bidang"/></label>
             </div>
+            {filteredCommittee.length ? (
+              <div className="da-committee-list">
+                {filteredCommittee.map((group) => {
+                  const isExpanded = expandedRoles.includes(group.role) || search.trim().length > 0;
+                  return <article className={`da-committee-row ${isExpanded ? 'is-open' : ''}`} key={group.role}>
+                    <button type="button" className="da-committee-row-trigger" aria-expanded={isExpanded} onClick={() => toggleRole(group.role)}>
+                      <span className="da-committee-row-number">{String(committeeData.indexOf(group) + 1).padStart(2, '0')}</span>
+                      <span className="da-committee-row-title"><strong>{group.role}</strong><small>{group.names.length} personel tercantum</small></span>
+                      <span className="da-committee-row-count">{String(group.names.length).padStart(2, '0')}</span>
+                      <ChevronDown className="da-committee-chevron" size={18}/>
+                    </button>
+                    {isExpanded && <div className="da-committee-members">{group.names.map((name, index) => <div key={name}><span>{String(index + 1).padStart(2, '0')}</span>{name}</div>)}</div>}
+                  </article>;
+                })}
+              </div>
+            ) : <div className="da-committee-empty">Tidak ada nama atau bidang yang cocok dengan pencarian “{search}”.</div>}
           </FadeIn>
         ) : (
-          <FadeIn delay={0.1}>
-            <div className="has-registration-marks bg-[#FAF8F5] rounded-3xl p-6 sm:p-10 shadow-2xl border-2 border-[#B58A3C]/40 max-w-3xl mx-auto relative interactive-card">
-              <span className="reg-mark reg-tl" />
-              <span className="reg-mark reg-tr" />
-              <span className="reg-mark reg-bl" />
-              <span className="reg-mark reg-br" />
-
-              <div
-                className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 mb-6 gap-4 border-b border-[#B58A3C]/30"
-              >
-                <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="w-2 h-2 rounded-full bg-[#B58A3C]" />
-                    <span className="font-mono text-[10px] tracking-widest uppercase text-[#325956] font-bold">
-                      SK NO. 05/DA.5102/KMI/PMDG
-                    </span>
-                  </div>
-                  <h3 className="font-mileast font-bold text-2xl text-[#192E41]">Rencana Anggaran Biaya</h3>
-                  <p className="font-cormorant-sc text-xs mt-0.5 tracking-wider text-[#325956] font-semibold">Tahun Ajaran 1447-1448 H · Kulliyatu-l-Mu'allimin Al-Islamiyah</p>
-                </div>
-                <div className="text-right p-4 rounded-2xl bg-[#192E41] text-[#EDE8E2] border border-[#B58A3C] shadow-md">
-                  <div className="font-cormorant-sc text-[11px] uppercase tracking-wider text-[#EDE8E2]/70 font-semibold">Total Anggaran</div>
-                  <div className="font-mileast font-bold text-xl sm:text-2xl gold-text">Rp 500.107.000</div>
-                </div>
+          <FadeIn>
+            <div className="da-budget-document">
+              <div className="da-budget-doc-head">
+                <div><span className="da-budget-stamp">DOKUMEN ANGGARAN · 1447—1448 H</span><h3>Rencana Anggaran Biaya</h3><p>SK NO. 05/DA.5102/KMI/PMDG</p></div>
+                <div className="da-budget-total"><small>Total anggaran tercantum</small><strong>Rp 500.107.000</strong><span>Tahun Ajaran 1447–1448 H</span></div>
               </div>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b-2 border-[#B58A3C] bg-[#EDE8E2]/60">
-                      <th className="py-3 px-3 text-left font-cormorant-sc text-xs tracking-wider uppercase text-[#192E41] font-bold">No</th>
-                      <th className="py-3 px-3 text-left font-cormorant-sc text-xs tracking-wider uppercase text-[#192E41] font-bold">Bagian Kepanitiaan</th>
-                      <th className="py-3 px-3 text-right font-cormorant-sc text-xs tracking-wider uppercase text-[#192E41] font-bold">Alokasi Nominal</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {budgetItems.map((b, i) => (
-                      <tr key={b.no} className={`border-b border-[#192E41]/10 hover:bg-[#EDE8E2]/60 transition-colors ${i % 2 === 1 ? 'bg-black/[0.015]' : ''}`}>
-                        <td className="py-2.5 px-3 font-mono text-xs text-[#192E41]/60">{b.no}.</td>
-                        <td className="py-2.5 px-3 font-alverata font-semibold text-sm text-[#192E41]">
-                          <div className="flex items-center justify-between">
-                            <span>{b.section}</span>
-                          </div>
-                        </td>
-                        <td className="py-2.5 px-3 text-right font-mono font-bold text-sm text-[#325956]">{b.amount}</td>
-                      </tr>
-                    ))}
-                    <tr className="bg-[#192E41] text-[#EDE8E2]">
-                      <td colSpan={2} className="py-3.5 px-3 text-right font-cormorant-sc font-bold text-sm uppercase tracking-widest text-[#B58A3C]">
-                        Total Keseluruhan Anggaran:
-                      </td>
-                      <td className="py-3.5 px-3 text-right font-mileast font-bold text-xl gold-text">Rp 500.107.000</td>
-                    </tr>
-                  </tbody>
-                </table>
+              <div className="da-budget-note"><span>CATATAN PEMERIKSAAN DATA</span><p>Nominal total pada dokumen dan hasil penjumlahan 13 alokasi di bawah menunjukkan angka yang berbeda. Angka asli ditampilkan apa adanya agar dapat diverifikasi, bukan disesuaikan secara sepihak.</p></div>
+              <div className="da-budget-list-heading"><span>RINCIAN ALOKASI</span><span>{budgetItems.length} POS ANGGARAN</span></div>
+              <div className="da-budget-items">
+                {budgetItems.map(item => <div className="da-budget-item" key={item.no}>
+                  <span className="da-budget-number">{String(item.no).padStart(2, '0')}</span>
+                  <div className="da-budget-item-main"><div><strong>{item.section}</strong><span>{item.amount}</span></div><div className="da-budget-track"><i style={{ width: `${((item.raw || 0) / largestAllocation) * 100}%` }}/></div></div>
+                </div>)}
               </div>
+              <div className="da-budget-reconciliation">
+                <div><span>Total dari rincian 13 pos</span><strong>{formatRupiah(listedBudgetTotal)}</strong></div>
+                <div><span>Total yang tercantum di dokumen</span><strong>Rp 500.107.000</strong></div>
+                <div className="da-budget-difference"><span>Selisih yang perlu dikonfirmasi</span><strong>{formatRupiah(listedBudgetTotal - statedBudgetTotal)}</strong></div>
+              </div>
+              <p className="da-budget-footnote">Visualisasi proporsi batang dihitung dari nominal tiap pos terhadap pos terbesar. Nilai nominal mengikuti daftar yang tersedia.</p>
             </div>
           </FadeIn>
         )}
 
-        {/* Official Workshirt Teaser Banner */}
-        <FadeIn delay={0.2} className="mt-14">
-          <div className="rounded-2xl p-6 bg-gradient-to-r from-[#192E41] via-[#1D3533] to-[#325956] text-[#EDE8E2] border-2 border-[#B58A3C]/40 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl">
-            <div className="flex items-center gap-4">
-              <div className="w-16 h-16 rounded-xl bg-white/10 p-2 flex items-center justify-center flex-shrink-0 border border-[#B58A3C]/40">
-                <img
-                  src={importImage('workshirt.png')}
-                  alt="Official Panitia Workshirt"
-                  className="w-full h-full object-contain"
-                />
-              </div>
-              <div>
-                <span className="font-cormorant-sc text-[10px] tracking-widest text-[#B58A3C] uppercase font-bold">
-                  ✦ SERAGAM RESMI PANITIA 5102 ✦
-                </span>
-                <h4 className="font-mileast font-bold text-lg text-[#EDE8E2]">
-                  Official Committee Workshirt & Visual Identity
-                </h4>
-                <p className="font-alverata text-xs text-[#EDE8E2]/80 max-w-lg mt-0.5">
-                  Lihat detail seragam dinas panitia dan seluruh arsip grafis di galeri Media Showcase.
-                </p>
-              </div>
-            </div>
-
-            {onNavigate && (
-              <button
-                onClick={() => onNavigate('media-showcase')}
-                className="px-5 py-2.5 rounded-lg border border-[#B58A3C] bg-[#B58A3C] text-[#192E41] font-cormorant-sc text-xs tracking-wider uppercase font-bold hover:bg-[#FAF8F5] transition-colors flex items-center gap-2 flex-shrink-0 cursor-pointer shadow"
-              >
-                Buka Media Showcase <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-            )}
-          </div>
+        <FadeIn className="da-committee-merch">
+          <div className="da-committee-merch-image"><img src={importImage('workshirt.png')} alt="Seragam resmi panitia Drama Arena 5102"/></div>
+          <div className="da-committee-merch-copy"><span>IDENTITAS RESMI · 5102</span><h3>Seragam dan identitas visual panitia</h3><p>Jelajahi arsip visual, pedoman identitas, dan dokumentasi pendukung Drama Arena 5102.</p></div>
+          {onNavigate && <button type="button" onClick={() => onNavigate('media-showcase')}>Buka Media Showcase <ArrowRight size={15}/></button>}
         </FadeIn>
       </div>
     </section>
   );
 };
+
 export default CommitteeSection;
