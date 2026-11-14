@@ -47,6 +47,12 @@ interface CommitteeSectionProps {
 
 export const CommitteeSection: React.FC<CommitteeSectionProps> = ({ onNavigate }) => {
   const [committeeTab, setCommitteeTab] = useState<'panitia' | 'anggaran'>('panitia');
+  const [searchRole, setSearchRole] = useState<string>('');
+
+  const filteredCommittee = committeeData.filter(g =>
+    g.role.toLowerCase().includes(searchRole.toLowerCase()) ||
+    g.names.some(n => n.toLowerCase().includes(searchRole.toLowerCase()))
+  );
 
   return (
     <section id="committee" className="py-24 px-4 sm:px-6 md:px-12 bg-[#EDE8E2] text-[#192E41] relative overflow-hidden">
@@ -72,7 +78,7 @@ export const CommitteeSection: React.FC<CommitteeSectionProps> = ({ onNavigate }
         </FadeIn>
 
         {/* Tab switcher */}
-        <FadeIn delay={0.1} className="flex justify-center mb-12">
+        <FadeIn delay={0.1} className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
           <div className="flex gap-1.5 p-1.5 rounded-full bg-[#192E41]/10 border border-[#B58A3C]/35 shadow-inner backdrop-blur-sm">
             {[
               ['panitia', 'Susunan Panitia Mandiri'],
@@ -91,24 +97,37 @@ export const CommitteeSection: React.FC<CommitteeSectionProps> = ({ onNavigate }
               </button>
             ))}
           </div>
+
+          {committeeTab === 'panitia' && (
+            <div className="w-full sm:w-64">
+              <input
+                type="text"
+                placeholder="Cari bagian / nama santri..."
+                value={searchRole}
+                onChange={(e) => setSearchRole(e.target.value)}
+                className="w-full px-4 py-2 rounded-full bg-[#FAF8F5] border border-[#B58A3C]/40 text-xs text-[#192E41] placeholder-gray-500 focus:outline-none focus:border-[#B58A3C] shadow-inner font-dm"
+              />
+            </div>
+          )}
         </FadeIn>
 
         {committeeTab === 'panitia' ? (
           <FadeIn delay={0.1}>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {committeeData.map((group, idx) => (
-                <div key={idx} className="bg-[#FAF8F5] rounded-2xl p-6 border border-[#B58A3C]/30 shadow-md hover:shadow-xl transition-shadow">
-                  <div
-                    className="flex items-center gap-2.5 mb-3 pb-3 border-b border-[#B58A3C]/25"
-                  >
-                    <div
-                      className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 bg-[#192E41] text-[#EDE8E2] border border-[#B58A3C]"
-                    >
-                      {idx + 1}
+              {filteredCommittee.map((group, idx) => (
+                <div key={idx} className="bg-[#FAF8F5] rounded-3xl p-6 border border-[#B58A3C]/35 shadow-md hover:shadow-xl transition-all interactive-card group">
+                  <div className="flex items-center justify-between mb-3 pb-3 border-b border-[#B58A3C]/25">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 bg-[#192E41] text-[#EDE8E2] border border-[#B58A3C] group-hover:scale-110 transition-transform">
+                        {idx + 1}
+                      </div>
+                      <h4 className="font-mileast font-bold text-base text-[#192E41] tracking-wide group-hover:text-[#325956] transition-colors">
+                        {group.role}
+                      </h4>
                     </div>
-                    <h4 className="font-mileast font-bold text-base text-[#192E41] tracking-wide">
-                      {group.role}
-                    </h4>
+                    <span className="text-[10px] font-mono text-[#B58A3C] font-bold px-2 py-0.5 rounded bg-[#192E41]/5">
+                      {group.names.length} Santri
+                    </span>
                   </div>
                   <ul className="flex flex-col gap-1.5">
                     {group.names.map((n, i) => (
@@ -124,7 +143,7 @@ export const CommitteeSection: React.FC<CommitteeSectionProps> = ({ onNavigate }
           </FadeIn>
         ) : (
           <FadeIn delay={0.1}>
-            <div className="has-registration-marks bg-[#FAF8F5] rounded-3xl p-6 sm:p-10 shadow-2xl border-2 border-[#B58A3C]/40 max-w-3xl mx-auto relative">
+            <div className="has-registration-marks bg-[#FAF8F5] rounded-3xl p-6 sm:p-10 shadow-2xl border-2 border-[#B58A3C]/40 max-w-3xl mx-auto relative interactive-card">
               <span className="reg-mark reg-tl" />
               <span className="reg-mark reg-tr" />
               <span className="reg-mark reg-bl" />
@@ -143,7 +162,7 @@ export const CommitteeSection: React.FC<CommitteeSectionProps> = ({ onNavigate }
                   <h3 className="font-mileast font-bold text-2xl text-[#192E41]">Rencana Anggaran Biaya</h3>
                   <p className="font-cormorant-sc text-xs mt-0.5 tracking-wider text-[#325956] font-semibold">Tahun Ajaran 1447-1448 H · Kulliyatu-l-Mu'allimin Al-Islamiyah</p>
                 </div>
-                <div className="text-right p-4 rounded-xl bg-[#192E41] text-[#EDE8E2] border border-[#B58A3C] shadow-md">
+                <div className="text-right p-4 rounded-2xl bg-[#192E41] text-[#EDE8E2] border border-[#B58A3C] shadow-md">
                   <div className="font-cormorant-sc text-[11px] uppercase tracking-wider text-[#EDE8E2]/70 font-semibold">Total Anggaran</div>
                   <div className="font-mileast font-bold text-xl sm:text-2xl gold-text">Rp 500.107.000</div>
                 </div>
@@ -161,7 +180,11 @@ export const CommitteeSection: React.FC<CommitteeSectionProps> = ({ onNavigate }
                     {budgetItems.map((b, i) => (
                       <tr key={b.no} className={`border-b border-[#192E41]/10 hover:bg-[#EDE8E2]/60 transition-colors ${i % 2 === 1 ? 'bg-black/[0.015]' : ''}`}>
                         <td className="py-2.5 px-3 font-mono text-xs text-[#192E41]/60">{b.no}.</td>
-                        <td className="py-2.5 px-3 font-alverata font-semibold text-sm text-[#192E41]">{b.section}</td>
+                        <td className="py-2.5 px-3 font-alverata font-semibold text-sm text-[#192E41]">
+                          <div className="flex items-center justify-between">
+                            <span>{b.section}</span>
+                          </div>
+                        </td>
                         <td className="py-2.5 px-3 text-right font-mono font-bold text-sm text-[#325956]">{b.amount}</td>
                       </tr>
                     ))}

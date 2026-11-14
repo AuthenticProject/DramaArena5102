@@ -67,6 +67,8 @@ const colorPalette = [
 export const AboutSection: React.FC = () => {
   const [copiedHex, setCopiedHex] = useState<string | null>(null);
   const [selectedLogo, setSelectedLogo] = useState<'wave' | 'monogram'>('wave');
+  const [customFontText, setCustomFontText] = useState<string>('Sadar Dalam Perjuangan');
+  const [activePaletteIndex, setActivePaletteIndex] = useState<number>(0);
 
   const copyHex = (hex: string) => {
     navigator.clipboard.writeText(hex);
@@ -349,88 +351,114 @@ export const AboutSection: React.FC = () => {
             <FleuronDivider />
           </FadeIn>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch mb-12">
             {/* 1. Arabic Font: Naveid */}
             <FadeIn delay={0.1}>
-              <div className="bg-[#FAF8F5] p-8 rounded-2xl shadow-lg border border-[#B58A3C]/40 flex flex-col justify-between h-full">
+              <div className="bg-[#FAF8F5] p-8 rounded-3xl shadow-xl border border-[#B58A3C]/40 flex flex-col justify-between h-full interactive-card shine-card-hover group">
                 <div>
-                  <div className="inline-block px-3 py-1 rounded bg-[#325956] text-[#EDE8E2] text-[10px] font-cormorant-sc tracking-widest uppercase font-bold mb-4">
+                  <div className="inline-block px-3 py-1 rounded-full bg-[#325956] text-[#EDE8E2] text-[10px] font-cormorant-sc tracking-widest uppercase font-bold mb-4">
                     Arabic Font · Naveid
                   </div>
-                  <h3 className="font-mileast font-bold text-2xl text-[#192E41] mb-2">
+                  <h3 className="font-mileast font-bold text-2xl text-[#192E41] mb-2 group-hover:text-[#325956] transition-colors">
                     Naveid Calligraphy
                   </h3>
                   <p className="font-alverata text-xs text-[#192E41]/75 mb-6">
                     Font Arab berkarakter tegas dan anggun untuk seluruh teks kalam mutiara Mahfudzot dan ayat suci.
                   </p>
-                  <div className="p-6 bg-[#EDE8E2] rounded-xl border border-[#B58A3C]/30 text-center my-4">
-                    <div className="font-arabic font-bold text-3xl sm:text-4xl text-[#325956] leading-loose" dir="rtl">
-                      بِقَدْرِ الْكَدِّ تُكْتَسَبُ الْمَعَالِي
+                  <div className="p-6 bg-[#EDE8E2] rounded-2xl border border-[#B58A3C]/30 text-center my-4">
+                    <div className="font-arabic font-bold text-3xl sm:text-4xl text-[#325956] leading-loose filter drop-shadow-sm" dir="rtl">
+                      {customFontText || "بِقَدْرِ الْكَدِّ تُكْتَسَبُ الْمَعَالِي"}
                     </div>
                   </div>
                 </div>
-                <div className="text-[11px] font-mono text-[#325956] mt-4 pt-4 border-t border-[#192E41]/10">
-                  Sample: Biqadril Kaddi Tuktasabul Ma'aaliy
+                <div className="text-[11px] font-mono text-[#325956] mt-4 pt-4 border-t border-[#192E41]/10 flex justify-between items-center">
+                  <span>Sample: Biqadril Kaddi Tuktasabul Ma'aaliy</span>
+                  <span className="text-[#B58A3C]">ARABIC</span>
                 </div>
               </div>
             </FadeIn>
 
             {/* 2. Headline Font: MILEAST */}
             <FadeIn delay={0.15}>
-              <div className="bg-[#FAF8F5] p-8 rounded-2xl shadow-lg border-2 border-[#B58A3C] flex flex-col justify-between h-full relative">
-                <div className="absolute top-0 right-0 bg-[#B58A3C] text-[#EDE8E2] text-[9px] font-cormorant-sc uppercase tracking-widest px-3 py-1 rounded-bl-lg font-bold">
+              <div className="bg-[#FAF8F5] p-8 rounded-3xl shadow-xl border-2 border-[#B58A3C] flex flex-col justify-between h-full relative interactive-card shine-card-hover group">
+                <div className="absolute top-0 right-0 bg-[#B58A3C] text-[#192E41] text-[9px] font-cormorant-sc uppercase tracking-widest px-3 py-1 rounded-bl-xl font-bold">
                   Official Display
                 </div>
                 <div>
-                  <div className="inline-block px-3 py-1 rounded bg-[#192E41] text-[#EDE8E2] text-[10px] font-cormorant-sc tracking-widest uppercase font-bold mb-4">
+                  <div className="inline-block px-3 py-1 rounded-full bg-[#192E41] text-[#EDE8E2] text-[10px] font-cormorant-sc tracking-widest uppercase font-bold mb-4">
                     Headline Font · MILEAST
                   </div>
-                  <h3 className="font-mileast font-bold text-2xl text-[#192E41] mb-2">
+                  <h3 className="font-mileast font-bold text-2xl text-[#192E41] mb-2 group-hover:text-[#B58A3C] transition-colors">
                     MILEAST Serif
                   </h3>
                   <p className="font-alverata text-xs text-[#192E41]/75 mb-6">
                     Font serif berbobot historis megah dengan karakter tajam, dipergunakan pada tajuk utama, judul persembahan, dan monogram.
                   </p>
-                  <div className="p-6 bg-[#192E41] rounded-xl border border-[#B58A3C]/40 text-center my-4 text-[#EDE8E2]">
+                  <div className="p-6 bg-[#192E41] rounded-2xl border border-[#B58A3C]/40 text-center my-4 text-[#EDE8E2]">
                     <div className="font-mileast font-bold text-2xl sm:text-3xl tracking-wide uppercase gold-text">
-                      DRAMA ARENA
+                      {customFontText || "DRAMA ARENA"}
                     </div>
                     <div className="font-mileast italic text-lg sm:text-xl text-[#EDE8E2] mt-1">
                       Est. 2027
                     </div>
                   </div>
                 </div>
-                <div className="text-[11px] font-mono text-[#192E41] mt-4 pt-4 border-t border-[#192E41]/10">
-                  Styles: Regular, Italic, Bold, Display
+                <div className="text-[11px] font-mono text-[#192E41] mt-4 pt-4 border-t border-[#192E41]/10 flex justify-between items-center">
+                  <span>Styles: Regular, Italic, Bold, Display</span>
+                  <span className="text-[#D4A853] font-bold">DISPLAY</span>
                 </div>
               </div>
             </FadeIn>
 
             {/* 3. Body Text Font: ALVERATA */}
             <FadeIn delay={0.2}>
-              <div className="bg-[#FAF8F5] p-8 rounded-2xl shadow-lg border border-[#B58A3C]/40 flex flex-col justify-between h-full">
+              <div className="bg-[#FAF8F5] p-8 rounded-3xl shadow-xl border border-[#B58A3C]/40 flex flex-col justify-between h-full interactive-card shine-card-hover group">
                 <div>
-                  <div className="inline-block px-3 py-1 rounded bg-[#325956] text-[#EDE8E2] text-[10px] font-cormorant-sc tracking-widest uppercase font-bold mb-4">
+                  <div className="inline-block px-3 py-1 rounded-full bg-[#325956] text-[#EDE8E2] text-[10px] font-cormorant-sc tracking-widest uppercase font-bold mb-4">
                     Body Text Font · ALVERATA
                   </div>
-                  <h3 className="font-mileast font-bold text-2xl text-[#192E41] mb-2">
+                  <h3 className="font-mileast font-bold text-2xl text-[#192E41] mb-2 group-hover:text-[#325956] transition-colors">
                     ALVERATA
                   </h3>
                   <p className="font-alverata text-xs text-[#192E41]/75 mb-6">
                     Tipografi teks tubuh buku klasik dengan tingkat keterbacaan tinggi yang terinspirasi dari epigrafi abad pertengahan.
                   </p>
-                  <div className="p-6 bg-[#EDE8E2] rounded-xl border border-[#B58A3C]/30 my-4 text-[#192E41]">
+                  <div className="p-6 bg-[#EDE8E2] rounded-2xl border border-[#B58A3C]/30 my-4 text-[#192E41]">
                     <p className="font-alverata text-sm font-semibold leading-relaxed">
-                      "Sadar, dalam perjuangan. Sadar, akan nilai-nilai Islami. Utuh dalam kebersamaan. Drama Arena 5102."
+                      "{customFontText || "Sadar, dalam perjuangan. Sadar, akan nilai-nilai Islami. Utuh dalam kebersamaan. Drama Arena 5102."}"
                     </p>
                   </div>
                 </div>
-                <div className="text-[11px] font-mono text-[#325956] mt-4 pt-4 border-t border-[#192E41]/10">
-                  Styles: Alverata Lt, Regular, 300, 400
+                <div className="text-[11px] font-mono text-[#325956] mt-4 pt-4 border-t border-[#192E41]/10 flex justify-between items-center">
+                  <span>Styles: Alverata Lt, Regular, 300, 400</span>
+                  <span className="text-[#325956] font-bold">BODY</span>
                 </div>
               </div>
             </FadeIn>
           </div>
+
+          {/* Interactive Font Live Preview Input Bar */}
+          <FadeIn delay={0.25}>
+            <div className="max-w-2xl mx-auto p-4 sm:p-5 rounded-2xl bg-[#FAF8F5] border-2 border-[#B58A3C]/40 shadow-xl flex flex-col sm:flex-row items-center gap-3">
+              <div className="flex items-center gap-2 text-xs font-mono text-[#325956] font-bold flex-shrink-0">
+                <Type className="w-4 h-4 text-[#B58A3C]" />
+                <span>UJI COBA FONT LANGSUNG:</span>
+              </div>
+              <input
+                type="text"
+                value={customFontText}
+                onChange={(e) => setCustomFontText(e.target.value)}
+                placeholder="Ketik teks kustom di sini untuk menguji ketiga font..."
+                className="w-full px-4 py-2 rounded-xl bg-white border border-[#B58A3C]/30 text-xs sm:text-sm text-[#192E41] placeholder-gray-400 focus:outline-none focus:border-[#B58A3C] shadow-inner font-dm"
+              />
+              <button
+                onClick={() => setCustomFontText('Sadar Dalam Perjuangan, Utuh Dalam Kebersamaan')}
+                className="px-3 py-2 rounded-xl bg-[#192E41] text-[#EDE8E2] hover:bg-[#B58A3C] hover:text-[#192E41] text-[11px] font-mono font-bold transition-colors cursor-pointer flex-shrink-0"
+              >
+                Reset
+              </button>
+            </div>
+          </FadeIn>
         </div>
       </section>
     </>

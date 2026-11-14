@@ -127,7 +127,7 @@ export const ThemeSection: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {motos.map((m, index) => (
               <FadeIn key={m.num} delay={0.1 * (index + 1)}>
-                <div className="ticket-stub rounded-3xl p-7 flex flex-col justify-between h-full bg-[#FAF8F5] text-[#192E41] relative group overflow-hidden border border-[#B58A3C]/40 shadow-xl hover:-translate-y-2 hover:shadow-2xl transition-all duration-300">
+                <div className="ticket-stub ticket-hologram rounded-3xl p-7 flex flex-col justify-between h-full text-[#192E41] relative group overflow-hidden border border-[#B58A3C]/40 shadow-xl hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 shine-card-hover interactive-card">
                   {/* Punch notches on left & right perforation */}
                   <span className="ticket-notch ticket-notch-l" />
                   <span className="ticket-notch ticket-notch-r" />
@@ -141,7 +141,7 @@ export const ThemeSection: React.FC = () => {
 
                     {/* Number Badge & Headline */}
                     <div className="flex items-start gap-3.5 mb-4">
-                      <div className="w-11 h-11 rounded-xl bg-[#192E41] text-[#EDE8E2] font-mono font-bold text-base flex items-center justify-center flex-shrink-0 shadow-md border border-[#B58A3C]/40 group-hover:scale-105 transition-transform">
+                      <div className="w-11 h-11 rounded-xl bg-[#192E41] text-[#EDE8E2] font-mono font-bold text-base flex items-center justify-center flex-shrink-0 shadow-md border border-[#B58A3C]/40 group-hover:scale-110 group-hover:rotate-3 transition-transform">
                         {m.num}
                       </div>
                       <h4 className="font-mileast font-bold text-base sm:text-lg leading-snug text-[#192E41] group-hover:text-[#325956] transition-colors">
@@ -149,14 +149,17 @@ export const ThemeSection: React.FC = () => {
                       </h4>
                     </div>
 
-                    <p className="font-alverata text-xs text-[#192E41]/80 leading-relaxed">
+                    <p className="font-alverata text-xs text-[#192E41]/85 leading-relaxed">
                       {m.desc}
                     </p>
                   </div>
 
                   {/* Bottom Ticket Perforation with Barcode & Seal */}
-                  <div className="pt-4 mt-6 border-t-2 border-dashed border-[#192E41]/20 flex items-center justify-between">
-                    <div>
+                  <div className="pt-4 mt-6 border-t-2 border-dashed border-[#192E41]/20 flex items-center justify-between relative">
+                    <div className="relative group/barcode">
+                      {/* Laser scan line animation on hover */}
+                      <div className="absolute top-0 bottom-0 left-0 w-0.5 bg-red-500 shadow-[0_0_8px_red] opacity-0 group-hover:opacity-100 group-hover:left-full transition-all duration-700 pointer-events-none" />
+
                       <div className="flex items-center gap-0.5 h-6">
                         <div className="w-1 h-full bg-[#192E41]" />
                         <div className="w-0.5 h-full bg-[#192E41]" />
@@ -177,7 +180,7 @@ export const ThemeSection: React.FC = () => {
                       <span className="font-cormorant-sc text-[9px] uppercase tracking-widest text-[#325956] font-bold hidden sm:inline">
                         ADMIT ONE
                       </span>
-                      <div className="w-9 h-9 rounded-full bg-[#325956] border border-[#B58A3C] flex items-center justify-center text-[#EDE8E2] font-mono text-[10px] font-bold shadow-md">
+                      <div className="w-9 h-9 rounded-full bg-[#325956] border border-[#B58A3C] flex items-center justify-center text-[#EDE8E2] font-mono text-[10px] font-bold shadow-md group-hover:scale-110 transition-transform">
                         5102
                       </div>
                     </div>

@@ -151,7 +151,7 @@ export const MediaShowcase: React.FC<MediaShowcaseProps> = ({
                 <div
                   key={asset.id}
                   onClick={() => setSelectedAssetForModal(asset)}
-                  className="has-registration-marks bg-[#EDE8E2] rounded-2xl overflow-hidden border border-[#B58A3C]/35 shadow group hover:shadow-2xl hover:border-[#B58A3C] transition-all duration-300 cursor-pointer flex flex-col justify-between"
+                  className="has-registration-marks bg-[#EDE8E2] rounded-3xl overflow-hidden border border-[#B58A3C]/35 shadow group hover:shadow-2xl hover:border-[#B58A3C] transition-all duration-300 cursor-pointer flex flex-col justify-between interactive-card shine-card-hover"
                 >
                   <span className="reg-mark reg-tl" />
                   <span className="reg-mark reg-tr" />
@@ -213,9 +213,9 @@ export const MediaShowcase: React.FC<MediaShowcaseProps> = ({
                 <div
                   key={logo.id}
                   onClick={() => setSelectedAssetForModal(logo)}
-                  className="bg-[#101D2A] rounded-2xl p-6 border border-[#B58A3C]/30 shadow-lg hover:border-[#B58A3C] transition-all cursor-pointer flex flex-col items-center justify-between group"
+                  className="bg-[#101D2A] rounded-3xl p-6 border border-[#B58A3C]/30 shadow-lg hover:border-[#B58A3C] transition-all cursor-pointer flex flex-col items-center justify-between group interactive-card shine-card-hover"
                 >
-                  <div className="w-48 h-48 flex items-center justify-center p-4 bg-white/5 rounded-xl border border-white/10 group-hover:bg-[#B58A3C]/10 transition-colors">
+                  <div className="w-48 h-48 flex items-center justify-center p-4 bg-white/5 rounded-2xl border border-white/10 group-hover:bg-[#B58A3C]/10 transition-colors">
                     <img
                       src={importImage(logo.name)}
                       alt={logo.title}
@@ -223,7 +223,7 @@ export const MediaShowcase: React.FC<MediaShowcaseProps> = ({
                     />
                   </div>
                   <div className="mt-4 text-center">
-                    <h4 className="font-mileast font-bold text-lg text-[#EDE8E2]">
+                    <h4 className="font-mileast font-bold text-lg text-[#EDE8E2] group-hover:text-[#B58A3C] transition-colors">
                       {logo.title}
                     </h4>
                     <p className="font-alverata text-xs text-[#EDE8E2]/70 mt-1">

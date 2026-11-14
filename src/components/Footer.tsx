@@ -35,23 +35,27 @@ export const Footer: React.FC<FooterProps> = ({ onOpenSponsorshipModal, onNaviga
       />
 
       {/* CTA Banner */}
-      <div className="px-4 sm:px-8 md:px-12 py-20 border-b border-[#B58A3C]/25 relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
+      <div className="px-4 sm:px-8 md:px-12 py-20 border-b border-[#B58A3C]/25 relative z-10 overflow-hidden">
+        {/* Ambient radial glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-[#B58A3C]/10 rounded-full blur-[100px] pointer-events-none" />
+
+        <div className="max-w-4xl mx-auto text-center relative z-10">
           <SectionLabel text="KEMITRAAN & SPONSORSHIP" />
           <h2
-            className="font-mileast italic font-bold mt-4 leading-tight gold-text"
+            className="font-serif italic font-bold mt-4 leading-tight text-white drop-shadow-md"
             style={{ fontSize: 'clamp(2.2rem, 5.5vw, 60px)' }}
           >
-            Sadar Dalam Perjuangan,<br />Utuh Dalam Kebersamaan
+            Sadar Dalam Perjuangan,<br />
+            <span className="text-[#D4AF37]">Utuh Dalam Kebersamaan</span>
           </h2>
-          <p className="font-alverata text-sm mt-4 mb-8 max-w-xl mx-auto text-[#EDE8E2]/80 leading-relaxed">
+          <p className="font-sans text-sm mt-4 mb-8 max-w-xl mx-auto text-[#EDE8E2]/80 leading-relaxed">
             Sambut peluang kemitraan bersejarah dan berkontribusi langsung menyukseskan perhelatan seni akbar tahunan termegah siswa kelas 5 KMI Pondok Modern Darussalam Gontor.
           </p>
           <div className="flex items-center justify-center gap-4 flex-wrap">
             <GoldButton onClick={onOpenSponsorshipModal} label="AJUKAN PROPOSAL SPONSORSHIP" />
             <button
               onClick={() => onNavigate('media-showcase')}
-              className="px-6 py-3 rounded border border-[#B58A3C] text-[#B58A3C] hover:bg-[#B58A3C] hover:text-[#192E41] transition-colors font-cormorant-sc text-xs tracking-widest uppercase flex items-center gap-2 cursor-pointer font-bold shadow"
+              className="px-6 py-3 rounded-xl border border-[#B58A3C] text-[#B58A3C] hover:bg-[#B58A3C] hover:text-[#192E41] transition-all duration-300 font-mono text-xs tracking-widest uppercase flex items-center gap-2 cursor-pointer font-bold shadow hover:shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:-translate-y-0.5"
             >
               <Sparkles className="w-3.5 h-3.5" />
               Arsip Media Showcase

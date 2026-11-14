@@ -68,7 +68,7 @@ export const ShowsSection: React.FC<ShowsSectionProps> = ({ onOpenTrailer }) => 
             return (
               <FadeIn key={show.id} delay={i * 0.1}>
                 <div
-                  className="has-registration-marks bg-[#FAF8F5] rounded-3xl overflow-hidden group cursor-pointer border border-[#B58A3C]/40 shadow-xl hover:shadow-2xl hover:border-[#B58A3C] transition-all duration-500 transform hover:-translate-y-2"
+                  className="has-registration-marks bg-[#FAF8F5] rounded-3xl overflow-hidden group cursor-pointer border border-[#B58A3C]/40 shadow-xl hover:shadow-2xl hover:border-[#B58A3C] transition-all duration-500 transform hover:-translate-y-2 interactive-card shine-card-hover"
                   onClick={() => onOpenTrailer(show)}
                 >
                   <span className="reg-mark reg-tl" />
@@ -85,12 +85,20 @@ export const ShowsSection: React.FC<ShowsSectionProps> = ({ onOpenTrailer }) => 
                     <div className="absolute inset-0 bg-gradient-to-t from-[#101D2A] via-[#101D2A]/60 to-transparent" />
                     
                     {/* Act Badge on top right */}
-                    <div className="absolute top-4 right-4 px-3.5 py-1.5 rounded-full bg-[#101D2A]/90 backdrop-blur-md border border-[#B58A3C]/60 text-[10px] font-mono tracking-widest text-[#D4A853] font-bold shadow-lg">
-                      {romanActs[i]}
+                    <div className="absolute top-4 right-4 px-3.5 py-1.5 rounded-full bg-[#101D2A]/90 backdrop-blur-md border border-[#B58A3C]/60 text-[10px] font-mono tracking-widest text-[#D4A853] font-bold shadow-lg flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#B58A3C] animate-pulse" />
+                      <span>{romanActs[i]}</span>
                     </div>
 
                     <div className="absolute top-4 left-4 font-mileast font-bold text-5xl text-[#B58A3C]/40 select-none">
                       {show.number}
+                    </div>
+
+                    {/* Hover Play Button Overlay */}
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                      <div className="w-14 h-14 rounded-full bg-[#B58A3C] text-[#192E41] flex items-center justify-center shadow-2xl transform scale-75 group-hover:scale-100 transition-transform duration-300">
+                        <span className="text-xl ml-1 font-bold">▶</span>
+                      </div>
                     </div>
 
                     <div className="absolute bottom-5 left-5 right-5">
@@ -108,7 +116,7 @@ export const ShowsSection: React.FC<ShowsSectionProps> = ({ onOpenTrailer }) => 
                       {show.items.map(item => (
                         <span
                           key={item}
-                          className="font-cormorant-sc text-xs px-3 py-1 rounded-full bg-[#192E41]/5 border border-[#B58A3C]/30 text-[#192E41] font-bold"
+                          className="font-cormorant-sc text-xs px-3 py-1 rounded-full bg-[#192E41]/5 border border-[#B58A3C]/30 text-[#192E41] font-bold group-hover:border-[#B58A3C]/60 transition-colors"
                         >
                           {item}
                         </span>
@@ -116,7 +124,14 @@ export const ShowsSection: React.FC<ShowsSectionProps> = ({ onOpenTrailer }) => 
                     </div>
 
                     <div className="pt-3.5 border-t border-[#192E41]/10 flex items-center justify-between text-xs font-cormorant-sc text-[#325956] font-bold uppercase tracking-wider">
-                      <span>Rangkaian Pentas 5102</span>
+                      <span className="flex items-center gap-2">
+                        <span className="flex items-end gap-0.5 h-3">
+                          <span className="w-0.5 h-full bg-[#B58A3C] animate-pulse" />
+                          <span className="w-0.5 h-2 bg-[#B58A3C] animate-pulse" style={{ animationDelay: '0.2s' }} />
+                          <span className="w-0.5 h-3 bg-[#B58A3C] animate-pulse" style={{ animationDelay: '0.4s' }} />
+                        </span>
+                        <span>Rangkaian Pentas 5102</span>
+                      </span>
                       <span className="group-hover:text-[#B58A3C] group-hover:translate-x-1.5 transition-all inline-flex items-center gap-1.5 font-bold">
                         Buka Detail Pentas →
                       </span>

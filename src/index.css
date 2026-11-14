@@ -559,3 +559,101 @@ body::after {
   pointer-events: none;
   user-select: none;
 }
+
+/* ─────────────────────────────────────────────────
+   Visual Richness & Micro-Animation Enhancements
+   ───────────────────────────────────────────────── */
+@keyframes radar-pulse {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.4); opacity: 0.2; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+.radar-pulse-ring {
+  animation: radar-pulse 3s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+}
+
+@keyframes holographic-shine {
+  0% { transform: translateX(-100%) rotate(45deg); }
+  30%, 100% { transform: translateX(200%) rotate(45deg); }
+}
+
+.shine-card-hover {
+  position: relative;
+  overflow: hidden;
+}
+
+.shine-card-hover::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.15) 50%,
+    transparent 65%
+  );
+  transform: translateX(-100%) rotate(45deg);
+  pointer-events: none;
+  z-index: 15;
+  transition: opacity 0.3s;
+  opacity: 0;
+}
+
+.shine-card-hover:hover::before {
+  opacity: 1;
+  animation: holographic-shine 1.8s ease-out;
+}
+
+/* Ticket Gold Foil Sheen */
+.ticket-hologram {
+  background: linear-gradient(
+    135deg,
+    #FAF8F5 0%,
+    #FFFDF9 45%,
+    #F3EBDD 50%,
+    #FAF8F5 55%,
+    #EDE8E2 100%
+  );
+  background-size: 200% 200%;
+  transition: background-position 0.6s ease;
+}
+
+.ticket-hologram:hover {
+  background-position: 100% 100%;
+}
+
+/* Floating badge breathing animation */
+@keyframes float-badge {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-6px) rotate(1deg); }
+}
+
+.animate-float-badge {
+  animation: float-badge 4.5s ease-in-out infinite;
+}
+
+/* Glowing Border Pulse */
+@keyframes border-glow-pulse {
+  0%, 100% { border-color: rgba(181, 138, 60, 0.35); box-shadow: 0 0 15px rgba(181, 138, 60, 0.1); }
+  50% { border-color: rgba(212, 168, 83, 0.7); box-shadow: 0 0 25px rgba(181, 138, 60, 0.3); }
+}
+
+.card-glow-pulse {
+  animation: border-glow-pulse 4s ease-in-out infinite;
+}
+
+/* Interactive card tilt & scale */
+.interactive-card {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+  will-change: transform;
+}
+
+.interactive-card:hover {
+  transform: translateY(-8px) scale(1.012);
+  box-shadow: 0 25px 50px -12px rgba(25, 46, 65, 0.25);
+  border-color: rgba(181, 138, 60, 0.85);
+}

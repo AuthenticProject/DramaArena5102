@@ -533,6 +533,26 @@ export const IndonesiaMap3D: React.FC = () => {
             Visualisasi 3D Interaktif Kepulauan Indonesia & Pancaran 20 Cabang PMDG dari Kampus Pusat Ponorogo.
           </p>
 
+          {/* 4 Geographical Scope Badges */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 max-w-3xl mx-auto mt-6">
+            <div className="p-2.5 rounded-xl bg-[#101D2A]/80 border border-[#B58A3C]/30 text-center">
+              <div className="font-mileast font-bold text-base gold-text">9 Kampus</div>
+              <div className="text-[10px] font-mono text-[#EDE8E2]/70 uppercase">Wilayah Jawa & Pusat</div>
+            </div>
+            <div className="p-2.5 rounded-xl bg-[#101D2A]/80 border border-[#B58A3C]/30 text-center">
+              <div className="font-mileast font-bold text-base gold-text">7 Kampus</div>
+              <div className="text-[10px] font-mono text-[#EDE8E2]/70 uppercase">Wilayah Sumatera</div>
+            </div>
+            <div className="p-2.5 rounded-xl bg-[#101D2A]/80 border border-[#B58A3C]/30 text-center">
+              <div className="font-mileast font-bold text-base gold-text">4 Kampus</div>
+              <div className="text-[10px] font-mono text-[#EDE8E2]/70 uppercase">Wilayah Sulawesi</div>
+            </div>
+            <div className="p-2.5 rounded-xl bg-[#101D2A]/80 border border-[#B58A3C]/30 text-center">
+              <div className="font-mileast font-bold text-base gold-text">2.150 KM</div>
+              <div className="text-[10px] font-mono text-[#EDE8E2]/70 uppercase">Jarak Terjauh (Aceh)</div>
+            </div>
+          </div>
+
           {/* Interactive Search Box & Region Filters */}
           <div className="mt-7 max-w-lg mx-auto flex flex-col items-center gap-3">
             <div className="w-full relative">
