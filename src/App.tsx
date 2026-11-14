@@ -20,6 +20,8 @@ export function App() {
   // Show animated loading screen with spinning logo on load
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [activeSection, setActiveSection] = useState<string>('hero');
+  const [scrollProgress, setScrollProgress] = useState<number>(0);
+  const [showBackToTop, setShowBackToTop] = useState<boolean>(false);
   const [isSponsorshipModalOpen, setIsSponsorshipModalOpen] = useState<boolean>(false);
   const [activeShow, setActiveShow] = useState<ShowCategoryData | null>(null);
 
@@ -48,6 +50,10 @@ export function App() {
   useEffect(() => {
     const sectionIds = ['hero', 'ide-pokok', 'theme', 'about', 'map-3d', 'shows', 'committee', 'media-showcase'];
     const handleScroll = () => {
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+      setScrollProgress(Math.min(100, Math.max(0, progress)));
+      setShowBackToTop(window.scrollY > 640);
       const scrollPos = window.scrollY + 200;
       for (let i = sectionIds.length - 1; i >= 0; i--) {
         const el = document.getElementById(sectionIds[i]);
@@ -59,6 +65,7 @@ export function App() {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -98,6 +105,10 @@ export function App() {
         onOpenSponsorshipModal={() => setIsSponsorshipModalOpen(true)}
         onNavigate={handleNavigate}
       />
+
+      <div className="da-reading-progress" role="progressbar" aria-label="Progress membaca halaman" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(scrollProgress)}>
+        <span style={{ transform: `scaleX(${scrollProgress / 100})` }} />
+      </div>
 
       {/* 2. Main Single-Page Scroll Content */}
       <main>
@@ -154,6 +165,13 @@ export function App() {
         show={activeShow}
         onClose={() => setActiveShow(null)}
       />
+
+      {showBackToTop && (
+        <button className="da-back-to-top" type="button" onClick={() => handleNavigate('hero')} aria-label="Kembali ke bagian atas">
+          <span aria-hidden="true">↑</span>
+          <small>TOP</small>
+        </button>
+      )}
 
       {/* Floating OST Music Player Widget */}
       <AudioPlayer />
