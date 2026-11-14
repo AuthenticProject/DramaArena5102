@@ -770,3 +770,65 @@ body::after {
   text-transform: uppercase;
   font-weight: 600;
 }
+
+
+/* ═══════════════════════════════════════════════
+   ROTATING 3D LOGO & SUNBURST KEYFRAMES FOR PRELOADER
+   ═══════════════════════════════════════════════ */
+@keyframes spin-logo-smooth {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-logo-reverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes spin-3d-flip {
+  0% {
+    transform: perspective(600px) rotateY(0deg);
+  }
+  50% {
+    transform: perspective(600px) rotateY(180deg) scale(0.95);
+  }
+  100% {
+    transform: perspective(600px) rotateY(360deg);
+  }
+}
+
+@keyframes gold-halo-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.9;
+  }
+}
+
+.animate-spin-logo {
+  animation: spin-logo-smooth 10s linear infinite;
+}
+
+.animate-spin-logo-reverse {
+  animation: spin-logo-reverse 14s linear infinite;
+}
+
+.animate-spin-3d {
+  animation: spin-3d-flip 6s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+.animate-gold-halo {
+  animation: gold-halo-pulse 3s ease-in-out infinite;
+}

@@ -17,16 +17,13 @@ import { AudioPlayer } from './components/AudioPlayer';
 import { MediaShowcase } from './pages/MediaShowcase';
 
 export function App() {
-  // Show loading screen once per session
-  const [isLoading, setIsLoading] = useState<boolean>(
-    () => !sessionStorage.getItem('da5102-loaded')
-  );
+  // Show animated loading screen with spinning logo on load
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [activeSection, setActiveSection] = useState<string>('hero');
   const [isSponsorshipModalOpen, setIsSponsorshipModalOpen] = useState<boolean>(false);
   const [activeShow, setActiveShow] = useState<ShowCategoryData | null>(null);
 
   const handleLoadingComplete = () => {
-    sessionStorage.setItem('da5102-loaded', '1');
     setIsLoading(false);
   };
 
