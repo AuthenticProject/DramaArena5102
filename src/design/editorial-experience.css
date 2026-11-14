@@ -711,3 +711,51 @@ button[title*="music" i] { border-radius: 3px !important; }
 @media(max-width:760px){.da-sponsor-tier-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.da-sponsor-section-head{align-items:flex-start;flex-direction:column;gap:8px}.da-sponsor-section-head>p{max-width:none}}
 @media(max-width:520px){.da-sponsor-overlay{padding:7px}.da-sponsor-modal{max-height:97vh;padding:22px 17px}.da-sponsor-topline{padding-right:38px;font-size:6px}.da-sponsor-close{top:17px;right:16px;width:34px;height:34px}.da-sponsor-heading{margin:28px auto 34px}.da-sponsor-budget{align-items:flex-start;flex-direction:column;gap:5px}.da-sponsor-tier-grid{gap:8px}.da-sponsor-tier{min-height:172px;padding:13px 11px}.da-sponsor-tier-name{font-size:13px}.da-sponsor-tier-pct{font-size:24px}.da-sponsor-tier-amount{font-size:7px}.da-sponsor-detail-head{align-items:flex-start;flex-direction:column}.da-sponsor-detail-head>strong{text-align:left}.da-sponsor-detail ul{grid-template-columns:1fr;gap:10px}.da-sponsor-bank{align-items:flex-start;flex-direction:column}.da-sponsor-footer{align-items:flex-start;flex-direction:column}}
 @media(prefers-reduced-motion:reduce){.da-sponsor-tier{transition:none}}
+
+
+/* Phase 09 — continuous navigation and reading experience */
+.da-reading-progress {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 80;
+  height: 2px;
+  overflow: hidden;
+  pointer-events: none;
+  background: rgba(212,168,83,.12);
+}
+.da-reading-progress span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-origin: left center;
+  background: linear-gradient(90deg,#8e6b28 0%,#d4a853 55%,#f3e1b8 100%);
+  box-shadow: 0 0 12px rgba(212,168,83,.55);
+  will-change: transform;
+}
+.da-back-to-top {
+  position: fixed;
+  right: clamp(14px,2.5vw,34px);
+  bottom: clamp(90px,12vh,130px);
+  z-index: 45;
+  display: flex;
+  width: 46px;
+  height: 52px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  color: #f3e1b8;
+  background: rgba(16,29,42,.94);
+  border: 1px solid rgba(212,168,83,.65);
+  box-shadow: 0 8px 24px rgba(4,10,16,.22);
+  transition: transform .25s ease, background .25s ease, border-color .25s ease;
+}
+.da-back-to-top:hover { transform: translateY(-3px); background:#264744; border-color:#f3e1b8; }
+.da-back-to-top span { font: 22px/1 'Cormorant Garamond',serif; }
+.da-back-to-top small { font: 6px 'Space Mono',monospace; letter-spacing:.18em; }
+@media(max-width:767px) {
+  .da-back-to-top { width:40px; height:46px; right:12px; bottom:100px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .da-back-to-top { transition:none; }
+}
