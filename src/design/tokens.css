@@ -1,17 +1,35 @@
 /* src/design/tokens.css */
 :root {
-  /* Brand Colors */
-  --color-navy: #062B4A;
-  --color-gold: #D69103;
-  --color-bone: #F4F1EB;
+  /* Brand Colors from Brand Guideline DA 5102 */
+  --color-navy: #192E41;
+  --color-navy-dark: #101D2A;
+  --color-navy-light: #24415C;
+  
+  --color-teal: #325956;
+  --color-teal-dark: #223C3A;
+  --color-teal-light: #447773;
+
+  --color-bone: #EDE8E2;
+  --color-bone-dark: #DDD7CE;
+  --color-bone-light: #F7F5F0;
+
+  --color-gold: #B58A3C;
+  --color-gold-light: #D4A853;
+  --color-gold-pale: #F3E1B8;
+
   /* Gradients */
-  --gradient-gold: linear-gradient(135deg, #B8860B 0%, #D69103 50%, #E8A820 100%);
+  --gradient-gold: linear-gradient(135deg, #8E6B28 0%, #B58A3C 45%, #D4A853 75%, #F3E1B8 100%);
+  --gradient-navy: linear-gradient(135deg, #101D2A 0%, #192E41 60%, #24415C 100%);
+  --gradient-teal: linear-gradient(135deg, #1D3533 0%, #325956 60%, #447773 100%);
 }
 
 /* Utility classes */
 .bg-navy { background-color: var(--color-navy); }
+.bg-teal { background-color: var(--color-teal); }
 .bg-gold { background-color: var(--color-gold); }
 .bg-bone { background-color: var(--color-bone); }
+
 .text-navy { color: var(--color-navy); }
+.text-teal { color: var(--color-teal); }
 .text-gold { color: var(--color-gold); }
 .text-bone { color: var(--color-bone); }

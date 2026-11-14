@@ -95,6 +95,7 @@ declare module 'lucide-react' {
   export const Disc: any;
   export const ArrowRight: any;
   export const ArrowLeft: any;
+  export const ArrowUpRight: any;
   export const Clock: any;
   export const Search: any;
   export const Target: any;
@@ -109,6 +110,18 @@ declare module 'lucide-react' {
   export const Image: any;
   export const Feather: any;
   export const Download: any;
+  export const Waves: any;
+  export const Film: any;
+  export const Camera: any;
+  export const Ticket: any;
+  export const Paperclip: any;
+  export const Tv: any;
+  export const Type: any;
+  export const Bookmark: any;
+  export const HelpCircle: any;
+  export const Shield: any;
+  export const Stamp: any;
+  export const Scroll: any;
   const icons: { [key: string]: any };
   export default icons;
 }

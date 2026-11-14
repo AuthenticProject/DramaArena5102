@@ -4,7 +4,7 @@ import { SectionLabel, FleuronDivider } from './HeroSection';
 import { CommitteeGroup, BudgetItem } from '../types';
 import { TypographyDecor } from './TypographyDecor';
 import { importImage } from '../utils/assetHelpers';
-import { Shirt, ArrowRight } from 'lucide-react';
+import { Shirt, ArrowRight, ShieldCheck, DollarSign, Users } from 'lucide-react';
 
 const committeeData: CommitteeGroup[] = [
   { role: "Penanggung Jawab", names: ["Ahmad Nur Fajar Dwi Prakosa"] },
@@ -49,41 +49,43 @@ export const CommitteeSection: React.FC<CommitteeSectionProps> = ({ onNavigate }
   const [committeeTab, setCommitteeTab] = useState<'panitia' | 'anggaran'>('panitia');
 
   return (
-    <section id="committee" className="py-24 px-5 sm:px-8 md:px-12 relative overflow-hidden">
+    <section id="committee" className="py-24 px-4 sm:px-6 md:px-12 bg-[#EDE8E2] text-[#192E41] relative overflow-hidden">
       {/* Background Typography Watermark */}
       <TypographyDecor
         sectionId="committee"
         variant="5"
         mode="corner-ornament"
         position="bottom-right"
-        opacity={0.05}
+        opacity={0.04}
       />
 
       <div className="max-w-6xl mx-auto relative z-10">
         <FadeIn delay={0} className="text-center mb-12">
-          <SectionLabel text="FORMASI KEPANITIAAN" />
-          <h2 className="font-mileast italic font-bold mt-3 leading-none uppercase" style={{ fontSize: 'clamp(2rem, 6vw, 72px)', color: '#062B4A' }}>
+          <SectionLabel text="06. FORMASI KEPANITIAAN" />
+          <h2 className="font-mileast italic font-bold mt-2 leading-none uppercase text-[#192E41]" style={{ fontSize: 'clamp(2.2rem, 5.5vw, 68px)' }}>
             Panitia & Anggaran
           </h2>
           <FleuronDivider />
+          <p className="font-cormorant-sc text-xs sm:text-sm tracking-widest text-[#325956] uppercase max-w-xl mx-auto mt-2 font-semibold">
+            Struktur Amanah dan Akuntabilitas Perhelatan Drama Arena 5102
+          </p>
         </FadeIn>
 
         {/* Tab switcher */}
-        <FadeIn delay={0.1} className="flex justify-center mb-10">
-          <div className="flex gap-2 p-1 rounded-lg" style={{ background: 'rgba(6,43,74,0.08)', border: '1px solid rgba(214,145,3,0.2)' }}>
+        <FadeIn delay={0.1} className="flex justify-center mb-12">
+          <div className="flex gap-1.5 p-1.5 rounded-full bg-[#192E41]/10 border border-[#B58A3C]/35 shadow-inner backdrop-blur-sm">
             {[
-              ['panitia', 'Susunan Panitia'],
-              ['anggaran', 'Rencana Anggaran']
+              ['panitia', 'Susunan Panitia Mandiri'],
+              ['anggaran', 'Rencana Anggaran Biaya']
             ].map(([key, label]) => (
               <button
                 key={key}
                 onClick={() => setCommitteeTab(key as 'panitia' | 'anggaran')}
-                className="px-6 py-2 rounded-md font-cormorant-sc text-sm tracking-wider uppercase transition-all duration-200 cursor-pointer"
-                style={{
-                  background: committeeTab === key ? '#062B4A' : 'transparent',
-                  color: committeeTab === key ? '#D69103' : '#062B4A',
-                  fontWeight: committeeTab === key ? '700' : '400'
-                }}
+                className={`px-6 py-2.5 rounded-full font-cormorant-sc text-xs sm:text-sm tracking-wider uppercase transition-all duration-300 cursor-pointer font-bold ${
+                  committeeTab === key
+                    ? 'bg-[#192E41] text-[#EDE8E2] shadow-lg border border-[#B58A3C]/50'
+                    : 'text-[#192E41]/80 hover:text-[#192E41] hover:bg-[#192E41]/5'
+                }`}
               >
                 {label}
               </button>
@@ -95,25 +97,23 @@ export const CommitteeSection: React.FC<CommitteeSectionProps> = ({ onNavigate }
           <FadeIn delay={0.1}>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {committeeData.map((group, idx) => (
-                <div key={idx} className="classic-card rounded-2xl p-6">
+                <div key={idx} className="bg-[#FAF8F5] rounded-2xl p-6 border border-[#B58A3C]/30 shadow-md hover:shadow-xl transition-shadow">
                   <div
-                    className="flex items-center gap-2 mb-3 pb-3"
-                    style={{ borderBottom: '1px solid rgba(214,145,3,0.25)' }}
+                    className="flex items-center gap-2.5 mb-3 pb-3 border-b border-[#B58A3C]/25"
                   >
                     <div
-                      className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
-                      style={{ background: '#062B4A', color: '#D69103' }}
+                      className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 bg-[#192E41] text-[#EDE8E2] border border-[#B58A3C]"
                     >
                       {idx + 1}
                     </div>
-                    <h4 className="font-cormorant-sc font-bold text-sm uppercase tracking-wider" style={{ color: '#062B4A' }}>
+                    <h4 className="font-mileast font-bold text-base text-[#192E41] tracking-wide">
                       {group.role}
                     </h4>
                   </div>
                   <ul className="flex flex-col gap-1.5">
                     {group.names.map((n, i) => (
-                      <li key={i} className="flex items-start gap-2 font-baskerville text-xs leading-relaxed" style={{ color: '#062B4A', opacity: 0.85 }}>
-                        <span className="mt-1 flex-shrink-0" style={{ color: '#D69103' }}>·</span>
+                      <li key={i} className="flex items-start gap-2 font-alverata text-xs leading-relaxed text-[#192E41]/85">
+                        <span className="mt-1 flex-shrink-0 text-[#B58A3C] font-bold">·</span>
                         {n}
                       </li>
                     ))}
@@ -124,42 +124,52 @@ export const CommitteeSection: React.FC<CommitteeSectionProps> = ({ onNavigate }
           </FadeIn>
         ) : (
           <FadeIn delay={0.1}>
-            <div className="classic-card rounded-3xl p-6 sm:p-10 shadow-xl max-w-3xl mx-auto">
+            <div className="has-registration-marks bg-[#FAF8F5] rounded-3xl p-6 sm:p-10 shadow-2xl border-2 border-[#B58A3C]/40 max-w-3xl mx-auto relative">
+              <span className="reg-mark reg-tl" />
+              <span className="reg-mark reg-tr" />
+              <span className="reg-mark reg-bl" />
+              <span className="reg-mark reg-br" />
+
               <div
-                className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 mb-6 gap-4"
-                style={{ borderBottom: '1px solid rgba(214,145,3,0.3)' }}
+                className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 mb-6 gap-4 border-b border-[#B58A3C]/30"
               >
                 <div>
-                  <h3 className="font-playfair font-bold text-xl" style={{ color: '#062B4A' }}>Anggaran Kepanitiaan</h3>
-                  <p className="font-cormorant-sc text-xs mt-1 tracking-wider" style={{ color: '#D69103' }}>Drama Arena 5102 · T.A. 1447-1448</p>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="w-2 h-2 rounded-full bg-[#B58A3C]" />
+                    <span className="font-mono text-[10px] tracking-widest uppercase text-[#325956] font-bold">
+                      SK NO. 05/DA.5102/KMI/PMDG
+                    </span>
+                  </div>
+                  <h3 className="font-mileast font-bold text-2xl text-[#192E41]">Rencana Anggaran Biaya</h3>
+                  <p className="font-cormorant-sc text-xs mt-0.5 tracking-wider text-[#325956] font-semibold">Tahun Ajaran 1447-1448 H · Kulliyatu-l-Mu'allimin Al-Islamiyah</p>
                 </div>
-                <div className="text-right p-4 rounded-xl" style={{ background: '#062B4A' }}>
-                  <div className="font-cormorant-sc text-xs uppercase tracking-wider" style={{ color: 'rgba(244,241,235,0.7)' }}>Total Keseluruhan</div>
-                  <div className="font-mileast font-bold text-xl gold-text">Rp 500.107.000</div>
+                <div className="text-right p-4 rounded-xl bg-[#192E41] text-[#EDE8E2] border border-[#B58A3C] shadow-md">
+                  <div className="font-cormorant-sc text-[11px] uppercase tracking-wider text-[#EDE8E2]/70 font-semibold">Total Anggaran</div>
+                  <div className="font-mileast font-bold text-xl sm:text-2xl gold-text">Rp 500.107.000</div>
                 </div>
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr style={{ borderBottom: '2px solid rgba(214,145,3,0.4)' }}>
-                      <th className="py-2 px-3 text-left font-cormorant-sc text-xs tracking-wider uppercase" style={{ color: '#D69103' }}>No</th>
-                      <th className="py-2 px-3 text-left font-cormorant-sc text-xs tracking-wider uppercase" style={{ color: '#D69103' }}>Bagian</th>
-                      <th className="py-2 px-3 text-right font-cormorant-sc text-xs tracking-wider uppercase" style={{ color: '#D69103' }}>Nominal</th>
+                    <tr className="border-b-2 border-[#B58A3C] bg-[#EDE8E2]/60">
+                      <th className="py-3 px-3 text-left font-cormorant-sc text-xs tracking-wider uppercase text-[#192E41] font-bold">No</th>
+                      <th className="py-3 px-3 text-left font-cormorant-sc text-xs tracking-wider uppercase text-[#192E41] font-bold">Bagian Kepanitiaan</th>
+                      <th className="py-3 px-3 text-right font-cormorant-sc text-xs tracking-wider uppercase text-[#192E41] font-bold">Alokasi Nominal</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {budgetItems.map((b) => (
-                      <tr key={b.no} style={{ borderBottom: '1px solid rgba(6,43,74,0.1)' }} className="hover:bg-yellow-50/50 transition-colors">
-                        <td className="py-2.5 px-3 font-cormorant-sc text-xs opacity-60" style={{ color: '#062B4A' }}>{b.no}.</td>
-                        <td className="py-2.5 px-3 font-baskerville font-bold text-sm uppercase" style={{ color: '#062B4A' }}>{b.section}</td>
-                        <td className="py-2.5 px-3 text-right font-mileast font-bold" style={{ color: '#062B4A' }}>{b.amount}</td>
+                    {budgetItems.map((b, i) => (
+                      <tr key={b.no} className={`border-b border-[#192E41]/10 hover:bg-[#EDE8E2]/60 transition-colors ${i % 2 === 1 ? 'bg-black/[0.015]' : ''}`}>
+                        <td className="py-2.5 px-3 font-mono text-xs text-[#192E41]/60">{b.no}.</td>
+                        <td className="py-2.5 px-3 font-alverata font-semibold text-sm text-[#192E41]">{b.section}</td>
+                        <td className="py-2.5 px-3 text-right font-mono font-bold text-sm text-[#325956]">{b.amount}</td>
                       </tr>
                     ))}
-                    <tr style={{ background: '#062B4A' }}>
-                      <td colSpan={2} className="py-3 px-3 text-right font-cormorant-sc font-bold text-sm uppercase tracking-widest" style={{ color: '#D69103' }}>
-                        Total Anggaran:
+                    <tr className="bg-[#192E41] text-[#EDE8E2]">
+                      <td colSpan={2} className="py-3.5 px-3 text-right font-cormorant-sc font-bold text-sm uppercase tracking-widest text-[#B58A3C]">
+                        Total Keseluruhan Anggaran:
                       </td>
-                      <td className="py-3 px-3 text-right font-mileast font-bold text-base gold-text">Rp 500.107.000</td>
+                      <td className="py-3.5 px-3 text-right font-mileast font-bold text-xl gold-text">Rp 500.107.000</td>
                     </tr>
                   </tbody>
                 </table>
@@ -170,9 +180,9 @@ export const CommitteeSection: React.FC<CommitteeSectionProps> = ({ onNavigate }
 
         {/* Official Workshirt Teaser Banner */}
         <FadeIn delay={0.2} className="mt-14">
-          <div className="rounded-2xl p-6 bg-gradient-to-r from-[#062B4A] to-[#041d33] text-white border border-[#D69103]/40 flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className="rounded-2xl p-6 bg-gradient-to-r from-[#192E41] via-[#1D3533] to-[#325956] text-[#EDE8E2] border-2 border-[#B58A3C]/40 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl">
             <div className="flex items-center gap-4">
-              <div className="w-16 h-16 rounded-xl bg-white/10 p-2 flex items-center justify-center flex-shrink-0 border border-[#D69103]/30">
+              <div className="w-16 h-16 rounded-xl bg-white/10 p-2 flex items-center justify-center flex-shrink-0 border border-[#B58A3C]/40">
                 <img
                   src={importImage('workshirt.png')}
                   alt="Official Panitia Workshirt"
@@ -180,13 +190,13 @@ export const CommitteeSection: React.FC<CommitteeSectionProps> = ({ onNavigate }
                 />
               </div>
               <div>
-                <span className="font-cormorant-sc text-[10px] tracking-widest text-[#D69103] uppercase font-bold">
+                <span className="font-cormorant-sc text-[10px] tracking-widest text-[#B58A3C] uppercase font-bold">
                   ✦ SERAGAM RESMI PANITIA 5102 ✦
                 </span>
-                <h4 className="font-mileast font-bold text-lg text-white">
+                <h4 className="font-mileast font-bold text-lg text-[#EDE8E2]">
                   Official Committee Workshirt & Visual Identity
                 </h4>
-                <p className="font-baskerville text-xs text-[#F4F1EB]/75 max-w-lg mt-0.5">
+                <p className="font-alverata text-xs text-[#EDE8E2]/80 max-w-lg mt-0.5">
                   Lihat detail seragam dinas panitia dan seluruh arsip grafis di galeri Media Showcase.
                 </p>
               </div>
@@ -195,7 +205,7 @@ export const CommitteeSection: React.FC<CommitteeSectionProps> = ({ onNavigate }
             {onNavigate && (
               <button
                 onClick={() => onNavigate('media-showcase')}
-                className="px-5 py-2.5 rounded-lg border border-[#D69103] bg-[#D69103] text-[#062B4A] font-cormorant-sc text-xs tracking-wider uppercase font-bold hover:bg-white hover:text-[#062B4A] transition-colors flex items-center gap-2 flex-shrink-0 cursor-pointer"
+                className="px-5 py-2.5 rounded-lg border border-[#B58A3C] bg-[#B58A3C] text-[#192E41] font-cormorant-sc text-xs tracking-wider uppercase font-bold hover:bg-[#FAF8F5] transition-colors flex items-center gap-2 flex-shrink-0 cursor-pointer shadow"
               >
                 Buka Media Showcase <ArrowRight className="w-3.5 h-3.5" />
               </button>
@@ -206,3 +216,4 @@ export const CommitteeSection: React.FC<CommitteeSectionProps> = ({ onNavigate }
     </section>
   );
 };
+export default CommitteeSection;

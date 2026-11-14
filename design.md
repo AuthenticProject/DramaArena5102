@@ -1,145 +1,72 @@
-# Drama Arena 5102 — Design System & Brand Guideline
+# Drama Arena 5102 — Official Design System & Brand Guideline
 
-> **Pagelaran Seni Akbar — Kelas 5 102**
-> Dokumen ini merangkum identitas visual (brand identity) Drama Arena 5102, diekstrak dari materi ajuan/draft desain yang ada.
-
----
-
-## 1. Ringkasan Brand
-
-| Item | Keterangan |
-|---|---|
-| Nama Acara | **Drama Arena 5102** |
-| Sub-title | Pagelaran Seni Akbar |
-| Kelas | 5 102 |
-| Tema Besar | *Old Classic* dipadukan dengan identitas budaya Indonesia (nuansa prangko/stamp klasik) |
-| Konsep Visual | Prangko (Stamp) + Jam Pasir (Hourglass) + Monogram huruf **D & A** |
-| Tagline Utama | **"Sadar akan Nilai-Nilai Perjuangan, Tumbuhkan Semangat Kebersamaan."** |
-| Semboyan Pendukung | *"Forever Striving for an Authentic Masterpiece"* |
+> **Pagelaran Seni Akbar — Siswa Kelas 5 KMI Pondok Modern Darussalam Gontor**
+> Disusun dan diselaraskan secara akurat berdasarkan 12 Slide Panduan Identitas Visual Resmi di direktori `REFERENSI`.
 
 ---
 
-## 2. Color Palette
-
-| Warna | Nama | Hex |
-|---|---|---|
-| 🔵 | Blue Navy | `#062b4a` |
-| 🟡 | Gold | `#d69f03` |
-| ⚪ | Bone White | `#f4f1eb` |
-
-**Prinsip pemakaian:**
-- Navy → warna dominan untuk teks, outline logo utama, dan background gelap (kemeja, patch).
-- Gold → warna aksen untuk detail ornamen, ikon jam pasir/prangko, dan highlight tipografi.
-- Bone White → warna dasar/background netral bernuansa kertas tua (old paper texture).
+## 1. Konsep Utama (Main Concept)
+- **Tema Besar**: Vintage Postal, Archival Journal, & Islamic Arabesque Heritage.
+- **Elemen Inti**:
+  - Prangko (Stamp) bertepi perforasi bergerigi (scalloped edge) dengan stempel cap pembatalan pos (*cancellation postmark*) bertuliskan `DRAMA ARENA 5102`.
+  - Segel Lilin Timbal 3D (*Wax Seal*) dengan ornamen medali ombak arabesque DA.
+  - Tiket Perforasi (*Perforated Ticket Stubs*) dengan barcode `DA5102`, `Pagelaran Seni Akbar Kelas 5 KMI`, dan `Est.2027`.
+  - Folder Tab Arsip Dokumen (*Main Concept*, *Ide Pokok*, *Tema*, *Moto*, *Main Branding*).
+  - Tag Kertas Koper (*Luggage Tag*) berlubang tali goni bertuliskan `DA.5102`.
+  - Kertas Koyak Vintage (*Torn Parchment Note*) dengan penjepit kertas logam (*binder clip* hijau toska).
+  - Meja Kerja Klasik: Mesin tik vintage DA5102, lampu meja banker hijau berkerangka kuningan, kamera emas Leica dengan pita seluloid film, telepon putar emas klasik, dan botol tinta dengan pena bulu.
 
 ---
 
-## 3. Font Type / Typography
-
-| Font | Fungsi | Contoh Format |
-|---|---|---|
-| **Mileast** | Display / Judul utama | `2028/5102` |
-| **Alferata** | Pendukung / Body-display | `2028/5102` |
-
-Gaya huruf: serif klasik dengan sentuhan ornamen vintage (garis lengkung, swash, dan dekorasi flourish di ujung huruf) — konsisten dengan tema *Old Classic*.
-
----
-
-## 4. Main Logo
-
-### 4.1 Logo Utama (Lockup Lengkap)
-Terdiri dari:
-- Bingkai ornamen vintage (scrollwork/flourish) di kiri-kanan.
-- Teks atas: **"PAGELARAN SENI AKBAR"**
-- Wordmark utama: **"DRAMA ARENA"** (Drama dalam ukuran lebih kecil, Arena dalam ukuran lebih besar sebagai focal point)
-- Teks bawah: **"KELAS 5 102"**
-- Medali bulat kecil di kanan bawah berisi monogram D&A (versi mini stempel).
-
-### 4.2 Logo Prangko (Stamp Logo)
-- Bentuk kotak vertikal menyerupai perangko pos lengkap dengan tepi bergerigi (perforasi).
-- Teks atas: **"DRAMA"**
-- Ilustrasi tengah: **monogram jam pasir berbentuk huruf D & A** bergaya kaligrafis emas.
-- Teks bawah: **"ARENA"**
-- Warna: outline navy, isi bone white, elemen huruf/monogram gold.
-
-### 4.3 Logo Horizontal (Simplified/Lockup Sekunder)
-- Versi ringkas: ikon stempel kecil (dengan angka "5102" di bawahnya) di sisi kiri + teks **"DRAMA ARENA"** dua baris di sisi kanan.
-- Digunakan untuk aplikasi ukuran kecil (merchandise, dokumen, media sosial).
+## 2. Ide Pokok & Falsafah Luhur
+- **Kutipan Utama**:
+  > **"Sebesar keinsyafanmu, sebesar itu pula keuntunganmu."**
+- **Penjabaran Falsafah**:
+  Keinsyafan/kesadaran adalah dasar perjuangan, dan perjuangan adalah jalan menuju keberhasilan. Besarnya hasil yang diperoleh bergantung pada kedalaman kesadaran dalam memahami nilai, tujuan, dan tanggung jawab dari setiap perjuangan. Santri yang berjuang tanpa kesadaran hanya melihat perjuangan sebagai beban. Sebaliknya, santri yang berjuang dengan penuh keinsyafan memahami bahwa setiap kesulitan merupakan proses bernilai pembelajaran tinggi. Keuntungan yang dimaksud bukan cuma keberhasilan kasat mata, melainkan bertambahnya ilmu, pengalaman, dan pendewasaan diri.
+- **Mahfudzot Resmi**:
+  $$\text{بِقَدْرِ الْكَدِّ تُكْتَسَبُ الْمَعَالِي}$$
+  *(Biqadril kaddi tuktasabul ma'aaliy)*
+  - Sadar untuk berjuang, berjuang untuk berhasil; jika sudah berhasil maka kemuliaan akan datang (*Jer Basuki Mawa Beya* — setiap keberhasilan membutuhkan pengorbanan).
 
 ---
 
-## 5. Elemen Visual & Makna (The Meaning of Branding)
-
-Logo Drama Arena 5102 dibangun dari 3 elemen utama yang saling melengkapi:
-
-### 5.1 Prangko (Stamp)
-Melambangkan **perjalanan, pesan, dan sejarah** — setiap prangko membawa cerita dari satu tempat ke tempat lain, sebagaimana nilai-nilai perjuangan yang diwariskan antar generasi. Bentuknya memperkuat kesan klasik (*Old Classic*).
-
-### 5.2 Jam Pasir (Hourglass)
-Simbol **perjalanan waktu dan proses yang tidak pernah berhenti**. Menggambarkan bahwa pertumbuhan bukan sesuatu yang instan, melainkan hasil perjuangan berkelanjutan — setiap butir pasir melambangkan pengalaman dan pembelajaran yang membentuk karakter.
-> Sejalan dengan semangat: *"Forever Striving for an Authentic Masterpiece"*
-
-### 5.3 Monogram Huruf D & A
-Bentuk jam pasir pada logo sekaligus merupakan stilisasi huruf **D** dan **A** (singkatan Drama Arena), menyatukan makna dan visual dalam satu elemen ikonik.
+## 3. Tema & Tiga Moto Perjuangan
+- **Tiga Pertanyaan Introspeksi Tema**:
+  1. *Sadar, Ke Pondok apa yang kau cari?*
+  2. *Sadar, akan nilai-nilai perjuangan.*
+  3. *Sadar, dan utuh dalam kebersamaan.*
+- **Tiga Moto Resmi (Bentuk Tiket Perforasi)**:
+  1. **Moto 1**: *Sadar dalam perjuangan, Utuh dalam kebersamaan*
+  2. **Moto 2**: *Teguh dalam perjuangan, Utuh dalam kebersamaan*
+  3. **Moto 3**: *Sadar akan nilai kebersamaan, tumbuhkan semangat perjuangan*
 
 ---
 
-## 6. Background / Latar Konsep
-
-- Menggunakan ilustrasi **bangunan klasik Nusantara** (perpaduan arsitektur berbagai daerah — atap gonjong Minang, ornamen ukir, menara jam, kubah masjid) sebagai representasi akar budaya dan identitas bangsa.
-- Merepresentasikan semangat **Pondok Modern Darussalam Gontor sebagai "Guru Kebangsaan"** — menghimpun santri dari berbagai suku, daerah, dan bahasa untuk tumbuh bersama dalam satu nilai dan tujuan.
-- Logo utama ditempatkan di tengah fasad bangunan sebagai focal point.
-
----
-
-## 7. Wordmark & Tipografi Tambahan (Sub-brand Assets)
-
-| Aset | Bentuk | Keterangan |
-|---|---|---|
-| **"Forever Striving for an Authentic Masterpiece"** | Lettering dekoratif, navy + gold | Semboyan/motto pendukung tema jam pasir |
-| **"Head Hand Heart"** | Lettering dalam bingkai prangko | Value/filosofi tambahan |
-| **"Naluri & Nurani"** | Lettering dalam bingkai prangko | Value/filosofi tambahan |
-| **"5ADAR"** (Sadar, angka 5 menggantikan huruf S) | Lettering flourish besar, navy outline + gold ornamen | Digunakan sebagai elemen punggung kemeja (back print) |
-| **Monogram "D A"** bergaya illuminated letter | Ilustrasi arsitektur (masjid, menara jam) di dalam huruf D dan A, gaya ukiran biru monokrom (toile-style) | Elemen dekoratif tambahan |
-| **Ilustrasi lanskap biru monokrom** (masjid, menara jam, pohon, danau) | Gaya toile/engraving klasik | Background/elemen dekoratif pendukung |
-| **Kaligrafi Arab-Latin "Innama Dunya Haditsum Badahu Fakun Haditsan Hasanan Liman Wa'a"** | Lettering dekoratif navy + gold | Kutipan/hadits/pepatah dalam tema tipografi vintage |
-| **Poster "Deadline is a word... always by my side"** | Poster bergaya prangko besar, sepia/gold | Elemen humor/identitas panitia, dilengkapi ornamen arsitektur di sudut |
+## 4. Dua Varian Logo & Filosofi Lambang
+1. **Logo Varian 1 (Lambang Utama)**:
+   - *Ornamen bentuk ombak membentuk tulisan DA, yang menggambarkan nama acara yaitu Drama Arena.*
+2. **Logo Varian 2 (Monogram)**:
+   - *Monogram DA, menggambarkan nama acara yaitu, Drama Arena.*
+3. **Tiga Pilar Filosofis**:
+   - **The Great Wave of Kanagawa**: Gelombang raksasa melambangkan kekuatan alam yang berada di luar kendali manusia. Dalam interpretasi filosofis, gelombang menggambarkan ujian, kesulitan, dan berbagai tantangan kehidupan. Manusia tidak selalu mampu mengendalikan keadaan, namun manusia tetap memiliki pilihan bagaimana ia menghadapinya.
+   - **Ornamen Floral Arabesque**: Seni ornamen tradisi Islam berupa sulur tumbuhan, dedaunan, dan pola geometris yang saling terhubung berulang secara harmonis.
+   - **Huruf D & A**: Implementasi acara Drama Arena pagelaran seni di PMDG yang diadakan setahun sekali dikoordinasikan oleh siswa kelas 5 KMI.
 
 ---
 
-## 8. Aplikasi Merchandise (Kemeja/Jersey Panitia)
+## 5. Palet Warna Resmi (Official Color Palette)
 
-**Kemeja lapangan warna Navy**, dengan penempatan elemen:
-- **Lengan kiri**: Patch stempel "DRAMA ARENA" (kotak prangko kecil)
-- **Dada kiri**: Angka "5102" (bordir gold)
-- **Dada kanan**: Logo lockup horizontal "DRAMA ARENA" + ikon jam pasir
-- **Lengan kanan**: Lettering "Naluri & Nurani" (patch bordir)
-- **Punggung (back print besar)**: Lettering **"5ADAR"** dengan ornamen flourish
-
-Detail bordir yang tersedia sebagai aset terpisah:
-1. Patch "Naluri & Nurani"
-2. Patch "5ADAR"
-3. Patch stempel ikon jam pasir (polos)
-4. Patch stempel "DRAMA ARENA" + ikon
-5. Patch angka "5102"
+| Sampul | Nama Warna | Nilai HEX | RGB | CMYK |
+| :---: | :--- | :---: | :---: | :---: |
+| 🔵 | **Navy Blue** | `#192E41` | `25, 46, 65` | `62, 29, 0, 75` |
+| 🟢 | **Green Teal** | `#325956` | `50, 89, 86` | `44, 0, 3, 65` |
+| ⚪ | **Bone White** | `#EDE8E2` | `237, 232, 226` | `0, 2, 5, 7` |
+| 🟡 | **Golden Metal** | `#B58A3C` | `181, 138, 60` | `0, 24, 67, 29` |
 
 ---
 
-## 9. Aset Fotografi & Mockup Tambahan
-
-- **Frame foto bergaya prangko vertikal**: dokumentasi santri/panitia dibingkai dalam bentuk prangko dengan watermark "Drama Arena 5102" dan caption tagline di bagian bawah, lengkap stempel pos dekoratif.
-- **Prangko heritage bergaya vintage (sepia)**: ilustrasi pemain basket melompat dengan latar bangunan Gontor, label "GONTOR HERITAGE SERIES", cap pos "PONDOK MODERN GONTOR 1926", nominal harga "18.50 €", teks "SADAR AKAN SEJARAH, NILAI, DAN PERJUANGAN", serta label "DRAMA ARENA 2025 — KELAS 5 KMI GONTOR".
-
----
-
-## 10. Prinsip Desain Keseluruhan
-
-1. **Konsistensi tema Old Classic** — seluruh aset menggunakan motif prangko, jam pasir, ornamen ukir/flourish, dan tekstur kertas tua.
-2. **Kontras warna Navy–Gold–Bone White** dipertahankan di semua media (cetak, digital, merchandise).
-3. **Monogram D&A** sebagai benang merah visual yang selalu muncul dalam berbagai skala (logo utama, medali kecil, patch bordir).
-4. **Narasi kebangsaan & nilai kepesantrenan** menjadi dasar filosofis setiap elemen, bukan sekadar dekorasi.
-5. **Fleksibilitas lockup**: logo utama (kompleks/ornamen penuh) untuk media formal & besar; logo prangko sederhana untuk media kecil/merchandise.
-
----
-
-*Dokumen ini disusun sebagai referensi desain (design system) berdasarkan hasil ekstraksi dari draft brand book "Drama Arena 5102" (Ajuan Gontor, 24 Juli 2026).*
+## 6. Sistem Tipografi & Font Resmi
+1. **Arabic Font**: **Naveid** (diterapkan pada kaligrafi Mahfudzot dan teks Arab).
+2. **Headline Font**: **MILEAST** (diterapkan pada judul utama, angka angkatan, dan penamaan acara `DRAMA ARENA Est.2027`).
+3. **Body Text Font**: **ALVERATA** (diterapkan pada naskah, deskripsi, moto, dan dokumen resmi).
+4. **Secondary Typografi**: **Stamp Typography Tiles** (`D-R-A-M-A A-R-E-N-A 5102`).

@@ -91,23 +91,23 @@ export const AudioPlayer: React.FC = () => {
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2 pointer-events-auto">
         {/* Autoplay prompt toast if blocked */}
         {showNotification && !isPlaying && (
-          <div className="bg-[#062B4A] border-2 border-[#D69103] text-[#F5D98A] text-xs px-4 py-2 rounded-2xl shadow-2xl flex items-center gap-2 animate-bounce max-w-xs">
-            <Music className="w-4 h-4 text-[#D69103] flex-shrink-0" />
-            <span>Klik tombol <strong>▶ Play</strong> untuk mendengarkan lagu OST DA 5102!</span>
+          <div className="bg-[#192E41] border-2 border-[#B58A3C] text-[#F3E1B8] text-xs px-4 py-2 rounded-2xl shadow-2xl flex items-center gap-2 animate-bounce max-w-xs">
+            <Music className="w-4 h-4 text-[#B58A3C] flex-shrink-0" />
+            <span>Klik tombol <strong>▶ Play</strong> untuk memutar OST Drama Arena 5102!</span>
           </div>
         )}
 
         {/* Branded Player Card */}
-        <div className="flex items-center gap-3 p-2.5 pl-4 rounded-full bg-[#062B4A]/90 backdrop-blur-md border-2 border-[#D69103] shadow-[0_10px_30px_rgba(6,43,74,0.5)] transition-all hover:scale-105">
+        <div className="flex items-center gap-3 p-2.5 pl-4 rounded-full bg-[#192E41]/95 backdrop-blur-md border-2 border-[#B58A3C] shadow-[0_10px_30px_rgba(25,46,65,0.6)] transition-all hover:scale-105">
           {/* Animated Vinyl Disc / Icon */}
           <div className="relative flex items-center justify-center">
-            <div className={`w-9 h-9 rounded-full bg-gradient-to-tr from-[#B8860B] via-[#D69103] to-[#F5D98A] flex items-center justify-center shadow-md ${isPlaying ? 'animate-spin' : ''}`} style={{ animationDuration: '6s' }}>
-              <Disc className="w-5 h-5 text-[#062B4A]" />
+            <div className={`w-9 h-9 rounded-full bg-gradient-to-tr from-[#8E6B28] via-[#B58A3C] to-[#F3E1B8] flex items-center justify-center shadow-md ${isPlaying ? 'animate-spin' : ''}`} style={{ animationDuration: '6s' }}>
+              <Disc className="w-5 h-5 text-[#192E41]" />
             </div>
             {isPlaying && (
               <span className="absolute -top-1 -right-1 flex h-3 w-3">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D69103] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-[#F5D98A]"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#B58A3C] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-[#F3E1B8]"></span>
               </span>
             )}
           </div>
@@ -115,19 +115,19 @@ export const AudioPlayer: React.FC = () => {
           {/* Track Info & Equalizer */}
           <div className="flex flex-col pr-1 min-w-[120px]">
             <div className="flex items-center gap-1.5">
-              <span className="text-xs font-bold text-[#F4F1EB] truncate max-w-[130px] font-sans">
+              <span className="text-xs font-bold text-[#EDE8E2] truncate max-w-[130px] font-sans">
                 Teruslah Percaya
               </span>
               {/* Equalizer Bars */}
               {isPlaying && (
                 <div className="flex items-end gap-0.5 h-3">
-                  <div className="w-0.5 bg-[#D69103] rounded-full eq-bar-1" />
-                  <div className="w-0.5 bg-[#F5D98A] rounded-full eq-bar-2" />
-                  <div className="w-0.5 bg-[#D69103] rounded-full eq-bar-3" />
+                  <div className="w-0.5 bg-[#B58A3C] rounded-full h-2 animate-pulse" />
+                  <div className="w-0.5 bg-[#F3E1B8] rounded-full h-3 animate-pulse" style={{ animationDelay: '0.15s' }} />
+                  <div className="w-0.5 bg-[#B58A3C] rounded-full h-1.5 animate-pulse" style={{ animationDelay: '0.3s' }} />
                 </div>
               )}
             </div>
-            <span className="text-[10px] text-[#F5D98A] font-medium tracking-wide truncate max-w-[130px]">
+            <span className="text-[10px] text-[#B58A3C] font-semibold tracking-wide truncate max-w-[130px]">
               OST Drama Arena 5102
             </span>
           </div>
@@ -135,21 +135,21 @@ export const AudioPlayer: React.FC = () => {
           {/* Play/Pause Button */}
           <button
             onClick={togglePlay}
-            className="w-10 h-10 rounded-full bg-[#D69103] hover:bg-[#E8A820] text-[#062B4A] flex items-center justify-center transition-transform hover:scale-110 shadow-lg cursor-pointer ml-1"
+            className="w-10 h-10 rounded-full bg-[#B58A3C] hover:bg-[#D4A853] text-[#192E41] flex items-center justify-center transition-transform hover:scale-110 shadow-lg cursor-pointer ml-1"
             title={isPlaying ? "Pause Musik" : "Putar Musik OST"}
             aria-label={isPlaying ? "Pause Musik" : "Putar Musik OST"}
           >
             {isPlaying ? (
-              <Pause className="w-5 h-5 fill-current text-[#062B4A]" />
+              <Pause className="w-5 h-5 fill-current text-[#192E41]" />
             ) : (
-              <Play className="w-5 h-5 fill-current text-[#062B4A] ml-0.5" />
+              <Play className="w-5 h-5 fill-current text-[#192E41] ml-0.5" />
             )}
           </button>
 
           {/* Mute Button */}
           <button
             onClick={toggleMute}
-            className="p-2 text-[#F5D98A] hover:text-white transition-colors cursor-pointer"
+            className="p-2 text-[#F3E1B8] hover:text-white transition-colors cursor-pointer"
             title={isMuted ? "Unmute" : "Mute"}
             aria-label={isMuted ? "Unmute" : "Mute"}
           >

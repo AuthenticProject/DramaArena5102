@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Check, Copy, CheckCheck, MessageCircle } from 'lucide-react';
+import { X, Check, Copy, CheckCheck, MessageCircle, ShieldCheck } from 'lucide-react';
 import { SectionLabel, GoldButton } from './HeroSection';
 import { SponsorTier } from '../types';
 
@@ -80,36 +80,29 @@ export const TicketModal: React.FC<TicketModalProps> = ({ isOpen, onClose }) => 
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 transition-opacity"
-        style={{ background: 'rgba(6,43,74,0.88)', backdropFilter: 'blur(10px)' }}
+        className="fixed inset-0 transition-opacity bg-[#101D2A]/85 backdrop-blur-md"
         onClick={onClose}
       />
 
       {/* Modal Box */}
       <div
-        className="relative w-full max-w-4xl rounded-3xl p-6 sm:p-10 z-10 my-auto max-h-[92vh] overflow-y-auto"
-        style={{
-          background: '#F4F1EB',
-          border: '2px solid rgba(214,145,3,0.6)',
-          boxShadow: '0 30px 90px rgba(6,43,74,0.6)'
-        }}
+        className="relative w-full max-w-4xl rounded-3xl p-6 sm:p-10 z-10 my-auto max-h-[92vh] overflow-y-auto bg-[#FAF8F5] text-[#192E41] border-2 border-[#B58A3C] shadow-2xl"
       >
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 rounded-full cursor-pointer transition-colors hover:bg-black/10"
-          style={{ color: '#062B4A' }}
+          className="absolute top-5 right-5 p-2 rounded-full cursor-pointer transition-colors hover:bg-black/10 text-[#192E41]"
           aria-label="Close modal"
         >
           <X className="w-5 h-5" />
         </button>
 
         <div className="mb-8 text-center sm:text-left">
-          <SectionLabel text="KEMITRAAN & SPONSORSHIP" />
-          <h2 className="font-mileast italic font-bold text-3xl sm:text-4xl mt-2 leading-tight" style={{ color: '#062B4A' }}>
+          <SectionLabel text="KEMITRAAN & SPONSORSHIP RESMI" />
+          <h2 className="font-mileast italic font-bold text-3xl sm:text-4xl mt-2 leading-tight text-[#192E41]">
             Paket Kerjasama Drama Arena 5102
           </h2>
-          <p className="font-cormorant-sc text-xs tracking-widest mt-1 uppercase" style={{ color: '#D69103' }}>
-            Total Anggaran Penyelenggaraan: <span className="font-bold">Rp 500.107.000</span>
+          <p className="font-cormorant-sc text-xs tracking-widest mt-1 uppercase text-[#325956] font-bold">
+            Total Anggaran Penyelenggaraan: <span className="text-[#B58A3C] font-bold font-mono">Rp 500.107.000</span>
           </p>
         </div>
 
@@ -119,35 +112,31 @@ export const TicketModal: React.FC<TicketModalProps> = ({ isOpen, onClose }) => 
             <div
               key={tier}
               className={`rounded-2xl p-5 flex flex-col justify-between transition-transform duration-300 hover:scale-[1.02] ${
-                popular ? 'bg-[#062B4A] text-[#F4F1EB] shadow-xl' : 'bg-[#EDE7DC] text-[#062B4A]'
+                popular ? 'bg-[#192E41] text-[#EDE8E2] shadow-xl border-2 border-[#B58A3C]' : 'bg-[#EDE8E2] text-[#192E41] border border-[#B58A3C]/40'
               }`}
-              style={{
-                border: `1.5px solid ${popular ? '#D69103' : 'rgba(214,145,3,0.35)'}`,
-                boxShadow: popular ? '0 10px 30px rgba(214,145,3,0.25)' : 'none'
-              }}
             >
               <div>
                 <div className="flex items-center justify-between mb-1">
-                  <span className="font-mileast font-bold text-lg" style={{ color: popular ? '#F5D98A' : '#062B4A' }}>
+                  <span className="font-mileast font-bold text-lg" style={{ color: popular ? '#D4A853' : '#192E41' }}>
                     {tier}
                   </span>
                   {badge && (
-                    <span className="px-2 py-0.5 text-[9px] font-bold rounded-full bg-[#D69103] text-[#062B4A]">
+                    <span className="px-2 py-0.5 text-[9px] font-bold rounded-full bg-[#B58A3C] text-[#192E41]">
                       {badge}
                     </span>
                   )}
                 </div>
                 <div
                   className="font-cormorant-sc text-xs tracking-wider mb-2 font-semibold"
-                  style={{ color: popular ? '#D69103' : '#8B6914' }}
+                  style={{ color: popular ? '#B58A3C' : '#325956' }}
                 >
                   {pct} dari total
                 </div>
                 <div
                   className="font-mileast font-bold text-base mb-4 pb-2 border-b"
                   style={{
-                    color: popular ? '#F4F1EB' : '#062B4A',
-                    borderColor: popular ? 'rgba(214,145,3,0.3)' : 'rgba(6,43,74,0.15)'
+                    color: popular ? '#EDE8E2' : '#192E41',
+                    borderColor: popular ? 'rgba(181,138,60,0.3)' : 'rgba(25,46,65,0.15)'
                   }}
                 >
                   {amount}
@@ -157,10 +146,10 @@ export const TicketModal: React.FC<TicketModalProps> = ({ isOpen, onClose }) => 
                     <li
                       key={p}
                       className="flex items-start gap-2 text-xs leading-relaxed"
-                      style={{ color: popular ? 'rgba(244,241,235,0.85)' : 'rgba(6,43,74,0.85)' }}
+                      style={{ color: popular ? 'rgba(237,232,226,0.85)' : 'rgba(25,46,65,0.85)' }}
                     >
-                      <Check className="w-3.5 h-3.5 mt-0.5 flex-shrink-0 text-[#D69103]" />
-                      <span>{p}</span>
+                      <Check className="w-3.5 h-3.5 mt-0.5 flex-shrink-0 text-[#B58A3C]" />
+                      <span className="font-alverata">{p}</span>
                     </li>
                   ))}
                 </ul>
@@ -168,11 +157,11 @@ export const TicketModal: React.FC<TicketModalProps> = ({ isOpen, onClose }) => 
 
               <button
                 onClick={() => handleWhatsApp(tier)}
-                className="mt-5 w-full py-2 px-3 rounded-lg text-xs font-cormorant-sc font-bold uppercase tracking-wider transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                className="mt-5 w-full py-2 px-3 rounded-lg text-xs font-cormorant-sc font-bold uppercase tracking-wider transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow"
                 style={{
-                  background: popular ? '#D69103' : 'rgba(6,43,74,0.1)',
-                  color: popular ? '#062B4A' : '#062B4A',
-                  border: '1px solid rgba(214,145,3,0.5)'
+                  background: popular ? '#B58A3C' : '#192E41',
+                  color: popular ? '#192E41' : '#EDE8E2',
+                  border: '1px solid #B58A3C'
                 }}
               >
                 <MessageCircle className="w-3.5 h-3.5" /> Pilih Paket
@@ -183,40 +172,36 @@ export const TicketModal: React.FC<TicketModalProps> = ({ isOpen, onClose }) => 
 
         {/* Official Bank Account & Contact Details */}
         <div
-          className="p-5 sm:p-6 rounded-2xl mb-6 flex flex-col md:flex-row md:items-center justify-between gap-5"
-          style={{
-            background: 'linear-gradient(135deg, rgba(6,43,74,0.06) 0%, rgba(214,145,3,0.08) 100%)',
-            border: '1.5px solid rgba(214,145,3,0.4)'
-          }}
+          className="p-5 sm:p-6 rounded-2xl mb-6 flex flex-col md:flex-row md:items-center justify-between gap-5 bg-[#EDE8E2] border-2 border-[#B58A3C]/40"
         >
           <div>
-            <div className="font-cormorant-sc text-xs tracking-widest uppercase mb-1 font-bold text-[#D69103]">
+            <div className="font-cormorant-sc text-xs tracking-widest uppercase mb-1 font-bold text-[#B58A3C]">
               ✦ Rekening Resmi Sponsorship
             </div>
             <div className="flex items-center gap-3 mt-1">
-              <span className="font-mileast text-lg sm:text-xl font-bold text-[#062B4A]">
+              <span className="font-mileast text-lg sm:text-xl font-bold text-[#192E41]">
                 Bank BRI: {bankAcc}
               </span>
               <button
                 onClick={handleCopy}
-                className="inline-flex items-center gap-1 px-3 py-1 rounded-md text-xs font-medium bg-[#D69103] text-[#062B4A] hover:bg-[#b8860b] transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1 px-3 py-1 rounded-md text-xs font-bold bg-[#B58A3C] text-[#192E41] hover:bg-[#8E6B28] hover:text-[#EDE8E2] transition-colors cursor-pointer"
                 title="Salin Nomor Rekening"
               >
                 {copied ? <CheckCheck className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
                 <span>{copied ? 'Tersalin!' : 'Salin'}</span>
               </button>
             </div>
-            <p className="text-xs text-[#062B4A]/70 mt-1">
-              a.n. <strong>Panitia Drama Arena Gontor</strong> · Wesel: Panitia DA 5102 PMDG, Ponorogo, Jawa Timur 63472
+            <p className="text-xs text-[#192E41]/75 mt-1 font-alverata">
+              a.n. <strong>Panitia Drama Arena 5102 PMDG</strong> · Kampus Pusat Ponorogo, Jawa Timur 63472
             </p>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-2.5">
             <button
               onClick={() => handleWhatsApp('Sponsorship')}
-              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-cormorant-sc font-bold text-xs uppercase tracking-widest text-[#F4F1EB] bg-[#062B4A] hover:bg-[#0b3d68] transition-colors border border-[#D69103] shadow-md cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-cormorant-sc font-bold text-xs uppercase tracking-widest text-[#EDE8E2] bg-[#192E41] hover:bg-[#325956] transition-colors border border-[#B58A3C] shadow-md cursor-pointer"
             >
-              <MessageCircle className="w-4 h-4 text-[#D69103]" />
+              <MessageCircle className="w-4 h-4 text-[#B58A3C]" />
               Hubungi Panitia WA
             </button>
           </div>
@@ -229,3 +214,4 @@ export const TicketModal: React.FC<TicketModalProps> = ({ isOpen, onClose }) => 
     </div>
   );
 };
+export default TicketModal;

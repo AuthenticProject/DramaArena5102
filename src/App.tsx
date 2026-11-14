@@ -3,8 +3,9 @@ import { LoadingScreen } from './components/LoadingScreen';
 import { Header } from './components/Header';
 import { HeroSection } from './components/HeroSection';
 import { MarqueeSection } from './components/MarqueeSection';
-import { AboutSection } from './components/AboutSection';
+import { IdePokokSection } from './components/IdePokokSection';
 import { ThemeSection } from './components/ThemeSection';
+import { AboutSection } from './components/AboutSection';
 import { IndonesiaMap3D } from './components/IndonesiaMap3D';
 import { ShowsSection } from './components/ShowsSection';
 import type { ShowCategoryData } from './types';
@@ -48,7 +49,7 @@ export function App() {
 
   // Track active section on scroll for header nav indicator
   useEffect(() => {
-    const sectionIds = ['hero', 'about', 'theme', 'map-3d', 'shows', 'committee', 'media-showcase'];
+    const sectionIds = ['hero', 'ide-pokok', 'theme', 'about', 'map-3d', 'shows', 'committee', 'media-showcase'];
     const handleScroll = () => {
       const scrollPos = window.scrollY + 200;
       for (let i = sectionIds.length - 1; i >= 0; i--) {
@@ -81,9 +82,19 @@ export function App() {
   };
 
   return (
-    <div className="main-wrapper min-h-screen bg-[#F4F1EB] text-[#062B4A] font-alverata select-none">
+    <div className="main-wrapper min-h-screen bg-[#EDE8E2] text-[#192E41] font-dm select-none relative">
+      {/* Aluro Signature Architectural Grid Guidelines */}
+      <div className="aluro-bg-grid" aria-hidden="true">
+        <div className="aluro-grid-line" />
+        <div className="aluro-grid-line hidden sm:block" />
+        <div className="aluro-grid-line hidden md:block" />
+        <div className="aluro-grid-line hidden lg:block" />
+        <div className="aluro-grid-line" />
+      </div>
+
       {/* Loading Screen */}
       {isLoading && <LoadingScreen onComplete={handleLoadingComplete} />}
+
       {/* 1. Global Navigation Header */}
       <Header
         currentView={activeSection}
@@ -93,7 +104,7 @@ export function App() {
 
       {/* 2. Main Single-Page Scroll Content */}
       <main>
-        {/* Hero Section */}
+        {/* 01. Hero Section & Main Concept */}
         <HeroSection
           onOpenSponsorshipModal={() => setIsSponsorshipModalOpen(true)}
           onNavigate={handleNavigate}
@@ -102,24 +113,27 @@ export function App() {
         {/* Marquee Photo Banner Section */}
         <MarqueeSection />
 
-        {/* About Section */}
-        <AboutSection />
+        {/* 02. Ide Pokok & Mahfudzot Section */}
+        <IdePokokSection />
 
-        {/* Theme Section */}
+        {/* 03. Tema & 04. Tiga Moto Acara Section */}
         <ThemeSection />
+
+        {/* 04. Filosofi Logo & Palet Warna & Tipografi */}
+        <AboutSection />
 
         {/* 3D Map of Indonesia Section */}
         <IndonesiaMap3D />
 
-        {/* Shows Section */}
+        {/* 05. Shows & Stage Concept Section */}
         <ShowsSection
           onOpenTrailer={(show: ShowCategoryData) => setActiveShow(show)}
         />
 
-        {/* Committee Section */}
+        {/* 06. Committee & Budget Section */}
         <CommitteeSection onNavigate={handleNavigate} />
 
-        {/* Media Showcase Section — Integrated directly on the same page */}
+        {/* 07. Media Showcase Section */}
         <MediaShowcase
           onBackToHome={() => handleNavigate('hero')}
           onOpenSponsorshipModal={() => setIsSponsorshipModalOpen(true)}

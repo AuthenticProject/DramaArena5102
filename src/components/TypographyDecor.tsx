@@ -1,7 +1,7 @@
 import React from 'react';
 import { importImage } from '../utils/assetHelpers';
 
-export type TypographyVariant = 'main' | '2' | '3' | '4' | '5' | '6' | 'auto';
+export type TypographyVariant = 'main' | 'stamps' | '1' | '2' | '3' | '4' | '5' | '6' | 'auto';
 
 interface TypographyDecorProps {
   sectionId?: string;
@@ -14,8 +14,9 @@ interface TypographyDecorProps {
 }
 
 const variantToFileMap: Record<string, string> = {
-  main: 'typography.png',
-  '1': 'typography.png',
+  main: 'typography-drama-arena-main.png',
+  stamps: 'typography-stamps.png',
+  '1': 'typography-drama-arena-main.png',
   '2': 'typography 2.png',
   '3': 'typography 3.png',
   '4': 'typography 4.png',
@@ -25,12 +26,12 @@ const variantToFileMap: Record<string, string> = {
 
 const sectionDefaultVariants: Record<string, TypographyVariant> = {
   hero: 'main',
-  about: '2',
+  about: 'stamps',
   theme: 'main',
   shows: '4',
   committee: '5',
-  media: '3',
-  footer: '6',
+  media: 'stamps',
+  footer: 'main',
 };
 
 export const TypographyDecor: React.FC<TypographyDecorProps> = ({
@@ -45,13 +46,13 @@ export const TypographyDecor: React.FC<TypographyDecorProps> = ({
   const chosenVariant: TypographyVariant =
     variant === 'auto' ? sectionDefaultVariants[sectionId] || 'main' : variant;
 
-  const fileName = variantToFileMap[chosenVariant] || 'typography.png';
+  const fileName = variantToFileMap[chosenVariant] || 'typography-drama-arena-main.png';
   const imgUrl = importImage(fileName);
 
   if (mode === 'divider-banner') {
     return (
       <div className={`w-full flex items-center justify-center my-6 overflow-hidden select-none pointer-events-none ${className}`}>
-        <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#D69103]/40 to-transparent" />
+        <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#B58A3C]/40 to-transparent" />
         <div className="mx-4 relative group">
           <img
             src={imgUrl}
@@ -60,7 +61,7 @@ export const TypographyDecor: React.FC<TypographyDecorProps> = ({
             loading="lazy"
           />
         </div>
-        <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#D69103]/40 to-transparent" />
+        <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#B58A3C]/40 to-transparent" />
       </div>
     );
   }
