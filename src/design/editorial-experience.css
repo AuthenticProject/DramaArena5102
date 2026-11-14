@@ -654,3 +654,60 @@ button[title*="music" i] { border-radius: 3px !important; }
  .da-committee-row,.da-committee-chevron {transition:none;}
  .da-committee-members {animation:none;}
 }
+
+
+/* Phase 08 — sponsorship & partnership dossier */
+.da-sponsor-overlay{position:fixed;inset:0;z-index:120;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(5,12,18,.88);backdrop-filter:blur(13px);animation:da-modal-in .22s ease both}
+.da-sponsor-modal{position:relative;width:min(1020px,100%);max-height:94vh;overflow:auto;padding:clamp(22px,4.5vw,48px);color:#192e41;background:linear-gradient(135deg,#faf8f5,#f0e9de 58%,#faf8f5);border:1px solid rgba(212,168,83,.8);box-shadow:0 35px 110px rgba(0,0,0,.55);animation:da-modal-rise .3s ease both}
+.da-sponsor-modal:before{content:"";position:absolute;inset:7px;border:1px solid rgba(181,138,60,.22);pointer-events:none}
+.da-sponsor-modal>*{position:relative;z-index:1}
+.da-sponsor-close{position:absolute;top:22px;right:22px;z-index:3;display:grid;place-items:center;width:40px;height:40px;color:#f3e1b8;background:#192e41;border:1px solid #b58a3c}
+.da-sponsor-topline{display:flex;justify-content:space-between;gap:12px;padding-bottom:12px;border-bottom:1px solid rgba(181,138,60,.38);color:#8e6b28;font:8px 'Space Mono',monospace;letter-spacing:.14em}
+.da-sponsor-heading{max-width:760px;margin:35px auto 45px;text-align:center}
+.da-sponsor-seal{display:grid;place-items:center;width:58px;height:58px;margin:0 auto 19px;color:#f3e1b8;background:#192e41;border:1px solid #b58a3c;box-shadow:4px 4px 0 rgba(181,138,60,.22)}
+.da-sponsor-eyebrow,.da-sponsor-section-head>div>span,.da-sponsor-detail-head>div>span,.da-sponsor-bank-copy>span{color:#8e6b28;font:8px 'Space Mono',monospace;letter-spacing:.17em}
+.da-sponsor-heading h2{margin-top:13px;color:#192e41;font:500 clamp(42px,7vw,72px)/.9 'Cormorant Garamond',serif;letter-spacing:-.045em}
+.da-sponsor-heading h2 em{color:#8e6b28;font-weight:400}
+.da-sponsor-heading>p{max-width:540px;margin:17px auto 20px;color:rgba(25,46,65,.68);font:16px/1.7 'Cormorant Garamond',serif}
+.da-sponsor-budget{display:inline-flex;align-items:center;gap:16px;padding:11px 16px;border:1px solid rgba(181,138,60,.42);background:rgba(181,138,60,.07)}
+.da-sponsor-budget span{color:#8e6b28;font:7px 'Space Mono',monospace;letter-spacing:.09em}
+.da-sponsor-budget strong{color:#192e41;font:600 16px 'Cormorant Garamond',serif}
+.da-sponsor-section-head{display:flex;align-items:end;justify-content:space-between;gap:25px;margin-bottom:15px;padding-bottom:14px;border-bottom:1px solid rgba(181,138,60,.35)}
+.da-sponsor-section-head h3{margin-top:6px;color:#192e41;font:600 27px 'Cormorant Garamond',serif}
+.da-sponsor-section-head>p{max-width:320px;color:rgba(25,46,65,.58);font:12px/1.55 'Cormorant Garamond',serif}
+.da-sponsor-tier-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.da-sponsor-tier{position:relative;display:flex;min-height:190px;flex-direction:column;align-items:flex-start;padding:17px 15px 13px;text-align:left;color:#192e41;background:#eee8df;border:1px solid rgba(181,138,60,.34);transition:transform .25s ease,border-color .25s ease,background .25s ease,box-shadow .25s ease}
+.da-sponsor-tier:hover{transform:translateY(-3px);border-color:#b58a3c;box-shadow:0 12px 25px rgba(25,46,65,.08)}
+.da-sponsor-tier.is-featured{color:#f3e1b8;background:#192e41;border-color:#b58a3c}
+.da-sponsor-tier.is-selected{outline:2px solid #b58a3c;outline-offset:2px;background:#f8f1e5}
+.da-sponsor-tier.is-featured.is-selected{background:#203a4f}
+.da-sponsor-tier-index{color:#b58a3c;font:8px 'Space Mono',monospace}
+.da-sponsor-tier-badge{position:absolute;right:9px;top:10px;padding:4px 6px;color:#192e41;background:#d4a853;font:6px 'Space Mono',monospace}
+.da-sponsor-tier-name{margin-top:18px;font:700 15px 'Cormorant Garamond',serif;letter-spacing:.05em}
+.da-sponsor-tier-pct{margin-top:7px;color:#8e6b28;font:600 27px 'Cormorant Garamond',serif}
+.da-sponsor-tier.is-featured .da-sponsor-tier-pct{color:#d4a853}
+.da-sponsor-tier-amount{margin-top:3px;color:inherit;font:8px 'Space Mono',monospace;line-height:1.6;overflow-wrap:anywhere}
+.da-sponsor-tier-select{display:flex;align-items:center;gap:5px;margin-top:auto;padding-top:16px;color:#8e6b28;font:7px 'Space Mono',monospace}
+.da-sponsor-tier.is-featured .da-sponsor-tier-select{color:#d4a853}
+.da-sponsor-detail{margin-top:20px;padding:clamp(19px,3vw,27px);background:#192e41;color:#ede8e2;border:1px solid rgba(181,138,60,.7)}
+.da-sponsor-detail-head{display:flex;align-items:end;justify-content:space-between;gap:16px;padding-bottom:15px;border-bottom:1px solid rgba(212,168,83,.3)}
+.da-sponsor-detail-head h3{margin-top:6px;color:#f3e1b8;font:600 30px 'Cormorant Garamond',serif}
+.da-sponsor-detail-head>strong{color:#d4a853;font:600 18px 'Cormorant Garamond',serif;text-align:right}
+.da-sponsor-detail ul{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 22px;margin:19px 0 22px;padding:0;list-style:none}
+.da-sponsor-detail li{display:flex;align-items:flex-start;gap:9px;color:rgba(237,232,226,.82);font:13px/1.5 'Cormorant Garamond',serif}
+.da-sponsor-detail li svg{flex:0 0 15px;margin-top:2px;color:#d4a853}
+.da-sponsor-contact{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:14px 18px;color:#192e41;background:#d4a853;border:1px solid #f3e1b8;font:8px 'Space Mono',monospace;letter-spacing:.07em}
+.da-sponsor-contact:hover{background:#f3e1b8}
+.da-sponsor-bank{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-top:18px;padding:20px 22px;background:#eee8df;border:1px solid rgba(181,138,60,.4)}
+.da-sponsor-bank-copy h3{margin-top:7px;color:#192e41;font:600 24px 'Cormorant Garamond',serif}
+.da-sponsor-bank-copy>strong{display:block;margin-top:2px;color:#325956;font:600 15px 'Space Mono',monospace;letter-spacing:.04em}
+.da-sponsor-bank-copy p{margin-top:8px;color:rgba(25,46,65,.62);font:11px/1.6 'Cormorant Garamond',serif}
+.da-sponsor-copy{display:flex;align-items:center;gap:8px;flex:0 0 auto;padding:11px 13px;color:#f3e1b8;background:#192e41;border:1px solid #b58a3c;font:7px 'Space Mono',monospace}
+.da-sponsor-footer{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-top:17px;padding-top:15px;border-top:1px solid rgba(181,138,60,.35)}
+.da-sponsor-footer>div,.da-sponsor-footer>button{display:flex;align-items:center;gap:8px}
+.da-sponsor-footer>div{color:rgba(25,46,65,.58);font:10px 'Cormorant Garamond',serif}
+.da-sponsor-footer>div svg{color:#8e6b28}
+.da-sponsor-footer>button{color:#8e6b28;font:8px 'Space Mono',monospace}
+@media(max-width:760px){.da-sponsor-tier-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.da-sponsor-section-head{align-items:flex-start;flex-direction:column;gap:8px}.da-sponsor-section-head>p{max-width:none}}
+@media(max-width:520px){.da-sponsor-overlay{padding:7px}.da-sponsor-modal{max-height:97vh;padding:22px 17px}.da-sponsor-topline{padding-right:38px;font-size:6px}.da-sponsor-close{top:17px;right:16px;width:34px;height:34px}.da-sponsor-heading{margin:28px auto 34px}.da-sponsor-budget{align-items:flex-start;flex-direction:column;gap:5px}.da-sponsor-tier-grid{gap:8px}.da-sponsor-tier{min-height:172px;padding:13px 11px}.da-sponsor-tier-name{font-size:13px}.da-sponsor-tier-pct{font-size:24px}.da-sponsor-tier-amount{font-size:7px}.da-sponsor-detail-head{align-items:flex-start;flex-direction:column}.da-sponsor-detail-head>strong{text-align:left}.da-sponsor-detail ul{grid-template-columns:1fr;gap:10px}.da-sponsor-bank{align-items:flex-start;flex-direction:column}.da-sponsor-footer{align-items:flex-start;flex-direction:column}}
+@media(prefers-reduced-motion:reduce){.da-sponsor-tier{transition:none}}
