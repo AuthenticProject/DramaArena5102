@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FadeIn } from './FadeIn';
-import { Calendar, MapPin, ArrowRight, ShieldCheck, Sparkles } from 'lucide-react';
+import { Calendar, MapPin, ArrowRight, ShieldCheck, Sparkles, Building2, Layers } from 'lucide-react';
 import { importImage } from '../utils/assetHelpers';
 
 interface HeroSectionProps {
@@ -42,7 +42,7 @@ export const GoldButton: React.FC<{ onClick?: () => void; label: string; outline
 );
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenSponsorshipModal, onNavigate }) => {
-  const [activeStackIndex, setActiveStackIndex] = useState<number>(0);
+  const [activeHeroTab, setActiveHeroTab] = useState<'wave' | 'monogram'>('wave');
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
@@ -63,33 +63,29 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenSponsorshipModal
     return () => clearInterval(interval);
   }, []);
 
-  const cycleStack = () => {
-    setActiveStackIndex((prev) => (prev + 1) % 3);
-  };
-
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col items-center justify-center pt-36 sm:pt-40 pb-20 px-4 sm:px-6 md:px-12 overflow-hidden bg-gradient-to-b from-[#0B151F] via-[#101D2A] to-[#192E41] text-[#EDE8E2] font-jakarta"
+      className="relative flex flex-col items-center justify-center pt-36 sm:pt-40 pb-16 px-4 sm:px-6 md:px-12 overflow-hidden bg-gradient-to-b from-[#070D13] via-[#0E1A26] to-[#192E41] text-[#EDE8E2] font-jakarta"
     >
       {/* Background Architectural Grid & Subtle Radial Spotlight */}
-      <div className="absolute inset-0 aluro-bg-grid opacity-20 pointer-events-none" />
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[450px] bg-[#B58A3C]/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute inset-0 aluro-bg-grid opacity-15 pointer-events-none" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[750px] h-[450px] bg-[#B58A3C]/10 rounded-full blur-[140px] pointer-events-none" />
 
       {/* Orbit Rings Accent */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] sm:w-[850px] h-[600px] sm:h-[850px] pointer-events-none opacity-20">
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] sm:w-[950px] h-[700px] sm:h-[950px] pointer-events-none opacity-20">
         <div className="absolute inset-0 border border-[#B58A3C]/20 rounded-full animate-orbit" />
-        <div className="absolute inset-20 border border-[#B58A3C]/15 rounded-full animate-orbit-reverse" />
+        <div className="absolute inset-24 border border-[#B58A3C]/15 rounded-full animate-orbit-reverse" />
       </div>
 
-      {/* Hero Master Container */}
-      <div className="relative max-w-5xl mx-auto w-full z-10 text-center flex flex-col items-center">
+      {/* ── CHAPTER 1: THE MASTER EDITORIAL STAGE (Top Chapter) ── */}
+      <div className="relative max-w-4xl mx-auto w-full z-10 text-center flex flex-col items-center">
         
-        {/* 1. Official Eyebrow Pill Badge */}
-        <FadeIn delay={0} y={-10} className="mb-6">
-          <div className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-[#101D2A]/90 border border-[#B58A3C]/50 text-xs font-semibold tracking-wider text-[#F3E1B8] shadow-2xl backdrop-blur-md">
+        {/* 1. Official Eyebrow Badge */}
+        <FadeIn delay={0} y={-8} className="mb-5">
+          <div className="inline-flex items-center gap-2.5 px-4 sm:px-5 py-2 rounded-full bg-[#101D2A]/90 border border-[#B58A3C]/40 text-xs font-semibold tracking-wider text-[#F3E1B8] shadow-2xl backdrop-blur-md">
             <span className="w-2 h-2 rounded-full bg-[#D4AF37] animate-pulse" />
-            <span className="font-mono text-[11px] uppercase tracking-[0.2em] font-bold">
+            <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.22em] font-bold">
               KULLIYATU-L-MU'ALLIMIN AL-ISLAMIYAH · GONTOR 2026
             </span>
             <span className="px-2 py-0.5 rounded-full bg-[#325956] text-[#F3E1B8] font-mono text-[9px] font-bold">
@@ -98,32 +94,25 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenSponsorshipModal
           </div>
         </FadeIn>
 
-        {/* 2. Grand Display Editorial Headline */}
-        <FadeIn delay={0.1} y={0} className="w-full">
+        {/* 2. Grand Display Headline */}
+        <FadeIn delay={0.08} y={0} className="w-full">
           <h1 className="text-5xl sm:text-7xl md:text-8xl font-black tracking-tight text-white leading-[1.05] font-instrument italic drop-shadow-md">
             Drama Arena 5102
           </h1>
-          <div className="mt-2 sm:mt-3 font-mileast text-2xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#F3E1B8] via-[#D4A853] to-[#B58A3C] bg-clip-text text-transparent">
+          <div className="mt-2.5 sm:mt-3.5 font-mileast text-2xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#F3E1B8] via-[#D4A853] to-[#B58A3C] bg-clip-text text-transparent">
             Sadar dalam Perjuangan, Utuh dalam Kebersamaan
           </div>
         </FadeIn>
 
-        {/* 3. Theme Blockquote Callout */}
-        <FadeIn delay={0.18} className="mt-5 max-w-2xl mx-auto w-full">
-          <blockquote className="text-xs sm:text-sm md:text-base font-medium text-[#F3E1B8] italic px-6 py-3.5 border border-[#B58A3C]/35 bg-[#101D2A]/85 rounded-2xl backdrop-blur-md shadow-xl card-glow-pulse font-instrument">
-            “Sadar, Ke Pondok apa yang kau cari? Sadar akan nilai-nilai perjuangan, Sadar dan utuh dalam kebersamaan.”
-          </blockquote>
-        </FadeIn>
-
-        {/* 4. Subheadline Overview */}
-        <FadeIn delay={0.24} className="mt-4 max-w-2xl mx-auto">
-          <p className="text-xs sm:text-sm text-[#EDE8E2]/80 leading-relaxed font-dm">
-            Pagelaran seni akbar tahunan termegah karya 648 santri kelas 5 KMI di Pondok Modern Darussalam Gontor, memadukan kematangan spiritual, kedisiplinan kepemimpinan, dan estetika seni Islam sejati.
+        {/* 3. Refined Synopsis Paragraph */}
+        <FadeIn delay={0.16} className="mt-5 max-w-2xl mx-auto">
+          <p className="text-xs sm:text-sm md:text-base text-[#EDE8E2]/85 leading-relaxed font-dm">
+            Pagelaran seni akbar tahunan termegah karya 648 santri kelas 5 KMI Pondok Modern Darussalam Gontor, memadukan kematangan spiritual, kedisiplinan kepemimpinan, dan estetika seni Islam sejati.
           </p>
         </FadeIn>
 
-        {/* 5. Dual CTA Action Buttons */}
-        <FadeIn delay={0.3} className="mt-7 flex flex-col sm:flex-row items-center justify-center gap-4 w-full">
+        {/* 4. Action Trigger Buttons & Event Pill */}
+        <FadeIn delay={0.24} className="mt-7 flex flex-col sm:flex-row items-center justify-center gap-3.5 w-full">
           <button
             onClick={onOpenSponsorshipModal}
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-xl font-bold text-xs sm:text-sm text-[#192E41] bg-gradient-to-r from-[#F3E1B8] via-[#D4A853] to-[#B58A3C] hover:from-[#D4A853] hover:to-[#B58A3C] shadow-xl hover:shadow-[0_0_25px_rgba(212,175,55,0.4)] hover:-translate-y-0.5 transition-all duration-300 cursor-pointer font-jakarta"
@@ -131,6 +120,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenSponsorshipModal
             <span>Ajukan Proposal Kemitraan</span>
             <ArrowRight className="w-4 h-4 stroke-[2.5]" />
           </button>
+          
           <button
             onClick={() => onNavigate('ide-pokok')}
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl font-semibold text-xs sm:text-sm text-[#EDE8E2] bg-[#101D2A]/80 hover:bg-[#192E41] border border-[#B58A3C]/40 hover:border-[#D4AF37] hover:-translate-y-0.5 transition-all duration-300 backdrop-blur-md cursor-pointer font-jakarta"
@@ -138,245 +128,220 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenSponsorshipModal
             <Calendar className="w-4 h-4 text-[#D4AF37]" />
             <span>Jelajahi Falsafah Luhur</span>
           </button>
-        </FadeIn>
 
-        {/* 6. Centerpiece Pedestal: Symmetrical Exhibition of 3D Stack + Credential Cards */}
-        <FadeIn delay={0.36} className="mt-12 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <div className="w-full sm:w-auto px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-[11px] font-mono text-[#EDE8E2]/80 flex items-center justify-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] animate-ping" />
+            <span>Kamis, 7 Mei 2026 · Ponorogo</span>
+          </div>
+        </FadeIn>
+      </div>
+
+      {/* ── CHAPTER 2: THE 3-CARD BENTO HERO PEDESTAL (Clean, Symmetrical, Award-Winning Studio Layout) ── */}
+      <div className="relative max-w-6xl mx-auto w-full z-10 mt-14">
+        <FadeIn delay={0.32}>
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-stretch">
             
-            {/* Left Credentials Box */}
-            <div className="hidden lg:flex lg:col-span-3 flex-col gap-3 text-left">
-              <div className="p-4 rounded-2xl bg-[#101D2A]/80 border border-[#B58A3C]/30 shadow-lg backdrop-blur-md interactive-card">
-                <div className="flex items-center gap-2 text-[#D4AF37] font-mono text-[10px] uppercase font-bold mb-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] animate-ping" />
-                  <span>Kampus Pusat PMDG</span>
+            {/* ── CARD 1 (Left): LOKASI & HISTORIS (4 cols) ── */}
+            <div className="md:col-span-4 rounded-3xl bg-[#101D2A]/85 border border-[#B58A3C]/35 p-6 flex flex-col justify-between shadow-2xl backdrop-blur-md interactive-card group">
+              <div>
+                <div className="flex items-center justify-between pb-3 border-b border-white/10 mb-4">
+                  <div className="flex items-center gap-2">
+                    <Building2 className="w-4 h-4 text-[#D4AF37]" />
+                    <span className="font-mono text-[10px] tracking-widest uppercase font-bold text-[#D4AF37]">
+                      LOKASI & HISTORIS
+                    </span>
+                  </div>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 text-[#F3E1B8] border border-white/10">
+                    EST. 1926
+                  </span>
                 </div>
-                <div className="font-mileast font-bold text-base text-white">Ponorogo, Jatim</div>
-                <div className="text-[11px] font-mono text-[#EDE8E2]/60 mt-1">7.87° S, 111.49° E</div>
+
+                <div className="w-full h-36 rounded-2xl overflow-hidden border border-[#B58A3C]/25 relative mb-4 group-hover:border-[#D4AF37] transition-colors">
+                  <img
+                    src={importImage('building.png')}
+                    alt="Balai Pertemuan PMDG"
+                    className="w-full h-full object-cover filter contrast-110 group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                  <div className="absolute bottom-2.5 left-3 text-left">
+                    <span className="text-white font-bold text-xs block font-sans">Balai Pertemuan Gontor</span>
+                    <span className="text-[10px] text-[#D4AF37] font-mono">Panggung Utama DA 5102</span>
+                  </div>
+                </div>
+
+                <div className="text-left space-y-1">
+                  <h3 className="font-mileast font-bold text-lg text-white">Kampus Pusat Ponorogo</h3>
+                  <p className="text-xs text-[#EDE8E2]/70 leading-relaxed font-sans">
+                    Pondok Modern Darussalam Gontor, Desa Gontor, Ponorogo, Jawa Timur 63472.
+                  </p>
+                </div>
               </div>
 
-              <div className="p-4 rounded-2xl bg-[#101D2A]/80 border border-[#B58A3C]/30 shadow-lg backdrop-blur-md interactive-card">
-                <div className="flex items-center gap-2 text-[#D4AF37] font-mono text-[10px] uppercase font-bold mb-1">
-                  <ShieldCheck className="w-3.5 h-3.5 text-[#D4AF37]" />
-                  <span>Legalitas Acara</span>
+              <div className="pt-4 mt-4 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-[#D4AF37]">
+                <div className="flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5" />
+                  <span>7.87° S, 111.49° E</span>
                 </div>
-                <div className="font-mileast font-bold text-base text-white">SK PMDG 1447 H</div>
-                <div className="text-[11px] font-mono text-[#EDE8E2]/60 mt-1">Siswa Kelas 5 KMI Mandiri</div>
+                <span className="text-[#EDE8E2]/50 text-[10px]">100 Th Gontor</span>
               </div>
             </div>
 
-            {/* Center: Interactive 3-Card Stack */}
-            <div className="lg:col-span-6 flex flex-col items-center">
-              <div
-                onClick={cycleStack}
-                className="aluro-hero-stack cursor-pointer group select-none"
-                title="Klik untuk memutar kartu 3D"
-              >
-                {/* Card 1: Monogram */}
-                <div
-                  className={`aluro-stack-card bg-[#101D2A] border-2 border-[#B58A3C]/40 shadow-2xl p-5 flex flex-col justify-between overflow-hidden shine-card-hover ${
-                    activeStackIndex === 1
-                      ? 'aluro-stack-card-3 border-[#D4AF37]'
-                      : activeStackIndex === 2
-                      ? 'aluro-stack-card-2'
-                      : 'aluro-stack-card-1'
-                  }`}
-                >
-                  <div className="flex items-center justify-between text-[10px] font-mono text-[#D4AF37]">
-                    <span className="font-bold">MARK II</span>
-                    <span className="px-1.5 py-0.5 rounded bg-white/10 text-[#F3E1B8]">MONOGRAM</span>
+            {/* ── CARD 2 (Center): HERO MONUMENT - IDENTITAS RESMI (4 cols) ── */}
+            <div className="md:col-span-4 rounded-3xl bg-gradient-to-b from-[#192E41] via-[#101D2A] to-[#0A121A] border-2 border-[#D4AF37]/60 p-6 flex flex-col justify-between shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-md interactive-card group relative overflow-hidden">
+              {/* Subtle Ambient Radial Glow */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-[#D4AF37]/15 rounded-full blur-2xl pointer-events-none" />
+
+              <div>
+                <div className="flex items-center justify-between pb-3 border-b border-[#B58A3C]/30 mb-4">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[#D4AF37] animate-pulse" />
+                    <span className="font-mono text-[10px] tracking-widest uppercase font-bold text-[#F3E1B8]">
+                      LAMBANG RESMI DA 5102
+                    </span>
                   </div>
-                  <div className="w-32 h-32 mx-auto flex items-center justify-center p-2 group-hover:scale-105 transition-transform">
-                    <img
-                      src={importImage('logo-da-monogram-transparent.png')}
-                      alt="Monogram DA"
-                      className="w-full h-full object-contain filter drop-shadow"
-                    />
-                  </div>
-                  <div className="text-left border-t border-[#B58A3C]/20 pt-2 text-[11px] font-dm text-[#EDE8E2]/85 flex justify-between items-center">
-                    <span>Interlocking DA 5102</span>
-                    <span className="text-[10px] text-[#B58A3C] font-mono">KMI</span>
+                  {/* Toggle Selector Buttons */}
+                  <div className="flex items-center gap-1 bg-[#101D2A] p-0.5 rounded-lg border border-white/10">
+                    <button
+                      onClick={() => setActiveHeroTab('wave')}
+                      className={`px-2 py-0.5 rounded text-[9px] font-mono font-bold transition-all ${
+                        activeHeroTab === 'wave'
+                          ? 'bg-[#B58A3C] text-[#192E41]'
+                          : 'text-[#EDE8E2]/60 hover:text-white'
+                      }`}
+                    >
+                      OMBAK
+                    </button>
+                    <button
+                      onClick={() => setActiveHeroTab('monogram')}
+                      className={`px-2 py-0.5 rounded text-[9px] font-mono font-bold transition-all ${
+                        activeHeroTab === 'monogram'
+                          ? 'bg-[#B58A3C] text-[#192E41]'
+                          : 'text-[#EDE8E2]/60 hover:text-white'
+                      }`}
+                    >
+                      MONOGRAM
+                    </button>
                   </div>
                 </div>
 
-                {/* Card 2: Balai Pertemuan Historical Building */}
-                <div
-                  className={`aluro-stack-card bg-[#101D2A] border-2 border-[#B58A3C]/40 shadow-2xl p-5 flex flex-col justify-between overflow-hidden shine-card-hover ${
-                    activeStackIndex === 2
-                      ? 'aluro-stack-card-3 border-[#D4AF37]'
-                      : activeStackIndex === 0
-                      ? 'aluro-stack-card-2'
-                      : 'aluro-stack-card-1'
-                  }`}
-                >
-                  <div className="flex items-center justify-between text-[10px] font-mono text-[#D4AF37]">
-                    <span className="font-bold">ARSIP HISTORIS</span>
-                    <span className="px-1.5 py-0.5 rounded bg-white/10 text-[#F3E1B8]">EST. 1926</span>
-                  </div>
-                  <div className="w-36 h-28 mx-auto rounded-xl overflow-hidden my-2 border border-[#B58A3C]/30 relative group-hover:scale-105 transition-transform">
-                    <img
-                      src={importImage('building.png')}
-                      alt="Balai Pertemuan Gontor"
-                      className="w-full h-full object-cover filter contrast-110"
-                    />
-                  </div>
-                  <div className="text-left border-t border-[#B58A3C]/20 pt-2 text-[11px] font-dm text-[#EDE8E2]/85 flex justify-between items-center">
-                    <span>Balai Pertemuan PMDG</span>
-                    <span className="text-[10px] text-[#B58A3C] font-mono">PUSAT</span>
-                  </div>
-                </div>
-
-                {/* Card 3: The Great Wave Arabesque Medallion */}
-                <div
-                  className={`aluro-stack-card bg-gradient-to-br from-[#192E41] via-[#101D2A] to-[#0B151F] border-2 shadow-[0_25px_60px_rgba(0,0,0,0.6)] p-6 flex flex-col justify-between overflow-hidden shine-card-hover ${
-                    activeStackIndex === 0
-                      ? 'aluro-stack-card-3 border-[#D4AF37]'
-                      : activeStackIndex === 1
-                      ? 'aluro-stack-card-2 border-[#B58A3C]/50'
-                      : 'aluro-stack-card-1 border-[#B58A3C]/40'
-                  }`}
-                >
-                  <div className="flex items-center justify-between text-[10px] font-mono text-[#D4AF37]">
-                    <span className="font-bold">LAMBANG UTAMA</span>
-                    <span className="px-2 py-0.5 rounded-full bg-[#325956] text-[#F3E1B8] font-bold">5102</span>
-                  </div>
-                  <div className="w-36 h-36 mx-auto flex items-center justify-center p-3 group-hover:scale-105 transition-transform">
+                {/* Display Area for Active Emblem */}
+                <div className="relative w-44 h-44 mx-auto my-2 flex items-center justify-center p-3 group-hover:scale-105 transition-transform duration-500">
+                  {activeHeroTab === 'wave' ? (
                     <img
                       src={importImage('logo-da-wave-transparent.png')}
-                      alt="Ombak Kanagawa & Arabesque DA"
-                      className="w-full h-full object-contain filter drop-shadow-lg"
+                      alt="Lambang Utama DA 5102"
+                      className="w-full h-full object-contain filter drop-shadow-[0_8px_20px_rgba(212,175,55,0.35)]"
+                    />
+                  ) : (
+                    <img
+                      src={importImage('logo-da-monogram-transparent.png')}
+                      alt="Monogram DA 5102"
+                      className="w-full h-full object-contain filter drop-shadow-[0_8px_20px_rgba(212,175,55,0.35)]"
+                    />
+                  )}
+                  {/* Wax Seal Overlay Badge */}
+                  <div className="absolute -bottom-1 -right-1 w-10 h-10 drop-shadow-lg pointer-events-none">
+                    <img
+                      src={importImage('wax-seal-gold.png')}
+                      alt="Wax Seal Gold"
+                      className="w-full h-full object-contain"
                     />
                   </div>
-                  <div className="text-center border-t border-[#B58A3C]/30 pt-2.5">
-                    <div className="font-mileast font-bold text-sm text-[#EDE8E2]">The Great Wave of Kanagawa</div>
-                    <div className="text-[10px] font-dm text-[#D4A853] mt-0.5">Simbol Resiliensi & Keinsyafan</div>
+                </div>
+
+                <div className="text-center mt-3">
+                  <h3 className="font-mileast font-bold text-lg text-white">
+                    {activeHeroTab === 'wave' ? 'The Great Wave of Kanagawa' : 'Interlocking Monogram DA'}
+                  </h3>
+                  <p className="text-xs text-[#D4AF37] font-sans mt-0.5">
+                    {activeHeroTab === 'wave' ? 'Simbol Resiliensi & Keinsyafan Santri' : 'Tipografi Autentik Kelas 5 KMI PMDG'}
+                  </p>
+                </div>
+              </div>
+
+              <div className="pt-3 mt-3 border-t border-[#B58A3C]/30 flex items-center justify-between text-[10px] font-mono text-[#EDE8E2]/75">
+                <span className="flex items-center gap-1 text-[#D4AF37]">
+                  <Sparkles className="w-3 h-3" />
+                  <span>SK PMDG 1447 H</span>
+                </span>
+                <span>Klik tombol tab untuk ganti logo</span>
+              </div>
+            </div>
+
+            {/* ── CARD 3 (Right): COUNTDOWN & SKALA PERHELATAN (4 cols) ── */}
+            <div className="md:col-span-4 rounded-3xl bg-[#101D2A]/85 border border-[#B58A3C]/35 p-6 flex flex-col justify-between shadow-2xl backdrop-blur-md interactive-card group">
+              <div>
+                <div className="flex items-center justify-between pb-3 border-b border-white/10 mb-4">
+                  <div className="flex items-center gap-2">
+                    <Calendar className="w-4 h-4 text-[#D4AF37]" />
+                    <span className="font-mono text-[10px] tracking-widest uppercase font-bold text-[#D4AF37]">
+                      HITUNG MUNDUR PENTAS
+                    </span>
+                  </div>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#B58A3C]/20 text-[#D4AF37] border border-[#D4AF37]/40 font-bold flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] animate-ping" />
+                    <span>LIVE</span>
+                  </span>
+                </div>
+
+                {/* 4-Box Digital Clock */}
+                <div className="grid grid-cols-4 gap-2 my-2 text-center">
+                  {[
+                    { label: 'HARI', val: timeLeft.days },
+                    { label: 'JAM', val: timeLeft.hours },
+                    { label: 'MENIT', val: timeLeft.minutes },
+                    { label: 'DETIK', val: timeLeft.seconds },
+                  ].map(({ label, val }) => (
+                    <div key={label} className="p-2.5 rounded-xl bg-white/5 border border-white/10">
+                      <div className="font-mono font-bold text-xl sm:text-2xl text-white tabular-nums">
+                        {String(val).padStart(2, '0')}
+                      </div>
+                      <div className="text-[9px] font-mono text-[#D4AF37] mt-0.5">{label}</div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Event Scale Metrics */}
+                <div className="space-y-2 mt-4 pt-3 border-t border-white/10 text-left">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-[#EDE8E2]/70 font-sans">Koordinator Utama:</span>
+                    <span className="font-mono font-bold text-white">648 Santri Mandiri</span>
+                  </div>
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-[#EDE8E2]/70 font-sans">Jangkauan Cabang:</span>
+                    <span className="font-mono font-bold text-[#D4AF37]">20 Kampus Pondok</span>
+                  </div>
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-[#EDE8E2]/70 font-sans">Malam Pertunjukan:</span>
+                    <span className="font-mono font-bold text-white">1 Malam · 4 Babak Seni</span>
                   </div>
                 </div>
               </div>
 
-              {/* Click to Cycle Hint */}
-              <div className="text-[10px] font-mono text-[#D4AF37] mt-4 tracking-wider flex items-center justify-center gap-2 select-none">
-                <span className="animate-pulse">✦</span>
-                <span>KLIK KARTU UNTUK MEMUTAR STACK · HOVER UNTUK MEMBUKA FAN-OUT</span>
-                <span className="animate-pulse">✦</span>
+              <div className="pt-4 mt-4 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-[#D4AF37]">
+                <div className="flex items-center gap-1.5">
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  <span>KMI PMDG 1447H</span>
+                </div>
+                <span className="text-[#EDE8E2]/60 text-[10px]">19.30 WIB</span>
               </div>
             </div>
 
-            {/* Right Credentials Box */}
-            <div className="hidden lg:flex lg:col-span-3 flex-col gap-3 text-right">
-              <div className="p-4 rounded-2xl bg-[#101D2A]/80 border border-[#B58A3C]/30 shadow-lg backdrop-blur-md interactive-card">
-                <div className="flex items-center justify-end gap-2 text-[#D4AF37] font-mono text-[10px] uppercase font-bold mb-1">
-                  <span>Menuju 1 Abad</span>
-                  <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
-                </div>
-                <div className="font-mileast font-bold text-base text-white">100 Tahun Gontor</div>
-                <div className="text-[11px] font-mono text-[#EDE8E2]/60 mt-1">1926 — 2026 Masehi</div>
-              </div>
-
-              <div className="p-4 rounded-2xl bg-[#101D2A]/80 border border-[#B58A3C]/30 shadow-lg backdrop-blur-md interactive-card">
-                <div className="flex items-center justify-end gap-2 text-[#D4AF37] font-mono text-[10px] uppercase font-bold mb-1">
-                  <span>Konsep Panggung</span>
-                  <span className="text-xs">🎭</span>
-                </div>
-                <div className="font-mileast font-bold text-base text-white">4 Babak Seni Akbar</div>
-                <div className="text-[11px] font-mono text-[#EDE8E2]/60 mt-1">1 Malam Spektakuler</div>
-              </div>
-            </div>
           </div>
         </FadeIn>
-
-        {/* 7. Horological & Scope Bento Grid (4 Clean Metric Cards) */}
-        <FadeIn delay={0.42} className="mt-12 w-full">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 max-w-5xl mx-auto w-full">
-            {/* Card 1: Horological Countdown */}
-            <div className="glass-panel-dark p-4 sm:p-5 rounded-2xl border border-[#B58A3C]/35 text-left flex flex-col justify-between shadow-xl interactive-card shine-card-hover group">
-              <div className="flex items-center justify-between text-xs text-[#B58A3C] font-semibold mb-2">
-                <span className="uppercase tracking-wider text-[10px] font-bold">Waktu Menuju Pentas</span>
-                <Calendar className="w-3.5 h-3.5 text-[#D4AF37] group-hover:scale-110 transition-transform" />
-              </div>
-              <div className="font-mileast font-bold text-2xl sm:text-3xl text-white">
-                {timeLeft.days} <span className="text-xs font-mono font-normal text-[#F3E1B8]">Hari Lagi</span>
-              </div>
-              <div className="text-[11px] text-[#EDE8E2]/70 font-mono mt-2 pt-2 border-t border-white/10 flex items-center justify-between">
-                <span>{String(timeLeft.hours).padStart(2, '0')}j : {String(timeLeft.minutes).padStart(2, '0')}m : {String(timeLeft.seconds).padStart(2, '0')}d</span>
-                <span className="text-[#D4AF37] font-bold">LIVE</span>
-              </div>
-            </div>
-
-            {/* Card 2: 648 Santri Mandiri */}
-            <div className="glass-panel-dark p-4 sm:p-5 rounded-2xl border border-[#B58A3C]/35 text-left flex flex-col justify-between shadow-xl interactive-card shine-card-hover group">
-              <div className="flex items-center justify-between text-xs text-[#B58A3C] font-semibold mb-2">
-                <span className="uppercase tracking-wider text-[10px] font-bold">Koordinator Utama</span>
-                <span className="text-xs group-hover:rotate-45 transition-transform inline-block text-[#D4AF37]">✦</span>
-              </div>
-              <div className="font-mileast font-bold text-2xl sm:text-3xl text-white">
-                648 <span className="text-xs font-mono font-normal text-[#F3E1B8]">Santri</span>
-              </div>
-              <div className="text-[11px] text-[#EDE8E2]/70 mt-2 pt-2 border-t border-white/10 flex items-center justify-between">
-                <span>Siswa Kelas 5 KMI</span>
-                <span className="text-[#D4AF37] font-bold">MANDIRI</span>
-              </div>
-            </div>
-
-            {/* Card 3: 20 Kampus Pondok */}
-            <div className="glass-panel-dark p-4 sm:p-5 rounded-2xl border border-[#B58A3C]/35 text-left flex flex-col justify-between shadow-xl interactive-card shine-card-hover group">
-              <div className="flex items-center justify-between text-xs text-[#B58A3C] font-semibold mb-2">
-                <span className="uppercase tracking-wider text-[10px] font-bold">Jangkauan Cabang</span>
-                <MapPin className="w-3.5 h-3.5 text-[#D4AF37] group-hover:scale-110 transition-transform" />
-              </div>
-              <div className="font-mileast font-bold text-2xl sm:text-3xl text-white">
-                20 <span className="text-xs font-mono font-normal text-[#F3E1B8]">Kampus</span>
-              </div>
-              <div className="text-[11px] text-[#EDE8E2]/70 mt-2 pt-2 border-t border-white/10 flex items-center justify-between">
-                <span>Pondok Se-Nusantara</span>
-                <span className="text-[#D4AF37] font-bold">3D MAP</span>
-              </div>
-            </div>
-
-            {/* Card 4: 1 Panggung Akbar */}
-            <div className="glass-panel-dark p-4 sm:p-5 rounded-2xl border border-[#B58A3C]/35 text-left flex flex-col justify-between shadow-xl interactive-card shine-card-hover group">
-              <div className="flex items-center justify-between text-xs text-[#B58A3C] font-semibold mb-2">
-                <span className="uppercase tracking-wider text-[10px] font-bold">Agenda Tahunan</span>
-                <span className="text-xs">👑</span>
-              </div>
-              <div className="font-mileast font-bold text-2xl sm:text-3xl text-white">
-                1 <span className="text-xs font-mono font-normal text-[#F3E1B8]">Masterpiece</span>
-              </div>
-              <div className="text-[11px] text-[#EDE8E2]/70 mt-2 pt-2 border-t border-white/10 flex items-center justify-between">
-                <span>Kamis, 7 Mei 2026</span>
-                <span className="text-[#D4AF37] font-bold">19.30 WIB</span>
-              </div>
-            </div>
-          </div>
-        </FadeIn>
-
-        {/* 8. Section Fast-Jump Tabs Bar */}
-        <div className="w-full max-w-3xl mx-auto mt-10">
-          <div className="flex items-center justify-center gap-1.5 flex-wrap p-1.5 rounded-2xl bg-[#0B151F]/70 border border-white/10 backdrop-blur-md">
-            {[
-              { id: 'hero', label: '01. Konsep' },
-              { id: 'ide-pokok', label: '02. Ide Pokok' },
-              { id: 'theme', label: '03. Tema & Moto' },
-              { id: 'about', label: '04. Filosofi & Logo' },
-              { id: 'shows', label: '05. Pagelaran' },
-              { id: 'committee', label: '06. Panitia' },
-            ].map((tab, idx) => (
-              <button
-                key={tab.id}
-                onClick={() => onNavigate(tab.id)}
-                className={`px-3 py-1.5 rounded-xl font-mono text-[11px] font-bold tracking-wider transition-all duration-200 cursor-pointer ${
-                  idx === 0
-                    ? 'bg-[#192E41] text-[#F3E1B8] border border-[#B58A3C]/50 shadow'
-                    : 'text-[#EDE8E2]/70 hover:text-white hover:bg-white/5'
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
       </div>
+
+      {/* ── SEAMLESS TRANSITION BAR LEADING DIRECTLY INTO MARQUEE FILMSTRIP ── */}
+      <div className="w-full max-w-4xl mx-auto mt-14 z-10 flex flex-col items-center">
+        <div className="flex items-center gap-3 w-full max-w-md mx-auto mb-2 opacity-60">
+          <div className="flex-1 h-px bg-gradient-to-r from-transparent to-[#D4AF37]" />
+          <span className="font-mono text-[10px] tracking-[0.25em] text-[#D4AF37] uppercase font-bold">
+            DOKUMENTASI & FILMSTRIP ARSIP
+          </span>
+          <div className="flex-1 h-px bg-gradient-to-l from-transparent to-[#D4AF37]" />
+        </div>
+      </div>
+
     </section>
   );
 };

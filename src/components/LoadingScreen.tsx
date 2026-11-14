@@ -14,7 +14,8 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
     // Lock scroll while preloader is active
     document.body.style.overflow = 'hidden';
 
-    const totalDuration = 1900; // Snappy 1.9s duration
+    const maxProgress = 102; // Special tribute to DA 5102
+    const totalDuration = 2000; // 2.0s duration
     const interval = 20;
     const steps = totalDuration / interval;
     let current = 0;
@@ -24,7 +25,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
       const t = current / steps;
       // Smooth cubic ease-out
       const eased = 1 - Math.pow(1 - t, 3);
-      setProgress(Math.min(Math.round(eased * 100), 100));
+      setProgress(Math.min(Math.round(eased * maxProgress), maxProgress));
 
       if (current >= steps) {
         clearInterval(timer);
@@ -34,11 +35,11 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
             document.body.style.overflow = '';
             onComplete();
           }, 600);
-        }, 150);
+        }, 200);
       }
     }, interval);
 
-    // Failsafe timer (3s max)
+    // Failsafe timer (3.5s max)
     const safety = setTimeout(() => {
       clearInterval(timer);
       setExiting(true);
@@ -46,7 +47,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
         document.body.style.overflow = '';
         onComplete();
       }, 400);
-    }, 3200);
+    }, 3500);
 
     return () => {
       clearInterval(timer);
@@ -67,9 +68,12 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
     if (val < 25) return 'MEMPERSIAPKAN DOKUMEN RESMI 5102...';
     if (val < 55) return 'MEMUAT IDENTITAS VISUAL & ARSIP ARTISTIK...';
     if (val < 85) return 'MENYIAPKAN PANGGUNG & TATA CAHAYA...';
-    if (val < 100) return 'MENYELARASKAN ORKESTRASI SENI...';
-    return 'MAHAKARYA SIAP · MEMBUKA PANGGUNG';
+    if (val < 100) return 'MENYELARASKAN ORKESTRASI SENI 5102...';
+    if (val < 102) return 'FINALISASI DOKUMEN RESMI DA 5102...';
+    return '102% TERPENUHI · MAHAKARYA DA 5102 SIAP DIBUKA';
   };
+
+  const progressPercentWidth = Math.min((progress / 102) * 100, 100);
 
   return (
     <div
@@ -87,7 +91,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
         {/* ── TOP PROMINENT ROTATING LOGO PRESENTATION ── */}
         <div className="relative mb-8 flex flex-col items-center">
           {/* Ambient Golden Halo Pulse */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full bg-gradient-to-r from-[#F3E1B8]/20 via-[#D4AF37]/30 to-[#B58A3C]/20 blur-xl animate-gold-halo pointer-events-none" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-44 h-44 rounded-full bg-gradient-to-r from-[#F3E1B8]/25 via-[#D4AF37]/35 to-[#B58A3C]/25 blur-xl animate-gold-halo pointer-events-none" />
 
           <div className="relative w-36 h-36 sm:w-44 sm:h-44 flex items-center justify-center">
             {/* Outer Astronomical Orbit Ring 1 (Clockwise) */}
@@ -139,13 +143,18 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
 
         {/* Progress Bar Container */}
         <div className="loading-screen__bar-wrap" aria-hidden="true">
-          <div className="loading-screen__bar-fill" style={{ width: `${progress}%` }} />
+          <div className="loading-screen__bar-fill" style={{ width: `${progressPercentWidth}%` }} />
         </div>
 
-        {/* Progress Percentage & Dynamic Status Text */}
+        {/* Progress Percentage (Up to 102%) & Dynamic Status Text */}
         <div className="flex flex-col items-center gap-1">
-          <div className="loading-screen__progress-text font-bold text-xs sm:text-sm text-[#F3E1B8]">
-            {progress}%
+          <div className="loading-screen__progress-text font-bold text-sm sm:text-base text-[#F3E1B8] flex items-center gap-1.5">
+            <span className="tabular-nums font-mono text-lg sm:text-xl text-[#D4AF37]">{progress}%</span>
+            {progress >= 100 && (
+              <span className="px-1.5 py-0.2 rounded bg-[#B58A3C]/30 text-[10px] text-[#F3E1B8] border border-[#D4AF37]/40 animate-pulse font-mono">
+                {progress === 102 ? 'MAX 102%' : 'COMPLETE'}
+              </span>
+            )}
           </div>
           <div className="font-mono text-[10px] text-[#D4AF37] tracking-widest uppercase font-semibold">
             {getStatusText(progress)}
