@@ -86,7 +86,7 @@ export function App() {
   };
 
   return (
-    <div className="main-wrapper min-h-screen bg-[#EDE8E2] text-[#192E41] font-dm select-none relative">
+    <div className="main-wrapper min-h-screen bg-[#EDE8E2] text-[#192E41] font-dm relative">
       {/* Aluro Signature Architectural Grid Guidelines */}
       <div className="aluro-bg-grid" aria-hidden="true">
         <div className="aluro-grid-line" />
@@ -98,6 +98,8 @@ export function App() {
 
       {/* Loading Screen */}
       {isLoading && <LoadingScreen onComplete={handleLoadingComplete} />}
+
+      <a className="da-skip-link" href="#main-content">Lewati ke konten utama</a>
 
       {/* 1. Global Navigation Header */}
       <Header
@@ -111,7 +113,7 @@ export function App() {
       </div>
 
       {/* 2. Main Single-Page Scroll Content */}
-      <main>
+      <main id="main-content" tabIndex={-1}>
         {/* 01. Hero Section & Main Concept */}
         <HeroSection
           onOpenSponsorshipModal={() => setIsSponsorshipModalOpen(true)}
