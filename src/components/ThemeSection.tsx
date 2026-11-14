@@ -1,97 +1,197 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FadeIn } from './FadeIn';
-import { FleuronDivider } from './HeroSection';
-import { ArrowUpRight } from 'lucide-react';
+import { SectionLabel, FleuronDivider } from './HeroSection';
+import { Film, Camera, ArrowRight } from 'lucide-react';
+import { importImage } from '../utils/assetHelpers';
 
 const motos = [
-  { num: '01', headline: 'Sadar dalam perjuangan, Utuh dalam kebersamaan', desc: 'Kesadaran batin yang utuh bahwa perjuangan bukan semata panggung pertunjukan, melainkan peleburan ego demi ukhuwah Islamiyah.', barcode: 'DA5102-01', date: 'Est. 2027' },
-  { num: '02', headline: 'Teguh dalam perjuangan, Utuh dalam kebersamaan', desc: 'Keteguhan komitmen dan ketahanan mental santri saat menghadapi setiap rintangan menuju persembahan mahakarya terbaik.', barcode: 'DA5102-02', date: 'Est. 2027' },
-  { num: '03', headline: 'Sadar akan nilai kebersamaan, tumbuhkan semangat perjuangan', desc: 'Menumbuhkan kobaran api semangat perjuangan yang berakar dari persaudaraan suci dan keikhlasan beramal tanpa pamrih.', barcode: 'DA5102-03', date: 'Est. 2027' },
+  {
+    num: '01',
+    headline: 'Sadar dalam perjuangan, Utuh dalam kebersamaan',
+    desc: 'Kesadaran batin yang utuh bahwa perjuangan bukan semata panggung pertunjukan, melainkan peleburan ego demi ukhuwah Islamiyah.',
+    barcode: 'DA5102-01',
+    date: 'Est. 2027',
+  },
+  {
+    num: '02',
+    headline: 'Teguh dalam perjuangan, Utuh dalam kebersamaan',
+    desc: 'Keteguhan komitmen dan ketahanan mental santri saat menghadapi setiap rintangan menuju persembahan mahakarya terbaik.',
+    barcode: 'DA5102-02',
+    date: 'Est. 2027',
+  },
+  {
+    num: '03',
+    headline: 'Sadar akan nilai kebersamaan, tumbuhkan semangat perjuangan',
+    desc: 'Menumbuhkan kobaran api semangat perjuangan yang berakar dari persaudaraan suci dan keikhlasan beramal tanpa pamrih.',
+    barcode: 'DA5102-03',
+    date: 'Est. 2027',
+  },
 ];
 
 export const ThemeSection: React.FC = () => {
-  const [activeMoto, setActiveMoto] = useState(0);
-
   return (
-    <section id="theme" className="da-theme-section relative overflow-hidden px-4 py-24 sm:px-6 md:px-12 lg:py-32">
-      <div className="da-section-frame da-section-frame-light" aria-hidden="true" />
-      <div className="relative z-10 mx-auto max-w-7xl">
-        <FadeIn className="mb-12 text-center">
-          <span className="da-kicker justify-center"><span className="da-kicker-dot" /> FOLIO 03 / TEMA & MOTO</span>
-          <h2 className="mx-auto mt-6 max-w-5xl font-mileast text-4xl leading-[.98] tracking-tight text-[#F4EEE4] sm:text-6xl lg:text-7xl">
-            Sadar, Ke Pondok Apa <em className="text-[#D4A853]">Yang Kau Cari?</em>
+    <section
+      id="theme"
+      className="relative py-28 px-4 sm:px-6 md:px-12 overflow-hidden bg-gradient-to-b from-[#0B151F] via-[#101D2A] to-[#192E41] text-[#EDE8E2]"
+    >
+      {/* Background Ambience */}
+      <div className="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#D4A853]/30 via-transparent to-transparent" />
+      <div className="absolute top-1/3 right-10 w-80 h-80 bg-[#325956]/20 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="max-w-6xl mx-auto relative z-10">
+        {/* Section Header */}
+        <FadeIn delay={0} className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#325956]/60 border border-[#B58A3C]/40 text-xs font-mono tracking-widest text-[#D4A853] uppercase mb-4 shadow-lg backdrop-blur-md">
+            <span>FOLIO 03 · TEMA UTAMA & TIGA MOTO</span>
+          </div>
+          <h2
+            className="font-mileast italic font-bold mt-2 leading-tight gold-text tracking-tight"
+            style={{ fontSize: 'clamp(2.2rem, 5.5vw, 64px)' }}
+          >
+            Sadar, Ke Pondok Apa Yang Kau Cari?
           </h2>
-          <FleuronDivider className="my-6" />
-          <p className="mx-auto max-w-xl font-cormorant-sc text-xs uppercase leading-6 tracking-[.2em] text-[#EDE8E2]/60">
-            Penyadaran hakiki akan nilai-nilai luhur dan keutuhan barisan santri
+          <FleuronDivider />
+          <p className="font-cormorant-sc text-xs sm:text-sm tracking-[0.25em] text-[#EDE8E2]/85 uppercase max-w-2xl mx-auto mt-2 font-semibold">
+            Penyadaran Hakiki Akan Nilai-Nilai Luhur dan Keutuhan Barisan Santri
           </p>
         </FadeIn>
 
-        <FadeIn delay={0.1}>
-          <article className="da-theme-manifesto relative mx-auto max-w-6xl overflow-hidden p-7 sm:p-12 lg:p-16">
-            <div className="flex items-center justify-between gap-4 border-b border-[#192E41]/15 pb-4 font-mono text-[9px] uppercase tracking-[.16em] text-[#325956] sm:text-[10px]">
-              <span>Dokumen tema perhelatan / 03</span><span>DA 5102 · 1447—1448 H</span>
+        {/* ── PART 1: THEME EDITORIAL MANIFESTO (Ref: Slide 03) ── */}
+        <FadeIn delay={0.1} className="mb-20">
+          <div className="has-registration-marks relative max-w-4xl mx-auto bg-[#FAF8F5] text-[#192E41] p-8 sm:p-14 rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.4)] border-2 border-[#B58A3C]/40">
+            <span className="reg-mark reg-tl" />
+            <span className="reg-mark reg-tr" />
+            <span className="reg-mark reg-bl" />
+            <span className="reg-mark reg-br" />
+
+            {/* Header Folio */}
+            <div className="flex items-center justify-between pb-4 mb-6 border-b border-[#192E41]/10 text-xs font-mono text-[#325956]">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#B58A3C]" />
+                <span className="font-bold tracking-wider">TEMA PERHELATAN · DOKUMEN RESMI 03</span>
+              </div>
+              <span className="px-2.5 py-0.5 rounded-full bg-[#192E41] text-[#D4A853] font-bold">DA 5102</span>
             </div>
-            <div className="relative py-10 text-center sm:py-14">
-              <span className="da-manifesto-watermark" aria-hidden="true">SADAR</span>
-              <p className="relative z-10 font-mileast text-3xl leading-tight text-[#192E41] sm:text-5xl lg:text-6xl">Sadar, ke pondok apa yang kau cari?</p>
-              <div className="da-manifesto-divider"><span>✦</span></div>
-              <p className="relative z-10 font-mileast text-3xl leading-tight text-[#325956] sm:text-5xl lg:text-6xl">Sadar, akan nilai-nilai perjuangan</p>
-              <div className="da-manifesto-divider"><span>✦</span></div>
-              <p className="relative z-10 font-mileast text-3xl leading-tight text-[#8E6B28] sm:text-5xl lg:text-6xl">Sadar, dan utuh dalam kebersamaan</p>
+
+            {/* The 3 Core Questions */}
+            <div className="text-center my-8 space-y-7">
+              <h3
+                className="font-mileast font-bold text-[#192E41] leading-tight tracking-tight"
+                style={{ fontSize: 'clamp(1.7rem, 4vw, 40px)' }}
+              >
+                Sadar, Ke Pondok apa yang kau cari ?
+              </h3>
+              <div className="flex items-center justify-center gap-3 opacity-60">
+                <span className="w-16 h-px bg-[#B58A3C]" />
+                <span className="text-xs font-serif text-[#B58A3C]">✦</span>
+                <span className="w-16 h-px bg-[#B58A3C]" />
+              </div>
+              <h3
+                className="font-mileast font-bold text-[#325956] leading-tight tracking-tight"
+                style={{ fontSize: 'clamp(1.7rem, 4vw, 40px)' }}
+              >
+                Sadar, akan nilai-nilai perjuangan
+              </h3>
+              <div className="flex items-center justify-center gap-3 opacity-60">
+                <span className="w-16 h-px bg-[#B58A3C]" />
+                <span className="text-xs font-serif text-[#B58A3C]">✦</span>
+                <span className="w-16 h-px bg-[#B58A3C]" />
+              </div>
+              <h3
+                className="font-mileast font-bold text-[#B58A3C] leading-tight tracking-tight"
+                style={{ fontSize: 'clamp(1.7rem, 4vw, 40px)' }}
+              >
+                Sadar, dan utuh dalam kebersamaan
+              </h3>
             </div>
-            <div className="flex flex-col justify-between gap-2 border-t border-[#192E41]/15 pt-4 font-mono text-[9px] uppercase tracking-[.12em] text-[#192E41]/60 sm:flex-row sm:text-[10px]">
-              <span>Penyelenggara: Kelas 5 KMI PMDG</span><span>Tahun Ajaran 1447–1448 H / 2026–2027 M</span>
+
+            {/* Footer Metadata */}
+            <div className="mt-8 pt-4 border-t border-[#192E41]/10 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs font-mono text-[#192E41]/70">
+              <span className="font-semibold">PENYELENGGARA: KELAS 5 KMI PMDG</span>
+              <span>TAHUN AJARAN 1447-1448 H / 2026-2027 M</span>
             </div>
-          </article>
+          </div>
         </FadeIn>
 
-        <div className="mt-20 grid items-start gap-8 lg:grid-cols-[.7fr_1.3fr]">
-          <FadeIn delay={0.16}>
-            <div className="max-w-md">
-              <span className="da-kicker"><span className="da-kicker-dot" /> TIGA MOTO PERJUANGAN</span>
-              <h3 className="mt-5 font-mileast text-4xl leading-none text-[#F4EEE4] sm:text-5xl">Tiket Kehormatan<br /><em className="text-[#D4A853]">Angkatan 5102</em></h3>
-              <p className="mt-5 font-alverata text-sm leading-7 text-[#EDE8E2]/65">Pilih satu moto untuk membuka catatan perjuangannya. Ketiganya menjadi bagian dari arsip nilai perhelatan.</p>
-              <div className="mt-8 flex gap-2" role="tablist" aria-label="Pilih moto perjuangan">
-                {motos.map((m, index) => (
-                  <button key={m.num} type="button" role="tab" aria-selected={activeMoto === index} onClick={() => setActiveMoto(index)} className={`da-moto-tab ${activeMoto === index ? 'is-active' : ''}`}>
-                    <span>{m.num}</span>
-                  </button>
-                ))}
-              </div>
-              <p className="mt-3 font-mono text-[9px] uppercase tracking-[.16em] text-[#D4A853]/65">Pilih nomor 01 — 03</p>
-            </div>
-          </FadeIn>
+        {/* ── PART 2: THE 3 OFFICIAL MOTOS AS ADMISSION TICKETS (Ref: Slide 04) ── */}
+        <div className="relative">
+          <div className="text-center mb-10">
+            <span className="font-cormorant-sc text-xs tracking-[0.35em] text-[#D4A853] uppercase font-bold">
+              ✦ TIGA PILIHAN MOTO PERJUANGAN (REF. 04) ✦
+            </span>
+            <h3 className="font-mileast text-2xl sm:text-3xl text-[#EDE8E2] mt-2 tracking-tight">
+              Tiket Kehormatan Angkatan 5102
+            </h3>
+          </div>
 
-          <FadeIn delay={0.22}>
-            <div className="da-ticket-feature" role="tabpanel">
-              <div className="da-ticket-perforation" aria-hidden="true" />
-              <div className="flex items-center justify-between border-b border-[#192E41]/15 pb-4 font-mono text-[9px] uppercase tracking-[.15em] text-[#325956]">
-                <span>№ 005102-0{activeMoto + 1}</span><span>{motos[activeMoto].date}</span>
-              </div>
-              <div className="grid gap-6 py-8 sm:grid-cols-[auto_1fr] sm:items-start">
-                <div className="da-ticket-number">{motos[activeMoto].num}</div>
-                <div>
-                  <h4 className="font-mileast text-3xl leading-tight text-[#192E41] sm:text-4xl">{motos[activeMoto].headline}</h4>
-                  <p className="mt-5 max-w-xl font-alverata text-sm leading-7 text-[#192E41]/75">{motos[activeMoto].desc}</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {motos.map((m, index) => (
+              <FadeIn key={m.num} delay={0.1 * (index + 1)}>
+                <div className="ticket-stub ticket-hologram rounded-3xl p-7 flex flex-col justify-between h-full text-[#192E41] relative group overflow-hidden border border-[#B58A3C]/40 shadow-xl hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 shine-card-hover interactive-card">
+                  {/* Punch notches on left & right perforation */}
+                  <span className="ticket-notch ticket-notch-l" />
+                  <span className="ticket-notch ticket-notch-r" />
+
+                  <div>
+                    {/* Top Ticket Header */}
+                    <div className="flex items-center justify-between pb-3 border-b border-[#192E41]/10 mb-4 text-xs font-mono">
+                      <span className="text-[#325956] font-bold">№ 005102-0{index + 1}</span>
+                      <span className="px-2 py-0.5 rounded-full bg-[#192E41]/10 text-[#B58A3C] font-bold text-[11px]">{m.date}</span>
+                    </div>
+
+                    {/* Number Badge & Headline */}
+                    <div className="flex items-start gap-3.5 mb-4">
+                      <div className="w-11 h-11 rounded-xl bg-[#192E41] text-[#EDE8E2] font-mono font-bold text-base flex items-center justify-center flex-shrink-0 shadow-md border border-[#B58A3C]/40 group-hover:scale-110 group-hover:rotate-3 transition-transform">
+                        {m.num}
+                      </div>
+                      <h4 className="font-mileast font-bold text-base sm:text-lg leading-snug text-[#192E41] group-hover:text-[#325956] transition-colors">
+                        {m.headline}
+                      </h4>
+                    </div>
+
+                    <p className="font-alverata text-xs text-[#192E41]/85 leading-relaxed">
+                      {m.desc}
+                    </p>
+                  </div>
+
+                  {/* Bottom Ticket Perforation with Barcode & Seal */}
+                  <div className="pt-4 mt-6 border-t-2 border-dashed border-[#192E41]/20 flex items-center justify-between relative">
+                    <div className="relative group/barcode">
+                      {/* Laser scan line animation on hover */}
+                      <div className="absolute top-0 bottom-0 left-0 w-0.5 bg-red-500 shadow-[0_0_8px_red] opacity-0 group-hover:opacity-100 group-hover:left-full transition-all duration-700 pointer-events-none" />
+
+                      <div className="flex items-center gap-0.5 h-6">
+                        <div className="w-1 h-full bg-[#192E41]" />
+                        <div className="w-0.5 h-full bg-[#192E41]" />
+                        <div className="w-1.5 h-full bg-[#192E41]" />
+                        <div className="w-0.5 h-full bg-[#192E41]" />
+                        <div className="w-2 h-full bg-[#192E41]" />
+                        <div className="w-0.5 h-full bg-[#192E41]" />
+                        <div className="w-1 h-full bg-[#192E41]" />
+                        <div className="w-2.5 h-full bg-[#192E41]" />
+                        <div className="w-1 h-full bg-[#192E41]" />
+                      </div>
+                      <span className="font-mono text-[9px] tracking-wider text-[#192E41] font-bold mt-1 block">
+                        {m.barcode}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <span className="font-cormorant-sc text-[9px] uppercase tracking-widest text-[#325956] font-bold hidden sm:inline">
+                        ADMIT ONE
+                      </span>
+                      <div className="w-9 h-9 rounded-full bg-[#325956] border border-[#B58A3C] flex items-center justify-center text-[#EDE8E2] font-mono text-[10px] font-bold shadow-md group-hover:scale-110 transition-transform">
+                        5102
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-end justify-between border-t border-dashed border-[#192E41]/25 pt-5">
-                <div className="font-mono text-[9px] font-bold tracking-[.18em] text-[#192E41]">{motos[activeMoto].barcode}<div className="da-barcode mt-2" aria-hidden="true" /></div>
-                <span className="flex h-11 w-11 items-center justify-center rounded-full border border-[#B58A3C] bg-[#325956] font-mono text-[9px] font-bold text-[#F3E1B8]">5102</span>
-              </div>
-              <div className="absolute -left-3 top-1/2 h-6 w-6 -translate-y-1/2 rounded-full bg-[#192E41]" aria-hidden="true" />
-              <div className="absolute -right-3 top-1/2 h-6 w-6 -translate-y-1/2 rounded-full bg-[#192E41]" aria-hidden="true" />
-            </div>
-          </FadeIn>
-        </div>
-
-        <div className="mt-12 flex items-center justify-between border-t border-[#D4A853]/20 pt-5 font-mono text-[9px] uppercase tracking-[.16em] text-[#EDE8E2]/35">
-          <span>Drama Arena 5102 / Arsip tema</span><span className="flex items-center gap-2">Folio 03 <ArrowUpRight size={12} className="text-[#D4A853]" /></span>
+              </FadeIn>
+            ))}
+          </div>
         </div>
       </div>
     </section>
   );
 };
-
 export default ThemeSection;
