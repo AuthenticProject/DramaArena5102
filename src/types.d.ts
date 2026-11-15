@@ -4,7 +4,6 @@ declare namespace React {
   export type ComponentType<P = {}> = any;
   export type ReactElement<P = any, T = any> = any;
   export type ElementType = any;
-  export type ElementType = any;
   export type MouseEvent<T = any> = any;
   export type FormEvent<T = any> = any;
   export function useState<T>(initialState: T | (() => T)): [T, (newState: T | ((prevState: T) => T)) => void];
