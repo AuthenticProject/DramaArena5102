@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { importImage, importRef, ALL_ASSETS, type DAAsset } from '../utils/assetHelpers';
 import { Maximize2, X, ChevronLeft, ChevronRight, ZoomIn, ArrowUpRight } from 'lucide-react';
 
@@ -24,10 +24,10 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const selectedAsset = selectedIndex === null ? null : galleryItems[selectedIndex];
 
-  const close = () => setSelectedIndex(null);
-  const move = (direction: number) => {
+  const close = useCallback(() => setSelectedIndex(null), []);
+  const move = useCallback((direction: number) => {
     setSelectedIndex((current) => current === null ? null : (current + direction + galleryItems.length) % galleryItems.length);
-  };
+  }, [galleryItems.length]);
 
   useEffect(() => {
     if (selectedIndex === null) return;
@@ -43,7 +43,7 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({
       document.body.style.overflow = previousOverflow;
       window.removeEventListener('keydown', onKeyDown);
     };
-  }, [selectedIndex, galleryItems.length]);
+  }, [selectedIndex, galleryItems.length, close, move]);
 
   return (
     <div className={`da-gallery-shell ${className}`}>
