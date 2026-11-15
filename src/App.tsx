@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { LoadingScreen } from './components/LoadingScreen';
 import { Header } from './components/Header';
 import { HeroSection } from './components/HeroSection';
@@ -25,9 +25,9 @@ export function App() {
   const [isSponsorshipModalOpen, setIsSponsorshipModalOpen] = useState<boolean>(false);
   const [activeShow, setActiveShow] = useState<ShowCategoryData | null>(null);
 
-  const handleLoadingComplete = () => {
+  const handleLoadingComplete = useCallback(() => {
     setIsLoading(false);
-  };
+  }, []);
 
   // Sync with window hash on load and hash changes
   useEffect(() => {

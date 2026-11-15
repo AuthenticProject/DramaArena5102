@@ -148,7 +148,7 @@ export const Header: React.FC<HeaderProps> = ({
 
       {/* Mobile Dropdown */}
       {mobileMenuOpen && (
-        <nav id="da-mobile-navigation" aria-label="Navigasi mobile" className="lg:hidden border-t border-[#B58A3C]/20 px-6 py-5 bg-[#101D2A] flex flex-col gap-2 shadow-2xl font-jakarta">
+        <nav id="da-mobile-navigation" aria-label="Navigasi mobile" className="da-mobile-navigation lg:hidden border-t border-[#B58A3C]/20 px-6 py-5 bg-[#101D2A] flex flex-col gap-2 shadow-2xl font-jakarta">
           {navItems.map((item) => (
             <button
               key={item.id}

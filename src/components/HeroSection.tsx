@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { FadeIn } from './FadeIn';
 import { Calendar, MapPin, ArrowRight, ShieldCheck, Sparkles, Building2, Layers } from 'lucide-react';
 import { importImage } from '../utils/assetHelpers';
@@ -43,26 +43,6 @@ export const GoldButton: React.FC<{ onClick?: () => void; label: string; outline
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenSponsorshipModal, onNavigate }) => {
   const [activeHeroTab, setActiveHeroTab] = useState<'wave' | 'monogram'>('wave');
-  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-
-  useEffect(() => {
-    const target = new Date('2026-05-07T19:30:00+07:00').getTime();
-    const update = () => {
-      const diff = target - new Date().getTime();
-      if (diff > 0) {
-        setTimeLeft({
-          days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-          minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
-          seconds: Math.floor((diff % (1000 * 60)) / 1000),
-        });
-      }
-    };
-    update();
-    const interval = setInterval(update, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <section
       id="hero"
@@ -268,37 +248,25 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenSponsorshipModal
               </div>
             </div>
 
-            {/* ── CARD 3 (Right): COUNTDOWN & SKALA PERHELATAN (4 cols) ── */}
+            {/* ── CARD 3 (Right): ARCHIVE RECORD & EVENT SCALE (4 cols) ── */}
             <div className="md:col-span-4 rounded-3xl bg-[#101D2A]/85 border border-[#B58A3C]/35 p-6 flex flex-col justify-between shadow-2xl backdrop-blur-md interactive-card group">
               <div>
                 <div className="flex items-center justify-between pb-3 border-b border-white/10 mb-4">
                   <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4 text-[#D4AF37]" />
                     <span className="font-mono text-[10px] tracking-widest uppercase font-bold text-[#D4AF37]">
-                      HITUNG MUNDUR PENTAS
+                      CATATAN ARSIP PEMENTASAN
                     </span>
                   </div>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#B58A3C]/20 text-[#D4AF37] border border-[#D4AF37]/40 font-bold flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] animate-ping" />
-                    <span>LIVE</span>
+                  <span className="text-[10px] font-mono px-2 py-1 rounded-full bg-[#B58A3C]/20 text-[#D4AF37] border border-[#D4AF37]/40 font-bold">
+                    TELAH TERLAKSANA
                   </span>
                 </div>
 
-                {/* 4-Box Digital Clock */}
-                <div className="grid grid-cols-4 gap-2 my-2 text-center">
-                  {[
-                    { label: 'HARI', val: timeLeft.days },
-                    { label: 'JAM', val: timeLeft.hours },
-                    { label: 'MENIT', val: timeLeft.minutes },
-                    { label: 'DETIK', val: timeLeft.seconds },
-                  ].map(({ label, val }) => (
-                    <div key={label} className="p-2.5 rounded-xl bg-white/5 border border-white/10">
-                      <div className="font-mono font-bold text-xl sm:text-2xl text-white tabular-nums">
-                        {String(val).padStart(2, '0')}
-                      </div>
-                      <div className="text-[9px] font-mono text-[#D4AF37] mt-0.5">{label}</div>
-                    </div>
-                  ))}
+                <div className="my-3 rounded-xl border border-[#B58A3C]/30 bg-white/5 p-4">
+                  <div className="font-serif text-3xl sm:text-4xl text-[#F3E1B8]">07·05·2026</div>
+                  <div className="mt-2 text-[10px] font-mono tracking-widest text-[#D4AF37]">KAMIS · 19.30 WIB</div>
+                  <p className="mt-3 text-xs leading-relaxed text-[#EDE8E2]/65">Satu malam pementasan, empat babak seni, dan sebuah catatan perjuangan kelas 5 KMI.</p>
                 </div>
 
                 {/* Event Scale Metrics */}
