@@ -114,13 +114,20 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({
       {selectedAsset && selectedIndex !== null && (
         <div
           className="da-lightbox"
-          role="presentation"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="da-lightbox-title"
+          aria-describedby="da-lightbox-description"
+          tabIndex={-1}
           onMouseDown={(event) => { if (event.target === event.currentTarget) close(); }}
         >
           <div className="da-lightbox-topline">
             <span>DRAMA ARENA 5102 <i>/</i> VISUAL ARCHIVE</span>
             <span>{String(selectedIndex + 1).padStart(2, '0')} — {String(galleryItems.length).padStart(2, '0')}</span>
           </div>
+          <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+            Arsip {selectedIndex + 1} dari {galleryItems.length}: {selectedAsset.title}
+          </p>
           <button ref={closeButtonRef} type="button" className="da-lightbox-close" onClick={close} aria-label="Tutup lightbox"><X size={20} /></button>
           <button type="button" className="da-lightbox-nav da-lightbox-prev" onClick={() => move(-1)} aria-label="Arsip sebelumnya"><ChevronLeft size={24} /></button>
           <div className="da-lightbox-stage" onPointerDown={handleStagePointerDown} onPointerUp={handleStagePointerUp} onPointerCancel={() => { touchStartRef.current = null; }}>
@@ -130,8 +137,8 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({
           <div className="da-lightbox-caption">
             <div>
               <span>{selectedAsset.category.toUpperCase()} · {selectedAsset.dimensions.width} × {selectedAsset.dimensions.height} PX</span>
-              <h3>{selectedAsset.title}</h3>
-              <p>{selectedAsset.description}</p>
+              <h3 id="da-lightbox-title">{selectedAsset.title}</h3>
+              <p id="da-lightbox-description">{selectedAsset.description}</p>
             </div>
             <a href={getAssetUrl(selectedAsset)} target="_blank" rel="noreferrer">
               BUKA FILE ASLI <Maximize2 size={14} />
