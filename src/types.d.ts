@@ -110,6 +110,7 @@ declare module 'lucide-react' {
   export const Palette: any;
   export const Maximize2: any;
   export const ZoomIn: any;
+  export const ZoomOut: any;
   export const Info: any;
   export const Eye: any;
   export const Image: any;
