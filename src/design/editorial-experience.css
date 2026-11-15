@@ -1142,3 +1142,21 @@ section:hover > .da-section-frame {
   .main-wrapper main > section[id] { animation: none !important; }
   .da-chapter-break i { box-shadow: none; }
 }
+
+
+/* Phase 44 — accessible hero identity selector */
+#hero-emblem-display img {
+  transition: opacity .24s ease, filter .35s ease, transform .35s cubic-bezier(.22,1,.36,1);
+}
+[aria-controls="hero-emblem-display"][aria-pressed="true"] {
+  box-shadow: inset 0 0 0 1px rgba(243,225,184,.3), 0 2px 12px rgba(181,138,60,.16);
+}
+[aria-controls="hero-emblem-display"]:focus-visible {
+  outline: 2px solid #f3e1b8;
+  outline-offset: 3px;
+  position: relative;
+  z-index: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  #hero-emblem-display img { transition: none; }
+}
