@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { importImage, importRef, ALL_ASSETS, type DAAsset } from '../utils/assetHelpers';
-import { Maximize2, X, ChevronLeft, ChevronRight, ZoomIn, ArrowUpRight } from 'lucide-react';
+import { Maximize2, X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut, ArrowUpRight } from 'lucide-react';
 
 interface PhotoGalleryProps {
   categoryFilter?: 'all' | 'photo' | 'graphic' | 'merchandise';
@@ -25,12 +25,14 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({
     return inCategory && matchesSearch;
   }), [categoryFilter, searchTerm]);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [isZoomed, setIsZoomed] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const touchStartRef = useRef<{ x: number; y: number } | null>(null);
   const selectedAsset = selectedIndex === null ? null : galleryItems[selectedIndex];
 
-  const close = useCallback(() => setSelectedIndex(null), []);
+  const close = useCallback(() => { setSelectedIndex(null); setIsZoomed(false); }, []);
   const move = useCallback((direction: number) => {
+    setIsZoomed(false);
     setSelectedIndex((current) => current === null || galleryItems.length === 0 ? null : (current + direction + galleryItems.length) % galleryItems.length);
   }, [galleryItems.length]);
 
@@ -59,6 +61,7 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({
       if (event.key === 'Escape') close();
       if (event.key === 'ArrowRight') move(1);
       if (event.key === 'ArrowLeft') move(-1);
+      if (event.key.toLowerCase() === 'z' && !event.metaKey && !event.ctrlKey && !event.altKey) setIsZoomed((current) => !current);
       if (event.key === 'Tab') {
         const dialog = document.querySelector<HTMLElement>('.da-lightbox[role="dialog"]');
         if (!dialog) return;
@@ -132,11 +135,15 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({
             Arsip {selectedIndex + 1} dari {galleryItems.length}: {selectedAsset.title}
           </p>
           <button ref={closeButtonRef} type="button" className="da-lightbox-close" onClick={close} aria-label="Tutup lightbox"><X size={20} /></button>
+          <button type="button" className="da-lightbox-zoom" onClick={() => setIsZoomed((current) => !current)} aria-pressed={isZoomed} aria-label={isZoomed ? "Perkecil gambar" : "Perbesar gambar"}>{isZoomed ? <ZoomOut size={17} /> : <ZoomIn size={17} />}<span>{isZoomed ? "FIT" : "ZOOM"}</span></button>
           <button type="button" className="da-lightbox-nav da-lightbox-prev" onClick={() => move(-1)} aria-label="Arsip sebelumnya"><ChevronLeft size={24} /></button>
-          <div className="da-lightbox-stage" onPointerDown={handleStagePointerDown} onPointerUp={handleStagePointerUp} onPointerCancel={() => { touchStartRef.current = null; }}>
+          <div className={`da-lightbox-stage${isZoomed ? ' is-zoomed' : ''}`} onPointerDown={handleStagePointerDown} onPointerUp={handleStagePointerUp} onPointerCancel={() => { touchStartRef.current = null; }}>
             <img src={getAssetUrl(selectedAsset)} alt={selectedAsset.title} decoding="async" />
           </div>
           <button type="button" className="da-lightbox-nav da-lightbox-next" onClick={() => move(1)} aria-label="Arsip berikutnya"><ChevronRight size={24} /></button>
+          <div className="da-lightbox-filmstrip" role="group" aria-label="Pilih arsip">
+            {galleryItems.map((item, index) => <button key={item.id} type="button" className={index === selectedIndex ? "is-current" : ""} onClick={() => { setSelectedIndex(index); setIsZoomed(false); }} aria-label={`Tampilkan arsip ${index + 1}: ${item.title}`} aria-pressed={index === selectedIndex}><img src={getAssetUrl(item)} alt="" loading="lazy" decoding="async" /><span>{String(index + 1).padStart(2, "0")}</span></button>)}
+          </div>
           <div className="da-lightbox-caption">
             <div>
               <span>{selectedAsset.category.toUpperCase()} · {selectedAsset.dimensions.width} × {selectedAsset.dimensions.height} PX</span>
@@ -147,7 +154,7 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({
               BUKA FILE ASLI <Maximize2 size={14} />
             </a>
           </div>
-          <div className="da-lightbox-keyhint">GESER FOTO / GUNAKAN ← → · ESC UNTUK KELUAR</div>
+          <div className="da-lightbox-keyhint">GESER FOTO / ← → PINDAH · Z ZOOM · ESC KELUAR</div>
         </div>
       )}
     </div>
