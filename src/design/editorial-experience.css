@@ -822,3 +822,203 @@ button, a, [tabindex]:not([tabindex="-1"]) { -webkit-tap-highlight-color: transp
     padding-block: .85rem;
   }
 }
+
+ 
+/* Phase 41 — Cinematic editorial motion & visual finish */
+:root {
+  --da-ease-cinematic: cubic-bezier(.22, 1, .36, 1);
+  --da-ease-editorial: cubic-bezier(.16, 1, .3, 1);
+}
+
+/* Hero: layered stage lighting, fine frame and slow ambient movement */
+#hero {
+  isolation: isolate;
+  min-height: min(900px, 100svh);
+}
+#hero::before {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  z-index: 0;
+  pointer-events: none;
+  border: 1px solid rgba(212,168,83,.2);
+  background:
+    linear-gradient(90deg, rgba(212,168,83,.12), transparent 18%, transparent 82%, rgba(212,168,83,.12)),
+    linear-gradient(180deg, rgba(212,168,83,.07), transparent 24%, transparent 76%, rgba(212,168,83,.08));
+  mask-image: linear-gradient(#000, transparent 22%, transparent 78%, #000);
+}
+#hero::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: -20% -10%;
+  pointer-events: none;
+  opacity: .38;
+  background:
+    radial-gradient(ellipse at 50% 34%, rgba(212,168,83,.12), transparent 34%),
+    linear-gradient(112deg, transparent 35%, rgba(243,225,184,.035) 48%, transparent 58%);
+  animation: da-stage-light 18s ease-in-out infinite alternate;
+}
+#hero h1 {
+  text-wrap: balance;
+  text-shadow: 0 8px 38px rgba(0,0,0,.32);
+  animation: da-title-arrive 1.1s var(--da-ease-cinematic) both;
+}
+#hero .font-mileast {
+  text-wrap: balance;
+}
+#hero .interactive-card {
+  position: relative;
+  transform: translateZ(0);
+  transition:
+    transform .55s var(--da-ease-editorial),
+    border-color .4s ease,
+    box-shadow .55s var(--da-ease-editorial),
+    background-color .4s ease;
+}
+#hero .interactive-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(125deg, transparent 20%, rgba(243,225,184,.09) 48%, transparent 70%);
+  transform: translateX(-35%);
+  transition: opacity .45s ease, transform .8s var(--da-ease-cinematic);
+}
+#hero .interactive-card:hover {
+  transform: translateY(-7px);
+  border-color: rgba(243,225,184,.72);
+  box-shadow: 0 28px 70px rgba(0,0,0,.34), 0 0 28px rgba(181,138,60,.09);
+}
+#hero .interactive-card:hover::after {
+  opacity: 1;
+  transform: translateX(35%);
+}
+#hero .interactive-card img {
+  transition: transform .9s var(--da-ease-cinematic), filter .6s ease;
+}
+#hero .interactive-card:hover img {
+  filter: saturate(1.12) contrast(1.06);
+}
+
+/* Editorial buttons: crisp press feedback and foil highlight */
+#hero button, header button, .da-back-to-top, .da-moto-tab {
+  -webkit-tap-highlight-color: transparent;
+}
+#hero button:not(:disabled), header nav button:not(:disabled) {
+  transition:
+    transform .28s var(--da-ease-editorial),
+    box-shadow .35s ease,
+    color .25s ease,
+    background-color .25s ease,
+    border-color .25s ease;
+}
+#hero button:active, header nav button:active {
+  transform: translateY(1px) scale(.985);
+}
+header.fixed {
+  transition: background .35s ease, box-shadow .35s ease, border-color .35s ease;
+  box-shadow: 0 8px 32px rgba(0,0,0,.12);
+}
+header nav button[aria-current="location"] {
+  position: relative;
+}
+header nav button[aria-current="location"]::after {
+  content: "";
+  position: absolute;
+  left: 22%;
+  right: 22%;
+  bottom: -3px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #d4a853, transparent);
+}
+
+/* Image-led sections: gentle cinematic reveal on hover */
+.marquee-left, .marquee-right {
+  will-change: transform;
+}
+.group\/marquee:hover .marquee-left,
+.group\/marquee:hover .marquee-right {
+  animation-play-state: paused;
+}
+.marquee-left > div, .marquee-right > div {
+  transform: translateZ(0);
+  transition: border-color .35s ease, box-shadow .45s ease, transform .55s var(--da-ease-editorial);
+}
+.marquee-left > div:hover, .marquee-right > div:hover {
+  transform: translateY(-5px) scale(1.025);
+  box-shadow: 0 20px 48px rgba(0,0,0,.38);
+}
+.marquee-left img, .marquee-right img {
+  backface-visibility: hidden;
+  transform: scale(1.001);
+}
+
+/* Consistent section transitions and archival details */
+main > section, main > div[id] {
+  scroll-margin-top: 112px;
+}
+.editorial-card, .museum-placard, .ticket-stub,
+.da-parchment-sheet, .da-theme-manifesto,
+.da-dimensions-panel {
+  transition:
+    transform .5s var(--da-ease-editorial),
+    box-shadow .5s var(--da-ease-editorial),
+    border-color .35s ease;
+}
+.editorial-card:hover, .museum-placard:hover, .ticket-stub:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 48px rgba(16,29,42,.13);
+}
+.da-kicker-dot {
+  animation: da-dot-breathe 3.2s ease-in-out infinite;
+}
+.da-section-frame {
+  transition: inset .7s var(--da-ease-editorial), border-color .4s ease;
+}
+section:hover > .da-section-frame {
+  border-color: rgba(212,168,83,.3);
+}
+
+/* Refined focus and touch feedback */
+:where(button, a, [role="button"]):focus-visible {
+  outline: 2px solid #f3e1b8;
+  outline-offset: 4px;
+  box-shadow: 0 0 0 6px rgba(181,138,60,.18);
+}
+@media (hover: hover) and (pointer: fine) {
+  .editorial-card:hover, .museum-placard:hover {
+    border-color: rgba(181,138,60,.5);
+  }
+}
+
+/* Motion should remain atmospheric, never block reading */
+@keyframes da-stage-light {
+  0% { transform: translate3d(-1.5%, 0, 0); opacity: .22; }
+  100% { transform: translate3d(1.5%, 1%, 0); opacity: .48; }
+}
+@keyframes da-title-arrive {
+  from { opacity: .35; transform: translateY(12px); filter: blur(5px); }
+  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+@keyframes da-dot-breathe {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(212,168,83,.15); }
+  50% { box-shadow: 0 0 0 5px rgba(212,168,83,0); }
+}
+
+@media (max-width: 767px) {
+  #hero { min-height: auto; }
+  #hero::before { inset: 8px; }
+  #hero .interactive-card:hover { transform: none; }
+  .marquee-left > div:hover, .marquee-right > div:hover { transform: none; }
+  main > section, main > div[id] { scroll-margin-top: 84px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #hero::after, #hero h1, .da-kicker-dot { animation: none !important; }
+  #hero .interactive-card, .marquee-left > div, .marquee-right > div,
+  .editorial-card, .museum-placard, .ticket-stub,
+  .da-parchment-sheet, .da-theme-manifesto, .da-dimensions-panel {
+    transition: none !important;
+  }
+}
