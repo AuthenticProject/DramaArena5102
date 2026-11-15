@@ -121,7 +121,7 @@ export const MediaShowcase: React.FC<MediaShowcaseProps> = ({ onBackToHome }) =>
                 <button type="button" onClick={() => setActiveTab('guideline')}>JELAJAHI PANDUAN <ArrowUpRight size={15} /></button>
               </div>
               <div className="da-media-feature-image">
-                <img src={importRef('slide-12-key-visual.jpg')} alt="Key visual identitas Drama Arena 5102" />
+                <img src={importRef('slide-12-key-visual.jpg')} alt="Key visual identitas Drama Arena 5102" loading="lazy" decoding="async" />
                 <span>PLATE 01 — KEY VISUAL</span>
               </div>
             </section>
@@ -188,7 +188,7 @@ export const MediaShowcase: React.FC<MediaShowcaseProps> = ({ onBackToHome }) =>
         <div className="da-media-detail" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setSelectedAsset(null); }}>
           <div className="da-media-detail-card" role="dialog" aria-modal="true" aria-label={selectedAsset.title} tabIndex={-1}>
             <div className="da-media-detail-top"><span>{selectedAsset.category.toUpperCase()} / DA 5102</span><button ref={detailCloseRef} type="button" onClick={() => setSelectedAsset(null)} aria-label="Tutup"><span>×</span></button></div>
-            <div className="da-media-detail-image"><img src={resolveAsset(selectedAsset)} alt={selectedAsset.title} /></div>
+            <div className="da-media-detail-image"><img src={resolveAsset(selectedAsset)} alt={selectedAsset.title} loading="lazy" decoding="async" /></div>
             <div className="da-media-detail-copy">
               <small>{selectedAsset.subtitle}</small>
               <h2>{selectedAsset.title}</h2>
