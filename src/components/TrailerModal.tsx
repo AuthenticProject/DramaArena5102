@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { X, ArrowUpRight } from 'lucide-react';
 import type { ShowCategoryData } from '../types';
 
@@ -8,17 +8,47 @@ interface TrailerModalProps {
 }
 
 export const TrailerModal: React.FC<TrailerModalProps> = ({ show, onClose }) => {
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
   useEffect(() => {
     if (!show) return;
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose();
-    };
     const previousOverflow = document.body.style.overflow;
+    const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     document.body.style.overflow = 'hidden';
+    closeButtonRef.current?.focus();
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onClose();
+        return;
+      }
+      if (event.key !== 'Tab') return;
+      const dialog = document.querySelector<HTMLElement>('.da-show-modal[role="dialog"]');
+      if (!dialog) return;
+      const focusable = Array.from(dialog.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      ));
+      if (focusable.length === 0) {
+        event.preventDefault();
+        dialog.focus();
+        return;
+      }
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener('keydown', handleKeyDown);
+      previousFocus?.focus();
     };
   }, [show, onClose]);
 
@@ -28,11 +58,11 @@ export const TrailerModal: React.FC<TrailerModalProps> = ({ show, onClose }) => 
     <div className="da-show-modal-layer" onMouseDown={(event) => {
       if (event.target === event.currentTarget) onClose();
     }}>
-      <section className="da-show-modal" role="dialog" aria-modal="true" aria-labelledby="da-show-modal-title">
+      <section className="da-show-modal" role="dialog" aria-modal="true" aria-labelledby="da-show-modal-title" tabIndex={-1}>
         <div className="da-show-modal-visual">
           <img src={show.img} alt="" />
           <div className="da-show-modal-shade" />
-          <button type="button" onClick={onClose} className="da-show-modal-close" aria-label="Tutup detail pertunjukan">
+          <button ref={closeButtonRef} type="button" onClick={onClose} className="da-show-modal-close" aria-label="Tutup detail pertunjukan">
             <X size={18} />
           </button>
           <div className="da-show-modal-heading">
