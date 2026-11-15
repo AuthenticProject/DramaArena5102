@@ -47,6 +47,8 @@ export const IndonesiaMap3D: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [loadingProgress, setLoadingProgress] = useState<number>(0);
   const [autoRotate, setAutoRotate] = useState<boolean>(true);
+  const autoRotateRef = useRef<boolean>(true);
+  autoRotateRef.current = autoRotate;
   const [activeCampus, setActiveCampus] = useState<Campus3DPin | null>(gontorCampuses[0]);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedRegion, setSelectedRegion] = useState<string>('Semua');
@@ -193,7 +195,7 @@ export const IndonesiaMap3D: React.FC = () => {
       controls.maxPolarAngle = Math.PI / 2.15;
       controls.minDistance = 12;
       controls.maxDistance = 140;
-      controls.autoRotate = autoRotate;
+      controls.autoRotate = autoRotateRef.current;
       controls.autoRotateSpeed = 0.35;
       controlsRef.current = controls;
 
