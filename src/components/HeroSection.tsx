@@ -142,7 +142,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenSponsorshipModal
       <div className="da-home-bottom">
         <div className="da-home-bottom-note"><Sparkles size={14} /><span>648 SANTRI · SATU PANGGUNG · SATU PERJUANGAN</span></div>
         <button type="button" onClick={() => onNavigate('ide-pokok')} className="da-home-scroll">
-          <span>SCROLL TO EXPLORE</span><ArrowDownRight size={17} />
+          <span>SCROLL TO EXPLORE</span><ArrowRight size={17} />
         </button>
         <span className="da-home-edition">PONDOK MODERN DARUSSALAM GONTOR <b>—</b> 2026</span>
       </div>
