@@ -156,3 +156,18 @@ jobs:
 
       - name: Validate motion and responsive safeguards
         run: npm run check:visual
+
+  immersive-archive-integrity:
+    name: Immersive archive interaction regression
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Validate gallery gestures and selected map state
+        run: npm run check:archive
