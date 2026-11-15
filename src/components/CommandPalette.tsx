@@ -91,7 +91,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ onNavigate, acti
     onNavigate(id);
   };
 
-  const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleInputKeyDown = (event: any) => {
     if (event.key === 'ArrowDown') {
       event.preventDefault();
       setActiveIndex((index) => Math.min(index + 1, results.length - 1));
