@@ -51,6 +51,8 @@ export const IndonesiaMap3D: React.FC = () => {
   const autoRotateRef = useRef<boolean>(true);
   autoRotateRef.current = autoRotate;
   const [activeCampus, setActiveCampus] = useState<Campus3DPin | null>(gontorCampuses[0]);
+  const activeCampusRef = useRef<Campus3DPin | null>(gontorCampuses[0]);
+  activeCampusRef.current = activeCampus;
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedRegion, setSelectedRegion] = useState<string>('Semua');
   const controlsRef = useRef<any>(null);
@@ -488,8 +490,18 @@ export const IndonesiaMap3D: React.FC = () => {
 
       const animate = () => {
         animationFrameId = requestAnimationFrame(animate);
-        if (!document.hidden && controls) controls.update();
-        if (!document.hidden && renderer && scene && camera) renderer.render(scene, camera);
+        if (!document.hidden) {
+          if (controls) controls.update();
+          const pulse = 1 + Math.sin(performance.now() * 0.0032) * 0.075;
+          pinMeshesRef.current.forEach((sprite) => {
+            const campus = sprite.userData as Campus3DPin | undefined;
+            if (!campus) return;
+            const baseScale = campus.isPusat ? 3.2 : 2.5;
+            const selectedScale = activeCampusRef.current?.id === campus.id ? pulse : 1;
+            sprite.scale.set(baseScale * selectedScale, baseScale * selectedScale, 1);
+          });
+          if (renderer && scene && camera) renderer.render(scene, camera);
+        }
       };
       animate();
 
