@@ -44,11 +44,11 @@ const duplicates = [...duplicateGroups.values()].filter((group) => group.length 
 const formatBytes = (bytes) => bytes >= 1024 * 1024
   ? `${(bytes / (1024 * 1024)).toFixed(2)} MiB`
   : `${(bytes / 1024).toFixed(1)} KiB`;
-const rows = files.slice(0, 25).map((file) => `| ${file.path.replaceAll('|', '\\|')} | ${formatBytes(file.bytes)} |`).join('\\n');
+const rows = files.slice(0, 25).map((file) => `| ${file.path.replaceAll('|', '\\|')} | ${formatBytes(file.bytes)} |`).join(String.fromCharCode(10));
 const duplicateRows = duplicates.map((group) => {
   const paths = group.map((file) => file.path).join(', ');
   return `| ${group.length} | ${formatBytes(group[0].bytes)} | ${paths.replaceAll('|', '\\|')} |`;
-}).join('\\n');
+}).join(String.fromCharCode(10));
 const report = [
   '# Static Asset Audit',
   '',
@@ -78,6 +78,6 @@ const report = [
   '- Review duplicate copies before removing anything; some paths may be referenced by legacy pages.',
   '- Treat the 1 MiB threshold as a review signal, not a hard failure or universal image-size target.',
   '',
-].join('\\n');
+].join(String.fromCharCode(10));
 await writeFile('asset-audit.md', report);
 console.log(`Audited ${files.length} public media files (${formatBytes(totalBytes)} total); ${oversized.length} exceed 1 MiB; ${duplicates.length} exact duplicate groups.`);
