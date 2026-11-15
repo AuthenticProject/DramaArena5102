@@ -111,3 +111,18 @@ jobs:
 
       - name: Validate canonical metadata, sitemap, robots and social image
         run: npm run check:site
+
+  experience-integrity:
+    name: Audio experience and accessibility regression
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Validate opt-in audio and accessible controls
+        run: npm run check:experience
