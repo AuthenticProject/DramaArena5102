@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
 import { importImage } from '../utils/assetHelpers';
 
@@ -14,14 +14,43 @@ export const Header: React.FC<HeaderProps> = ({
   currentView = 'hero',
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const menuTriggerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (!mobileMenuOpen) return;
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setMobileMenuOpen(false);
+    const previousOverflow = document.body.style.overflow;
+    const menuTrigger = menuTriggerRef.current;
+    document.body.style.overflow = 'hidden';
+    const menu = document.getElementById('da-mobile-navigation');
+    const focusable = () => Array.from(menu?.querySelectorAll<HTMLButtonElement>('button:not([disabled])') ?? []);
+    focusable()[0]?.focus();
+
+    const handleMenuKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        setMobileMenuOpen(false);
+        return;
+      }
+      if (event.key !== 'Tab') return;
+      const items = focusable();
+      if (!items.length) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
-    window.addEventListener('keydown', closeOnEscape);
-    return () => window.removeEventListener('keydown', closeOnEscape);
+
+    window.addEventListener('keydown', handleMenuKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', handleMenuKeyDown);
+      menuTrigger?.focus();
+    };
   }, [mobileMenuOpen]);
 
   const handleNav = (id: string) => {
@@ -134,6 +163,7 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Mobile Menu Trigger */}
         <div className="flex lg:hidden items-center gap-2">
           <button
+            ref={menuTriggerRef}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="p-2 rounded-xl text-[#EDE8E2] hover:bg-white/10 transition-colors cursor-pointer"
             type="button"
