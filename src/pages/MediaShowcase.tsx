@@ -10,7 +10,7 @@ interface MediaShowcaseProps {
 }
 
 type MediaTab = 'all' | 'guideline' | 'logo' | 'typography' | 'color' | 'merchandise' | 'photo';
-const tabs: { id: MediaTab; label: string; short: string; icon: React.ElementType }[] = [
+const tabs: { id: MediaTab; label: string; short: string; icon: React.ComponentType }[] = [
   { id: 'all', label: 'Semua koleksi', short: 'SEMUA', icon: Layers },
   { id: 'guideline', label: 'Brand guidelines', short: 'PANDUAN', icon: ImageIcon },
   { id: 'logo', label: 'Logo & monogram', short: 'LAMBANG', icon: Eye },
