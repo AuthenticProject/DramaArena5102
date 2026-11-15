@@ -15,6 +15,7 @@ import { TrailerModal } from './components/TrailerModal';
 import { Footer } from './components/Footer';
 import { AudioPlayer } from './components/AudioPlayer';
 import { MediaShowcase } from './pages/MediaShowcase';
+import { CommandPalette } from './components/CommandPalette';
 
 export function App() {
   // Show animated loading screen with spinning logo on load
@@ -206,6 +207,9 @@ export function App() {
           <small>TOP</small>
         </button>
       )}
+
+      {/* Keyboard-first interactive site explorer */}
+      <CommandPalette onNavigate={handleNavigate} activeSection={activeSection} />
 
       {/* Floating OST Music Player Widget */}
       <AudioPlayer />
