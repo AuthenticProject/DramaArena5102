@@ -23,12 +23,28 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({
   }), [categoryFilter]);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
   const selectedAsset = selectedIndex === null ? null : galleryItems[selectedIndex];
 
   const close = useCallback(() => setSelectedIndex(null), []);
   const move = useCallback((direction: number) => {
-    setSelectedIndex((current) => current === null ? null : (current + direction + galleryItems.length) % galleryItems.length);
+    setSelectedIndex((current) => current === null || galleryItems.length === 0 ? null : (current + direction + galleryItems.length) % galleryItems.length);
   }, [galleryItems.length]);
+
+  const handleStagePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType !== 'touch') return;
+    touchStartRef.current = { x: event.clientX, y: event.clientY };
+  };
+
+  const handleStagePointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
+    const start = touchStartRef.current;
+    touchStartRef.current = null;
+    if (!start || event.pointerType !== 'touch') return;
+    const deltaX = event.clientX - start.x;
+    const deltaY = event.clientY - start.y;
+    if (Math.abs(deltaX) < 48 || Math.abs(deltaX) < Math.abs(deltaY) * 1.25) return;
+    move(deltaX < 0 ? 1 : -1);
+  };
 
   useEffect(() => {
     if (selectedIndex === null) return;
@@ -98,30 +114,37 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({
       {selectedAsset && selectedIndex !== null && (
         <div
           className="da-lightbox"
-          role="presentation"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="da-lightbox-title"
+          aria-describedby="da-lightbox-description"
+          tabIndex={-1}
           onMouseDown={(event) => { if (event.target === event.currentTarget) close(); }}
         >
           <div className="da-lightbox-topline">
             <span>DRAMA ARENA 5102 <i>/</i> VISUAL ARCHIVE</span>
             <span>{String(selectedIndex + 1).padStart(2, '0')} — {String(galleryItems.length).padStart(2, '0')}</span>
           </div>
+          <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+            Arsip {selectedIndex + 1} dari {galleryItems.length}: {selectedAsset.title}
+          </p>
           <button ref={closeButtonRef} type="button" className="da-lightbox-close" onClick={close} aria-label="Tutup lightbox"><X size={20} /></button>
           <button type="button" className="da-lightbox-nav da-lightbox-prev" onClick={() => move(-1)} aria-label="Arsip sebelumnya"><ChevronLeft size={24} /></button>
-          <div className="da-lightbox-stage">
+          <div className="da-lightbox-stage" onPointerDown={handleStagePointerDown} onPointerUp={handleStagePointerUp} onPointerCancel={() => { touchStartRef.current = null; }}>
             <img src={getAssetUrl(selectedAsset)} alt={selectedAsset.title} decoding="async" />
           </div>
           <button type="button" className="da-lightbox-nav da-lightbox-next" onClick={() => move(1)} aria-label="Arsip berikutnya"><ChevronRight size={24} /></button>
           <div className="da-lightbox-caption">
             <div>
               <span>{selectedAsset.category.toUpperCase()} · {selectedAsset.dimensions.width} × {selectedAsset.dimensions.height} PX</span>
-              <h3>{selectedAsset.title}</h3>
-              <p>{selectedAsset.description}</p>
+              <h3 id="da-lightbox-title">{selectedAsset.title}</h3>
+              <p id="da-lightbox-description">{selectedAsset.description}</p>
             </div>
             <a href={getAssetUrl(selectedAsset)} target="_blank" rel="noreferrer">
               BUKA FILE ASLI <Maximize2 size={14} />
             </a>
           </div>
-          <div className="da-lightbox-keyhint">GUNAKAN ← → UNTUK MENJELAJAH · ESC UNTUK KELUAR</div>
+          <div className="da-lightbox-keyhint">GESER FOTO / GUNAKAN ← → · ESC UNTUK KELUAR</div>
         </div>
       )}
     </div>
