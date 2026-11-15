@@ -132,7 +132,7 @@ export const MediaShowcase: React.FC<MediaShowcaseProps> = ({ onBackToHome }) =>
                 return (
                   <button type="button" key={tab.id} className="da-media-collection" onClick={() => setActiveTab(tab.id)}>
                     <span className="da-media-collection-image">
-                      {preview && <img src={resolveAsset(preview)} alt="" loading="lazy" />}
+                      {preview && <img src={resolveAsset(preview)} alt="" loading="lazy" decoding="async" />}
                       <span>0{index + 1}</span>
                     </span>
                     <span className="da-media-collection-info">
@@ -161,7 +161,7 @@ export const MediaShowcase: React.FC<MediaShowcaseProps> = ({ onBackToHome }) =>
                 {filteredAssets.map((asset, index) => (
                   <button type="button" key={asset.id} className={`da-media-asset da-media-asset-${index % 4}`} onClick={() => setSelectedAsset(asset)}>
                     <span className="da-media-asset-image">
-                      <img src={resolveAsset(asset)} alt={asset.title} loading="lazy" />
+                      <img src={resolveAsset(asset)} alt={asset.title} loading="lazy" decoding="async" />
                       <span>{String(index + 1).padStart(2, '0')}</span>
                       <i><Eye size={16} /> VIEW ASSET</i>
                     </span>
