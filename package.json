@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "check:site": "node scripts/site-integrity.mjs",
     "check:experience": "node scripts/experience-integrity.mjs",
-    "check:assets": "node scripts/public-asset-integrity.mjs"
+    "check:assets": "node scripts/public-asset-integrity.mjs",
+    "check:visual": "node scripts/visual-experience-integrity.mjs"
   },
   "dependencies": {
     "framer-motion": "^12.38.0",
