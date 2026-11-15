@@ -24,6 +24,7 @@ const resolveAsset = (asset: DAAsset) => asset.category === 'guideline' ? import
 
 export const MediaShowcase: React.FC<MediaShowcaseProps> = ({ onBackToHome }) => {
   const [activeTab, setActiveTab] = useState<MediaTab>('all');
+  const [searchTerm, setSearchTerm] = useState('');
   const [selectedAsset, setSelectedAsset] = useState<DAAsset | null>(null);
   const detailCloseRef = useRef<HTMLButtonElement>(null);
 
@@ -65,7 +66,11 @@ export const MediaShowcase: React.FC<MediaShowcaseProps> = ({ onBackToHome }) =>
       previousFocus?.focus();
     };
   }, [selectedAsset]);
-  const filteredAssets = useMemo(() => activeTab === 'all' ? ALL_ASSETS : ALL_ASSETS.filter((asset) => asset.category === activeTab), [activeTab]);
+  const filteredAssets = useMemo(() => {
+    const query = searchTerm.trim().toLocaleLowerCase('id');
+    const collection = activeTab === 'all' ? ALL_ASSETS : ALL_ASSETS.filter((asset) => asset.category === activeTab);
+    return query ? collection.filter((asset) => [asset.title, asset.subtitle, asset.description, asset.name, asset.category].join(' ').toLocaleLowerCase('id').includes(query)) : collection;
+  }, [activeTab, searchTerm]);
   const counts = useMemo(() => tabs.reduce((acc, tab) => ({ ...acc, [tab.id]: tab.id === 'all' ? ALL_ASSETS.length : ALL_ASSETS.filter((asset) => asset.category === tab.id).length }), {} as Record<MediaTab, number>), []);
 
   return (
@@ -92,6 +97,7 @@ export const MediaShowcase: React.FC<MediaShowcaseProps> = ({ onBackToHome }) =>
           </div>
         </header>
 
+        <div className="da-archive-tools"><label className="da-archive-search"><span className="sr-only">Cari koleksi arsip</span><ImageIcon size={17} aria-hidden="true" /><input type="search" value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Cari judul, kategori, atau deskripsi arsip..." aria-controls="da-archive-results" />{searchTerm && <button type="button" onClick={() => setSearchTerm('')} aria-label="Hapus pencarian">×</button>}</label><span className="da-archive-search-count" aria-live="polite">{filteredAssets.length} / {activeTab === 'all' ? ALL_ASSETS.length : counts[activeTab]} ITEM</span></div>
         <div className="da-media-index">
           <div className="da-media-index-title">
             <span>INDEKS KOLEKSI</span>
@@ -146,7 +152,7 @@ export const MediaShowcase: React.FC<MediaShowcaseProps> = ({ onBackToHome }) =>
             </div>
           </div>
         ) : (
-          <section className="da-media-results" role="tabpanel">
+          <section className="da-media-results" id="da-archive-results" role="tabpanel">
             <div className="da-media-results-head">
               <div>
                 <span>COLLECTION / {tabs.find((tab) => tab.id === activeTab)?.short}</span>
@@ -155,7 +161,7 @@ export const MediaShowcase: React.FC<MediaShowcaseProps> = ({ onBackToHome }) =>
               <span>{String(filteredAssets.length).padStart(2, '0')} ITEMS IN THIS COLLECTION</span>
             </div>
             {activeTab === 'photo' || activeTab === 'merchandise' ? (
-              <PhotoGallery categoryFilter={activeTab} />
+              <PhotoGallery categoryFilter={activeTab} searchTerm={searchTerm} />
             ) : (
               <div className={activeTab === 'guideline' ? 'da-media-guideline-grid' : 'da-media-asset-grid'}>
                 {filteredAssets.map((asset, index) => (
