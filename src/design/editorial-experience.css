@@ -369,9 +369,9 @@ button[title*="music" i] { border-radius: 3px !important; }
 .da-stage-image {position:absolute;right:0;top:0;width:48%;height:100%;background-size:cover;background-position:center;opacity:.13;mask-image:linear-gradient(90deg,transparent,#000 45%);}
 .da-stage-specs {position:relative;z-index:2;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:30px;}
 .da-stage-spec {padding:15px 13px;border:1px solid rgba(212,168,83,.25);background:rgba(5,14,21,.32);}
-.da-stage-spec strong,.da-stage-spec span {display:block;}
+.da-stage-spec dt,.da-stage-spec dd {display:block;margin:0;}
 .da-stage-spec strong {color:#f3e1b8;font:16px 'Cormorant Garamond',serif;}
-.da-stage-spec span {margin-top:5px;color:rgba(237,232,226,.58);font:8px 'Space Mono',monospace;letter-spacing:.08em;}
+.da-stage-spec dd {margin-top:5px;color:rgba(237,232,226,.58);font:8px 'Space Mono',monospace;letter-spacing:.08em;}
 .da-stage-index {position:absolute;right:22px;top:22px;color:rgba(212,168,83,.6);font:8px 'Space Mono',monospace;letter-spacing:.13em;}
 .da-show-modal-layer {position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:22px;background:rgba(5,12,18,.86);backdrop-filter:blur(12px);animation:da-modal-in .2s ease both;}
 .da-show-modal {width:min(720px,100%);max-height:92vh;overflow:auto;background:#faf8f5;color:#192e41;border:1px solid #b58a3c;box-shadow:0 30px 100px rgba(0,0,0,.5);animation:da-modal-rise .3s ease both;}

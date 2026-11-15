@@ -76,7 +76,7 @@ export const ShowsSection: React.FC<ShowsSectionProps> = ({ onOpenTrailer }) => 
             <span>INDEKS PERTUNJUKAN</span>
             <span>{String(visibleShows.length).padStart(2, '0')} / 04 KATEGORI</span>
           </div>
-          <div className="da-show-filters" role="group" aria-label="Filter kategori pertunjukan">
+          <div className="da-show-filters" role="group" aria-label="Filter kategori pertunjukan" aria-controls="da-show-results">
             {filters.map((filter) => (
               <button
                 key={filter}
@@ -91,7 +91,8 @@ export const ShowsSection: React.FC<ShowsSectionProps> = ({ onOpenTrailer }) => 
           </div>
         </div>
 
-        <div className="da-show-grid" aria-live="polite">
+        <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">{visibleShows.length === 4 ? "Menampilkan semua empat kategori pertunjukan." : `Menampilkan ${visibleShows.length} kategori pertunjukan.`}</p>
+        <div id="da-show-results" className="da-show-grid" aria-label={`Hasil kategori pertunjukan: ${visibleShows.length} kategori`}>
           {visibleShows.map((show, i) => (
             <FadeIn key={show.id} delay={i * 0.08}>
               <button
@@ -101,7 +102,7 @@ export const ShowsSection: React.FC<ShowsSectionProps> = ({ onOpenTrailer }) => 
                 aria-label={`Buka detail ${show.title}`}
               >
                 <span className="da-show-image">
-                  <img src={show.img} alt="" loading="lazy" />
+                  <img src={show.img} alt="" loading="lazy" decoding="async" fetchPriority="low" />
                   <span className="da-show-image-shade" />
                   <span className="da-show-number">{show.number}</span>
                   <span className="da-show-open"><span>+</span><small>BUKA CATATAN PENTAS</small></span>
@@ -136,7 +137,7 @@ export const ShowsSection: React.FC<ShowsSectionProps> = ({ onOpenTrailer }) => 
               </p>
             </div>
             <div className="da-stage-image" style={{ backgroundImage: `url("${importImage('building.png')}")` }} aria-hidden="true" />
-            <div className="da-stage-specs">
+            <dl className="da-stage-specs">
               {[
                 ['12 × 26.84 m', 'Panggung Utama'],
                 ['48 Beam', 'Tata Cahaya Beam'],
@@ -148,11 +149,11 @@ export const ShowsSection: React.FC<ShowsSectionProps> = ({ onOpenTrailer }) => 
                 ['Pyro & Confetti', 'Grand Opening']
               ].map(([value, label]) => (
                 <div className="da-stage-spec" key={label}>
-                  <strong>{value}</strong>
-                  <span>{label}</span>
+                  <dt><strong>{value}</strong></dt>
+                  <dd>{label}</dd>
                 </div>
               ))}
-            </div>
+            </dl>
             <span className="da-stage-index">DA / 5102 — STAGE NOTES</span>
           </div>
         </FadeIn>
