@@ -83,34 +83,44 @@ export const IndonesiaMap3D: React.FC = () => {
     let controls: any;
     let raycaster: any;
     let mouse: any;
+    let disposed = false;
+    let cleanupThree: (() => void) | undefined;
+    let observer: IntersectionObserver | undefined;
+
+    const loadExternalScript = (src: string) => new Promise<void>((resolve, reject) => {
+      const existing = Array.from(document.scripts).find((script) => script.src === src);
+      if (existing) {
+        if ((existing as HTMLScriptElement).dataset.loaded === 'true') {
+          resolve();
+          return;
+        }
+        existing.addEventListener('load', () => resolve(), { once: true });
+        existing.addEventListener('error', () => reject(new Error(`Failed to load ${src}`)), { once: true });
+        return;
+      }
+      const script = document.createElement('script');
+      script.src = src;
+      script.async = true;
+      script.onload = () => {
+        script.dataset.loaded = 'true';
+        resolve();
+      };
+      script.onerror = () => reject(new Error(`Failed to load ${src}`));
+      document.head.appendChild(script);
+    });
 
     const loadThreeScript = async () => {
       if (!(window as any).THREE) {
-        await new Promise((resolve) => {
-          const script = document.createElement('script');
-          script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
-          script.onload = resolve;
-          document.head.appendChild(script);
-        });
+        await loadExternalScript('https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js');
       }
       if (!(window as any).THREE?.GLTFLoader) {
-        await new Promise((resolve) => {
-          const script = document.createElement('script');
-          script.src = 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js';
-          script.onload = resolve;
-          document.head.appendChild(script);
-        });
+        await loadExternalScript('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js');
       }
       if (!(window as any).THREE?.OrbitControls) {
-        await new Promise((resolve) => {
-          const script = document.createElement('script');
-          script.src = 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js';
-          script.onload = resolve;
-          document.head.appendChild(script);
-        });
+        await loadExternalScript('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js');
       }
 
-      initThree();
+      if (!disposed) cleanupThree = initThree();
     };
 
     const createBadgeTexture = (THREE: any, text: string, isPusat = false) => {
@@ -164,7 +174,7 @@ export const IndonesiaMap3D: React.FC = () => {
     };
 
     const initThree = () => {
-      if (!mountRef.current) return;
+      if (!mountRef.current || disposed) return;
       const THREE = (window as any).THREE;
       const container = mountRef.current;
       const width = container.clientWidth;
@@ -473,8 +483,8 @@ export const IndonesiaMap3D: React.FC = () => {
 
       const animate = () => {
         animationFrameId = requestAnimationFrame(animate);
-        if (controls) controls.update();
-        if (renderer && scene && camera) renderer.render(scene, camera);
+        if (!document.hidden && controls) controls.update();
+        if (!document.hidden && renderer && scene && camera) renderer.render(scene, camera);
       };
       animate();
 
@@ -500,7 +510,32 @@ export const IndonesiaMap3D: React.FC = () => {
       };
     };
 
-    loadThreeScript();
+    const startWhenVisible = () => {
+      if (disposed) return;
+      loadThreeScript().catch((error) => {
+        console.error('Unable to initialize the 3D campus map:', error);
+        if (!disposed) setLoading(false);
+      });
+    };
+
+    if (mountRef.current && 'IntersectionObserver' in window) {
+      observer = new IntersectionObserver((entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          observer?.disconnect();
+          startWhenVisible();
+        }
+      }, { rootMargin: '300px 0px' });
+      observer.observe(mountRef.current);
+    } else {
+      startWhenVisible();
+    }
+
+    return () => {
+      disposed = true;
+      observer?.disconnect();
+      cleanupThree?.();
+      cancelAnimationFrame(animationFrameId);
+    };
   }, []);
 
   const toggleAutoRotate = () => {
