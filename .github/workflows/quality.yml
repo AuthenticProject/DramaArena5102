@@ -2,7 +2,7 @@ name: Quality Assurance
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [ main, upgrade/phase-18-20-experience-polish ]
   push:
     branches: [ main ]
 
