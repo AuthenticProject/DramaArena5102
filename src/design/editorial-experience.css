@@ -797,3 +797,28 @@ button, a, [tabindex]:not([tabindex="-1"]) { -webkit-tap-highlight-color: transp
     transition-duration: .01ms !important;
   }
 }
+
+
+/* Phase 12 — responsive navigation refinement */
+.da-mobile-navigation {
+  max-height: calc(100vh - 72px);
+  max-height: calc(100svh - 72px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(181, 138, 60, .7) rgba(237, 232, 226, .06);
+}
+.da-mobile-navigation button {
+  min-height: 44px;
+}
+.da-mobile-navigation button:focus-visible {
+  outline-color: #f3e1b8;
+  outline-offset: 2px;
+}
+@media (max-width: 420px) {
+  .da-mobile-navigation {
+    padding-inline: 1rem;
+    padding-block: .85rem;
+  }
+}
