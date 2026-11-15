@@ -619,12 +619,12 @@ export const IndonesiaMap3D: React.FC = () => {
             </div>
 
             {/* Region Pill Filters */}
-            <div className="flex items-center gap-1.5 p-1 rounded-full bg-[#101D2A]/80 border border-[#B58A3C]/30 text-xs">
+            <div className="flex flex-wrap justify-center items-center gap-1.5 p-1.5 rounded-2xl bg-[#101D2A]/80 border border-[#B58A3C]/30 text-xs">
               {['Semua', 'Jawa', 'Sumatera', 'Sulawesi'].map((r) => (
                 <button
                   key={r}
                   onClick={() => setSelectedRegion(r)}
-                  className={`px-3.5 py-1 rounded-full transition-all cursor-pointer font-cormorant-sc tracking-wider uppercase font-bold text-xs ${
+                  className={`min-h-11 px-3.5 py-2 rounded-full transition-all cursor-pointer font-cormorant-sc tracking-wider uppercase font-bold text-xs ${
                     selectedRegion === r
                       ? 'bg-[#B58A3C] text-[#192E41] shadow-md'
                       : 'text-[#EDE8E2]/70 hover:text-[#EDE8E2]'
@@ -644,16 +644,16 @@ export const IndonesiaMap3D: React.FC = () => {
               <div className="w-2.5 h-2.5 rounded-full bg-[#B58A3C] animate-pulse" />
               <span className="text-xs font-mono tracking-wider font-bold text-[#EDE8E2]">INTERACTIVE 3D NUSANTARA GLB</span>
             </div>
-            <div className="flex items-center gap-2 mt-2 sm:mt-0">
+            <div className="flex flex-wrap items-center gap-2 mt-2 sm:mt-0">
               <button
                 onClick={toggleAutoRotate}
-                className="bg-[#B58A3C] hover:bg-[#D4A853] text-[#192E41] font-bold px-4 py-1.5 rounded-full text-xs transition-all shadow-md cursor-pointer font-cormorant-sc uppercase tracking-wider"
+                className="min-h-11 bg-[#B58A3C] hover:bg-[#D4A853] text-[#192E41] font-bold px-4 py-2 rounded-full text-xs transition-all shadow-md cursor-pointer font-cormorant-sc uppercase tracking-wider"
               >
                 {autoRotate ? '⏸ Jeda Putar' : '▶ Putar Otomatis'}
               </button>
               <button
                 onClick={resetCameraView}
-                className="border border-[#B58A3C]/50 hover:bg-[#B58A3C]/20 text-[#EDE8E2] font-semibold px-4 py-1.5 rounded-full text-xs transition-all cursor-pointer font-cormorant-sc uppercase tracking-wider"
+                className="min-h-11 border border-[#B58A3C]/50 hover:bg-[#B58A3C]/20 text-[#EDE8E2] font-semibold px-4 py-2 rounded-full text-xs transition-all cursor-pointer font-cormorant-sc uppercase tracking-wider"
               >
                 ↺ Reset Sudut
               </button>
@@ -675,7 +675,7 @@ export const IndonesiaMap3D: React.FC = () => {
             <div ref={mountRef} className="w-full h-full" />
 
             {activeCampus && (
-              <div className="absolute bottom-6 left-6 z-30 max-w-sm p-5 rounded-2xl bg-[#FAF8F5] border-2 border-[#B58A3C] text-[#192E41] shadow-2xl transition-all">
+              <div className="absolute bottom-3 left-3 right-3 sm:bottom-6 sm:left-6 sm:right-auto z-30 max-w-sm p-4 sm:p-5 rounded-2xl bg-[#FAF8F5] border-2 border-[#B58A3C] text-[#192E41] shadow-2xl transition-all">
                 <div className="flex items-center justify-between text-xs text-[#325956] font-bold mb-1">
                   <span>{activeCampus.isPusat ? '👑 KAMPUS PUSAT GONTOR' : `CABANG ${activeCampus.code}`}</span>
                   <span className="px-2 py-0.5 rounded bg-[#192E41] text-[#EDE8E2] font-bold text-[10px]">{activeCampus.code}</span>
