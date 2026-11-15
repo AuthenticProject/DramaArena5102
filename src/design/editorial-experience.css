@@ -1460,3 +1460,108 @@ section:hover > .da-section-frame {
   .da-command-backdrop,.da-command-dialog { animation:none; }
   .da-explore-trigger,.da-command-result,.da-command-arrow { transition:none; }
 }
+
+
+/* Phase 49 — responsive hero photography and tactile motion */
+.da-home-visual-interactive {
+  --hero-tilt-x: 0deg;
+  --hero-tilt-y: 0deg;
+  --hero-glow-x: 50%;
+  --hero-glow-y: 50%;
+  transform: perspective(1200px) rotateX(var(--hero-tilt-x)) rotateY(var(--hero-tilt-y));
+  transform-style: preserve-3d;
+  transition: transform .42s cubic-bezier(.2,.75,.25,1), box-shadow .42s ease;
+  box-shadow: 0 34px 90px rgba(0,0,0,.34), 0 0 0 1px rgba(212,168,83,.18);
+}
+.da-home-visual-interactive::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(circle at var(--hero-glow-x) var(--hero-glow-y), rgba(243,225,184,.16), transparent 36%);
+  opacity: .8;
+  transition: opacity .3s ease;
+}
+.da-home-visual-interactive:hover {
+  box-shadow: 0 42px 105px rgba(0,0,0,.42), 0 0 34px rgba(181,138,60,.12);
+}
+.da-home-visual-interactive .da-home-visual-image {
+  animation: da-hero-photo-arrive .85s cubic-bezier(.2,.75,.25,1) both, da-hero-photo-drift 18s ease-in-out 0.85s infinite alternate;
+  transform-origin: 50% 45%;
+}
+@keyframes da-hero-photo-arrive {
+  from { opacity: .35; transform: scale(1.09) translateY(10px); filter: saturate(.65); }
+  to { opacity: 1; transform: scale(1.025); filter: saturate(1); }
+}
+@keyframes da-hero-photo-drift {
+  from { transform: scale(1.025) translate3d(-.35%,0,0); }
+  to { transform: scale(1.075) translate3d(.45%,-.35%,0); }
+}
+.da-home-photo-switch {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.da-home-photo-switch button {
+  min-height: 34px;
+  padding: 0 10px;
+  color: rgba(237,232,226,.66);
+  border: 1px solid rgba(237,232,226,.2);
+  background: rgba(8,17,25,.42);
+  font: 8px/1 'Space Mono',monospace;
+  letter-spacing: .06em;
+  transition: color .22s ease, border-color .22s ease, background .22s ease, transform .22s ease;
+}
+.da-home-photo-switch button:hover,
+.da-home-photo-switch button[aria-pressed="true"] {
+  color: #192e41;
+  border-color: #f3e1b8;
+  background: #f3e1b8;
+  transform: translateY(-2px);
+}
+.da-home-emblem-caption {
+  position: absolute;
+  z-index: 4;
+  left: 24px;
+  bottom: 82px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  color: rgba(237,232,226,.76);
+  text-shadow: 0 2px 12px rgba(0,0,0,.55);
+  pointer-events: none;
+}
+.da-home-emblem-caption span {
+  color: #f3e1b8;
+  font: 8px/1.3 'Space Mono',monospace;
+  letter-spacing: .16em;
+}
+.da-home-emblem-caption strong {
+  font: 600 14px/1.2 'Cormorant Garamond',serif;
+}
+.da-home-visual-interactive .da-home-emblem {
+  transform: translateZ(28px);
+  transition: transform .45s cubic-bezier(.2,.75,.25,1);
+}
+.da-home-visual-interactive:hover .da-home-emblem {
+  transform: translateZ(42px) translateY(-3px);
+}
+.da-home-emblem-switch button {
+  transition: background .22s ease, color .22s ease, transform .22s ease, border-color .22s ease;
+}
+.da-home-emblem-switch button:hover { transform: translateY(-2px); }
+@media (max-width: 767px) {
+  .da-home-visual-interactive { transform: none; }
+  .da-home-emblem-caption { left: 16px; bottom: 92px; }
+  .da-home-photo-switch { gap: 4px; }
+  .da-home-photo-switch button { min-height: 32px; padding-inline: 7px; font-size: 7px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .da-home-visual-interactive,
+  .da-home-visual-interactive .da-home-visual-image,
+  .da-home-visual-interactive .da-home-emblem,
+  .da-home-photo-switch button,
+  .da-home-emblem-switch button { animation: none !important; transition: none !important; transform: none !important; }
+}
