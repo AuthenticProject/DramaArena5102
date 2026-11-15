@@ -12,7 +12,8 @@
     "check:experience": "node scripts/experience-integrity.mjs",
     "check:assets": "node scripts/public-asset-integrity.mjs",
     "check:visual": "node scripts/visual-experience-integrity.mjs",
-    "check:archive": "node scripts/immersive-archive-integrity.mjs"
+    "check:archive": "node scripts/immersive-archive-integrity.mjs",
+    "check:editorial": "node scripts/editorial-depth-integrity.mjs"
   },
   "dependencies": {
     "framer-motion": "^12.38.0",
