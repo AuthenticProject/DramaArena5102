@@ -46,7 +46,7 @@ export const IndonesiaMap3D: React.FC = () => {
   const mountRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [loadingProgress, setLoadingProgress] = useState<number>(0);
-  const [autoRotate, setAutoRotate] = useState<boolean>(true);
+  const [autoRotate, setAutoRotate] = useState<boolean>(() => typeof window === 'undefined' || !window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   const autoRotateRef = useRef<boolean>(true);
   autoRotateRef.current = autoRotate;
   const [activeCampus, setActiveCampus] = useState<Campus3DPin | null>(gontorCampuses[0]);
@@ -180,8 +180,8 @@ export const IndonesiaMap3D: React.FC = () => {
 
       renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
       renderer.setSize(width, height);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.shadowMap.enabled = true;
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, window.innerWidth < 768 ? 1.25 : 1.75));
+      renderer.shadowMap.enabled = window.innerWidth >= 768;
       renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
       while (container.firstChild) {
@@ -485,6 +485,8 @@ export const IndonesiaMap3D: React.FC = () => {
         camera.aspect = w / h;
         camera.updateProjectionMatrix();
         renderer.setSize(w, h);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, w < 768 ? 1.25 : 1.75));
+        renderer.shadowMap.enabled = w >= 768;
       };
       window.addEventListener('resize', handleResize);
 
