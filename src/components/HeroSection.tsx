@@ -180,8 +180,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenSponsorshipModal
                     </span>
                   </div>
                   {/* Toggle Selector Buttons */}
-                  <div className="flex items-center gap-1 bg-[#101D2A] p-0.5 rounded-lg border border-white/10">
+                  <div className="flex items-center gap-1 bg-[#101D2A] p-0.5 rounded-lg border border-white/10" role="group" aria-label="Pilih variasi lambang resmi">
                     <button
+                      type="button"
+                      aria-pressed={activeHeroTab === 'wave'}
+                      aria-controls="hero-emblem-display"
                       onClick={() => setActiveHeroTab('wave')}
                       className={`px-2 py-0.5 rounded text-[9px] font-mono font-bold transition-all ${
                         activeHeroTab === 'wave'
@@ -192,6 +195,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenSponsorshipModal
                       OMBAK
                     </button>
                     <button
+                      type="button"
+                      aria-pressed={activeHeroTab === 'monogram'}
+                      aria-controls="hero-emblem-display"
                       onClick={() => setActiveHeroTab('monogram')}
                       className={`px-2 py-0.5 rounded text-[9px] font-mono font-bold transition-all ${
                         activeHeroTab === 'monogram'
@@ -205,17 +211,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenSponsorshipModal
                 </div>
 
                 {/* Display Area for Active Emblem */}
-                <div className="relative w-44 h-44 mx-auto my-2 flex items-center justify-center p-3 group-hover:scale-105 transition-transform duration-500">
+                <div id="hero-emblem-display" className="relative w-44 h-44 mx-auto my-2 flex items-center justify-center p-3 group-hover:scale-105 transition-transform duration-500" aria-live="polite">
                   {activeHeroTab === 'wave' ? (
                     <img
                       src={importImage('logo-da-wave-transparent.png')}
-                      alt="Lambang Utama DA 5102"
+                      alt="Lambang ombak resmi Drama Arena 5102"
                       className="w-full h-full object-contain filter drop-shadow-[0_8px_20px_rgba(212,175,55,0.35)]"
                     />
                   ) : (
                     <img
                       src={importImage('logo-da-monogram-transparent.png')}
-                      alt="Monogram DA 5102"
+                      alt="Monogram DA resmi Drama Arena 5102"
                       className="w-full h-full object-contain filter drop-shadow-[0_8px_20px_rgba(212,175,55,0.35)]"
                     />
                   )}
