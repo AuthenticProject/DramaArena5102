@@ -19,6 +19,7 @@ export const Header: React.FC<HeaderProps> = ({
   useEffect(() => {
     if (!mobileMenuOpen) return;
     const previousOverflow = document.body.style.overflow;
+    const menuTrigger = menuTriggerRef.current;
     document.body.style.overflow = 'hidden';
     const menu = document.getElementById('da-mobile-navigation');
     const focusable = () => Array.from(menu?.querySelectorAll<HTMLButtonElement>('button:not([disabled])') ?? []);
@@ -48,7 +49,7 @@ export const Header: React.FC<HeaderProps> = ({
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener('keydown', handleMenuKeyDown);
-      menuTriggerRef.current?.focus();
+      menuTrigger?.focus();
     };
   }, [mobileMenuOpen]);
 
