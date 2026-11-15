@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 
 interface FadeInProps {
   children: React.ReactNode;
@@ -18,15 +18,17 @@ export const FadeIn: React.FC<FadeInProps> = ({
   y = 30,
   className = ''
 }) => {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <motion.div
-      initial={{ opacity: 0, x, y }}
-      whileInView={{ opacity: 1, x: 0, y: 0 }}
-      viewport={{ once: true, margin: "50px", amount: 0 }}
+      initial={prefersReducedMotion ? false : { opacity: 0, x, y, filter: 'blur(4px)' }}
+      whileInView={{ opacity: 1, x: 0, y: 0, filter: 'blur(0px)' }}
+      viewport={{ once: true, margin: '0px 0px -10% 0px', amount: 0.18 }}
       transition={{
-        duration,
-        delay,
-        ease: [0.25, 0.1, 0.25, 1]
+        duration: prefersReducedMotion ? 0 : duration,
+        delay: prefersReducedMotion ? 0 : delay,
+        ease: [0.22, 1, 0.36, 1]
       }}
       className={className}
     >
@@ -34,3 +36,5 @@ export const FadeIn: React.FC<FadeInProps> = ({
     </motion.div>
   );
 };
+
+export default FadeIn;
