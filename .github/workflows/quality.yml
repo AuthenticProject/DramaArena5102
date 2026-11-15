@@ -79,3 +79,25 @@ jobs:
           name: npm-audit-report
           path: npm-audit.json
           if-no-files-found: ignore
+
+  asset-audit:
+    name: Static asset inventory and budget report
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Generate asset report
+        run: node scripts/asset-audit.mjs
+
+      - name: Upload asset report
+        uses: actions/upload-artifact@v4
+        with:
+          name: static-asset-audit
+          path: asset-audit.md
+          if-no-files-found: error
