@@ -69,6 +69,8 @@ export const MarqueeSection: React.FC = () => {
                 src={item.src}
                 alt={item.tag}
                 loading="lazy"
+                decoding="async"
+                fetchPriority="low"
                 className="w-full h-full object-cover filter contrast-105 transition-transform duration-500 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-80 group-hover:opacity-95 transition-opacity" />
@@ -101,6 +103,8 @@ export const MarqueeSection: React.FC = () => {
                 src={item.src}
                 alt={item.tag}
                 loading="lazy"
+                decoding="async"
+                fetchPriority="low"
                 className="w-full h-full object-cover filter contrast-105 transition-transform duration-500 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-80 group-hover:opacity-95 transition-opacity" />

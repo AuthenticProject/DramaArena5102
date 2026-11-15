@@ -46,7 +46,8 @@ export const IndonesiaMap3D: React.FC = () => {
   const mountRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [loadingProgress, setLoadingProgress] = useState<number>(0);
-  const [autoRotate, setAutoRotate] = useState<boolean>(true);
+  const [loadError, setLoadError] = useState<boolean>(false);
+  const [autoRotate, setAutoRotate] = useState<boolean>(() => typeof window === 'undefined' || !window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   const autoRotateRef = useRef<boolean>(true);
   autoRotateRef.current = autoRotate;
   const [activeCampus, setActiveCampus] = useState<Campus3DPin | null>(gontorCampuses[0]);
@@ -83,34 +84,44 @@ export const IndonesiaMap3D: React.FC = () => {
     let controls: any;
     let raycaster: any;
     let mouse: any;
+    let disposed = false;
+    let cleanupThree: (() => void) | undefined;
+    let observer: IntersectionObserver | undefined;
+
+    const loadExternalScript = (src: string) => new Promise<void>((resolve, reject) => {
+      const existing = Array.from(document.scripts).find((script) => script.src === src);
+      if (existing) {
+        if ((existing as HTMLScriptElement).dataset.loaded === 'true') {
+          resolve();
+          return;
+        }
+        existing.addEventListener('load', () => resolve(), { once: true });
+        existing.addEventListener('error', () => reject(new Error(`Failed to load ${src}`)), { once: true });
+        return;
+      }
+      const script = document.createElement('script');
+      script.src = src;
+      script.async = true;
+      script.onload = () => {
+        script.dataset.loaded = 'true';
+        resolve();
+      };
+      script.onerror = () => reject(new Error(`Failed to load ${src}`));
+      document.head.appendChild(script);
+    });
 
     const loadThreeScript = async () => {
       if (!(window as any).THREE) {
-        await new Promise((resolve) => {
-          const script = document.createElement('script');
-          script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
-          script.onload = resolve;
-          document.head.appendChild(script);
-        });
+        await loadExternalScript('https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js');
       }
       if (!(window as any).THREE?.GLTFLoader) {
-        await new Promise((resolve) => {
-          const script = document.createElement('script');
-          script.src = 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js';
-          script.onload = resolve;
-          document.head.appendChild(script);
-        });
+        await loadExternalScript('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js');
       }
       if (!(window as any).THREE?.OrbitControls) {
-        await new Promise((resolve) => {
-          const script = document.createElement('script');
-          script.src = 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js';
-          script.onload = resolve;
-          document.head.appendChild(script);
-        });
+        await loadExternalScript('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js');
       }
 
-      initThree();
+      if (!disposed) cleanupThree = initThree();
     };
 
     const createBadgeTexture = (THREE: any, text: string, isPusat = false) => {
@@ -164,7 +175,7 @@ export const IndonesiaMap3D: React.FC = () => {
     };
 
     const initThree = () => {
-      if (!mountRef.current) return;
+      if (!mountRef.current || disposed) return;
       const THREE = (window as any).THREE;
       const container = mountRef.current;
       const width = container.clientWidth;
@@ -180,8 +191,8 @@ export const IndonesiaMap3D: React.FC = () => {
 
       renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
       renderer.setSize(width, height);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.shadowMap.enabled = true;
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, window.innerWidth < 768 ? 1.25 : 1.75));
+      renderer.shadowMap.enabled = window.innerWidth >= 768;
       renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
       while (container.firstChild) {
@@ -353,6 +364,7 @@ export const IndonesiaMap3D: React.FC = () => {
       loader.load(
         glbPath,
         (gltf: any) => {
+          if (disposed) return;
           const model = gltf.scene;
           const initialBox = new THREE.Box3().setFromObject(model);
           const initialSize = initialBox.getSize(new THREE.Vector3());
@@ -404,10 +416,12 @@ export const IndonesiaMap3D: React.FC = () => {
           }
         },
         (error: any) => {
+          if (disposed) return;
           console.warn('GLB load failed, trying relative path fallback...', error);
           loader.load(
             './peta_provinsi_indonesia.glb',
             (gltf: any) => {
+              if (disposed) return;
               const model = gltf.scene;
               const initialBox = new THREE.Box3().setFromObject(model);
               const initialSize = initialBox.getSize(new THREE.Vector3());
@@ -446,6 +460,7 @@ export const IndonesiaMap3D: React.FC = () => {
             },
             undefined,
             () => {
+              if (disposed) return;
               // Both GLB load attempts failed (e.g. file:// CORS block or offline)
               createFallbackGround();
               renderPinsAndConnections();
@@ -473,8 +488,8 @@ export const IndonesiaMap3D: React.FC = () => {
 
       const animate = () => {
         animationFrameId = requestAnimationFrame(animate);
-        if (controls) controls.update();
-        if (renderer && scene && camera) renderer.render(scene, camera);
+        if (!document.hidden && controls) controls.update();
+        if (!document.hidden && renderer && scene && camera) renderer.render(scene, camera);
       };
       animate();
 
@@ -485,6 +500,8 @@ export const IndonesiaMap3D: React.FC = () => {
         camera.aspect = w / h;
         camera.updateProjectionMatrix();
         renderer.setSize(w, h);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, w < 768 ? 1.25 : 1.75));
+        renderer.shadowMap.enabled = w >= 768;
       };
       window.addEventListener('resize', handleResize);
 
@@ -495,10 +512,43 @@ export const IndonesiaMap3D: React.FC = () => {
           renderer.domElement.remove();
         }
         cancelAnimationFrame(animationFrameId);
+        controls?.dispose?.();
+        renderer?.dispose?.();
+        controlsRef.current = null;
+        cameraRef.current = null;
+        pinMeshesRef.current = [];
       };
     };
 
-    loadThreeScript();
+    const startWhenVisible = () => {
+      if (disposed) return;
+      loadThreeScript().catch((error) => {
+        console.error('Unable to initialize the 3D campus map:', error);
+        if (!disposed) {
+          setLoadError(true);
+          setLoading(false);
+        }
+      });
+    };
+
+    if (mountRef.current && 'IntersectionObserver' in window) {
+      observer = new IntersectionObserver((entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          observer?.disconnect();
+          startWhenVisible();
+        }
+      }, { rootMargin: '300px 0px' });
+      observer.observe(mountRef.current);
+    } else {
+      startWhenVisible();
+    }
+
+    return () => {
+      disposed = true;
+      observer?.disconnect();
+      cleanupThree?.();
+      cancelAnimationFrame(animationFrameId);
+    };
   }, []);
 
   const toggleAutoRotate = () => {
@@ -569,12 +619,12 @@ export const IndonesiaMap3D: React.FC = () => {
             </div>
 
             {/* Region Pill Filters */}
-            <div className="flex items-center gap-1.5 p-1 rounded-full bg-[#101D2A]/80 border border-[#B58A3C]/30 text-xs">
+            <div className="flex flex-wrap justify-center items-center gap-1.5 p-1.5 rounded-2xl bg-[#101D2A]/80 border border-[#B58A3C]/30 text-xs">
               {['Semua', 'Jawa', 'Sumatera', 'Sulawesi'].map((r) => (
                 <button
                   key={r}
                   onClick={() => setSelectedRegion(r)}
-                  className={`px-3.5 py-1 rounded-full transition-all cursor-pointer font-cormorant-sc tracking-wider uppercase font-bold text-xs ${
+                  className={`min-h-11 px-3.5 py-2 rounded-full transition-all cursor-pointer font-cormorant-sc tracking-wider uppercase font-bold text-xs ${
                     selectedRegion === r
                       ? 'bg-[#B58A3C] text-[#192E41] shadow-md'
                       : 'text-[#EDE8E2]/70 hover:text-[#EDE8E2]'
@@ -594,16 +644,16 @@ export const IndonesiaMap3D: React.FC = () => {
               <div className="w-2.5 h-2.5 rounded-full bg-[#B58A3C] animate-pulse" />
               <span className="text-xs font-mono tracking-wider font-bold text-[#EDE8E2]">INTERACTIVE 3D NUSANTARA GLB</span>
             </div>
-            <div className="flex items-center gap-2 mt-2 sm:mt-0">
+            <div className="flex flex-wrap items-center gap-2 mt-2 sm:mt-0">
               <button
                 onClick={toggleAutoRotate}
-                className="bg-[#B58A3C] hover:bg-[#D4A853] text-[#192E41] font-bold px-4 py-1.5 rounded-full text-xs transition-all shadow-md cursor-pointer font-cormorant-sc uppercase tracking-wider"
+                className="min-h-11 bg-[#B58A3C] hover:bg-[#D4A853] text-[#192E41] font-bold px-4 py-2 rounded-full text-xs transition-all shadow-md cursor-pointer font-cormorant-sc uppercase tracking-wider"
               >
                 {autoRotate ? '⏸ Jeda Putar' : '▶ Putar Otomatis'}
               </button>
               <button
                 onClick={resetCameraView}
-                className="border border-[#B58A3C]/50 hover:bg-[#B58A3C]/20 text-[#EDE8E2] font-semibold px-4 py-1.5 rounded-full text-xs transition-all cursor-pointer font-cormorant-sc uppercase tracking-wider"
+                className="min-h-11 border border-[#B58A3C]/50 hover:bg-[#B58A3C]/20 text-[#EDE8E2] font-semibold px-4 py-2 rounded-full text-xs transition-all cursor-pointer font-cormorant-sc uppercase tracking-wider"
               >
                 ↺ Reset Sudut
               </button>
@@ -611,17 +661,21 @@ export const IndonesiaMap3D: React.FC = () => {
           </div>
 
           <div className="relative w-full h-[450px] sm:h-[550px] cursor-grab active:cursor-grabbing rounded-2xl overflow-hidden bg-[#070D14]">
-            {loading && (
+            {(loading || loadError) && (
               <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-[#0B151F]/95 backdrop-blur-md">
-                <div className="w-12 h-12 rounded-full border-4 border-[#B58A3C] border-t-transparent animate-spin mb-4" />
-                <div className="text-[#D4A853] font-bold text-base font-mileast tracking-wide">Menyiapkan Peta 3D Nusantara...</div>
-                <div className="text-xs text-[#EDE8E2]/70 mt-1 font-mono">{loadingProgress}% terunduh</div>
+                {!loadError && <div className="w-12 h-12 rounded-full border-4 border-[#B58A3C] border-t-transparent animate-spin mb-4" />}
+                <div className="text-[#D4A853] font-bold text-base font-mileast tracking-wide">
+                  {loadError ? 'Peta 3D tidak dapat dimuat' : 'Menyiapkan Peta 3D Nusantara...'}
+                </div>
+                <div className="text-xs text-[#EDE8E2]/70 mt-1 font-mono">
+                  {loadError ? 'Periksa koneksi internet lalu muat ulang halaman.' : `${loadingProgress}% terunduh`}
+                </div>
               </div>
             )}
             <div ref={mountRef} className="w-full h-full" />
 
             {activeCampus && (
-              <div className="absolute bottom-6 left-6 z-30 max-w-sm p-5 rounded-2xl bg-[#FAF8F5] border-2 border-[#B58A3C] text-[#192E41] shadow-2xl transition-all">
+              <div className="absolute bottom-3 left-3 right-3 sm:bottom-6 sm:left-6 sm:right-auto z-30 max-w-sm p-4 sm:p-5 rounded-2xl bg-[#FAF8F5] border-2 border-[#B58A3C] text-[#192E41] shadow-2xl transition-all">
                 <div className="flex items-center justify-between text-xs text-[#325956] font-bold mb-1">
                   <span>{activeCampus.isPusat ? '👑 KAMPUS PUSAT GONTOR' : `CABANG ${activeCampus.code}`}</span>
                   <span className="px-2 py-0.5 rounded bg-[#192E41] text-[#EDE8E2] font-bold text-[10px]">{activeCampus.code}</span>

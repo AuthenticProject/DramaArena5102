@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowLeft, Eye, Image as ImageIcon, Layers, Palette, Shirt, Type, Camera, ArrowUpRight } from 'lucide-react';
 import { importImage, importRef, ALL_ASSETS, type DAAsset } from '../utils/assetHelpers';
 import { SectionLabel, FleuronDivider } from '../components/HeroSection';
@@ -25,6 +25,46 @@ const resolveAsset = (asset: DAAsset) => asset.category === 'guideline' ? import
 export const MediaShowcase: React.FC<MediaShowcaseProps> = ({ onBackToHome }) => {
   const [activeTab, setActiveTab] = useState<MediaTab>('all');
   const [selectedAsset, setSelectedAsset] = useState<DAAsset | null>(null);
+  const detailCloseRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!selectedAsset) return;
+    const previousOverflow = document.body.style.overflow;
+    const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    document.body.style.overflow = 'hidden';
+    detailCloseRef.current?.focus();
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setSelectedAsset(null);
+        return;
+      }
+      if (event.key !== 'Tab') return;
+      const dialog = document.querySelector<HTMLElement>('.da-media-detail-card[role="dialog"]');
+      if (!dialog) return;
+      const focusable = Array.from(dialog.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'));
+      if (!focusable.length) {
+        event.preventDefault();
+        dialog.focus();
+        return;
+      }
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+      previousFocus?.focus();
+    };
+  }, [selectedAsset]);
   const filteredAssets = useMemo(() => activeTab === 'all' ? ALL_ASSETS : ALL_ASSETS.filter((asset) => asset.category === activeTab), [activeTab]);
   const counts = useMemo(() => tabs.reduce((acc, tab) => ({ ...acc, [tab.id]: tab.id === 'all' ? ALL_ASSETS.length : ALL_ASSETS.filter((asset) => asset.category === tab.id).length }), {} as Record<MediaTab, number>), []);
 
@@ -81,7 +121,7 @@ export const MediaShowcase: React.FC<MediaShowcaseProps> = ({ onBackToHome }) =>
                 <button type="button" onClick={() => setActiveTab('guideline')}>JELAJAHI PANDUAN <ArrowUpRight size={15} /></button>
               </div>
               <div className="da-media-feature-image">
-                <img src={importRef('slide-12-key-visual.jpg')} alt="Key visual identitas Drama Arena 5102" />
+                <img src={importRef('slide-12-key-visual.jpg')} alt="Key visual identitas Drama Arena 5102" loading="lazy" decoding="async" />
                 <span>PLATE 01 — KEY VISUAL</span>
               </div>
             </section>
@@ -92,7 +132,7 @@ export const MediaShowcase: React.FC<MediaShowcaseProps> = ({ onBackToHome }) =>
                 return (
                   <button type="button" key={tab.id} className="da-media-collection" onClick={() => setActiveTab(tab.id)}>
                     <span className="da-media-collection-image">
-                      {preview && <img src={resolveAsset(preview)} alt="" loading="lazy" />}
+                      {preview && <img src={resolveAsset(preview)} alt="" loading="lazy" decoding="async" />}
                       <span>0{index + 1}</span>
                     </span>
                     <span className="da-media-collection-info">
@@ -121,7 +161,7 @@ export const MediaShowcase: React.FC<MediaShowcaseProps> = ({ onBackToHome }) =>
                 {filteredAssets.map((asset, index) => (
                   <button type="button" key={asset.id} className={`da-media-asset da-media-asset-${index % 4}`} onClick={() => setSelectedAsset(asset)}>
                     <span className="da-media-asset-image">
-                      <img src={resolveAsset(asset)} alt={asset.title} loading="lazy" />
+                      <img src={resolveAsset(asset)} alt={asset.title} loading="lazy" decoding="async" />
                       <span>{String(index + 1).padStart(2, '0')}</span>
                       <i><Eye size={16} /> VIEW ASSET</i>
                     </span>
@@ -146,9 +186,9 @@ export const MediaShowcase: React.FC<MediaShowcaseProps> = ({ onBackToHome }) =>
 
       {selectedAsset && (
         <div className="da-media-detail" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setSelectedAsset(null); }}>
-          <div className="da-media-detail-card" role="dialog" aria-modal="true" aria-label={selectedAsset.title}>
-            <div className="da-media-detail-top"><span>{selectedAsset.category.toUpperCase()} / DA 5102</span><button type="button" onClick={() => setSelectedAsset(null)} aria-label="Tutup"><span>×</span></button></div>
-            <div className="da-media-detail-image"><img src={resolveAsset(selectedAsset)} alt={selectedAsset.title} /></div>
+          <div className="da-media-detail-card" role="dialog" aria-modal="true" aria-label={selectedAsset.title} tabIndex={-1}>
+            <div className="da-media-detail-top"><span>{selectedAsset.category.toUpperCase()} / DA 5102</span><button ref={detailCloseRef} type="button" onClick={() => setSelectedAsset(null)} aria-label="Tutup"><span>×</span></button></div>
+            <div className="da-media-detail-image"><img src={resolveAsset(selectedAsset)} alt={selectedAsset.title} loading="lazy" decoding="async" /></div>
             <div className="da-media-detail-copy">
               <small>{selectedAsset.subtitle}</small>
               <h2>{selectedAsset.title}</h2>

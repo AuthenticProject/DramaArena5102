@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { importImage, importRef, ALL_ASSETS, type DAAsset } from '../utils/assetHelpers';
 import { Maximize2, X, ChevronLeft, ChevronRight, ZoomIn, ArrowUpRight } from 'lucide-react';
 
@@ -22,6 +22,7 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({
     return item.category === categoryFilter;
   }), [categoryFilter]);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
   const selectedAsset = selectedIndex === null ? null : galleryItems[selectedIndex];
 
   const close = useCallback(() => setSelectedIndex(null), []);
@@ -32,16 +33,29 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({
   useEffect(() => {
     if (selectedIndex === null) return;
     const previousOverflow = document.body.style.overflow;
+    const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     document.body.style.overflow = 'hidden';
+    closeButtonRef.current?.focus();
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') close();
       if (event.key === 'ArrowRight') move(1);
       if (event.key === 'ArrowLeft') move(-1);
+      if (event.key === 'Tab') {
+        const dialog = document.querySelector<HTMLElement>('.da-lightbox[role="dialog"]');
+        if (!dialog) return;
+        const focusable = Array.from(dialog.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'));
+        if (!focusable.length) { event.preventDefault(); dialog.focus(); return; }
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+      }
     };
     window.addEventListener('keydown', onKeyDown);
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener('keydown', onKeyDown);
+      previousFocus?.focus();
     };
   }, [selectedIndex, galleryItems.length, close, move]);
 
@@ -64,7 +78,7 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({
             aria-label={`Buka ${item.title}`}
           >
             <span className="da-gallery-image">
-              <img src={getAssetUrl(item)} alt={item.title} loading="lazy" />
+              <img src={getAssetUrl(item)} alt={item.title} loading="lazy" decoding="async" />
               <span className="da-gallery-image-wash" />
               <span className="da-gallery-index">{String(index + 1).padStart(2, '0')}</span>
               <span className="da-gallery-zoom"><ZoomIn size={17} /> LIHAT ARSIP</span>
@@ -91,10 +105,10 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({
             <span>DRAMA ARENA 5102 <i>/</i> VISUAL ARCHIVE</span>
             <span>{String(selectedIndex + 1).padStart(2, '0')} — {String(galleryItems.length).padStart(2, '0')}</span>
           </div>
-          <button type="button" className="da-lightbox-close" onClick={close} aria-label="Tutup lightbox"><X size={20} /></button>
+          <button ref={closeButtonRef} type="button" className="da-lightbox-close" onClick={close} aria-label="Tutup lightbox"><X size={20} /></button>
           <button type="button" className="da-lightbox-nav da-lightbox-prev" onClick={() => move(-1)} aria-label="Arsip sebelumnya"><ChevronLeft size={24} /></button>
           <div className="da-lightbox-stage">
-            <img src={getAssetUrl(selectedAsset)} alt={selectedAsset.title} />
+            <img src={getAssetUrl(selectedAsset)} alt={selectedAsset.title} decoding="async" />
           </div>
           <button type="button" className="da-lightbox-nav da-lightbox-next" onClick={() => move(1)} aria-label="Arsip berikutnya"><ChevronRight size={24} /></button>
           <div className="da-lightbox-caption">

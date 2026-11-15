@@ -31,10 +31,12 @@ export function App() {
 
   // Sync with window hash on load and hash changes
   useEffect(() => {
+    let hashTimeout: number | undefined;
     const handleHashChange = () => {
       const hash = window.location.hash.replace(/^#/, '');
       if (hash && hash !== 'root') {
-        setTimeout(() => {
+        window.clearTimeout(hashTimeout);
+        hashTimeout = window.setTimeout(() => {
           const el = document.getElementById(hash);
           if (el) el.scrollIntoView({ behavior: 'smooth' });
         }, 150);
@@ -43,30 +45,46 @@ export function App() {
 
     handleHashChange();
     window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    return () => {
+      window.clearTimeout(hashTimeout);
+      window.removeEventListener('hashchange', handleHashChange);
+    };
   }, []);
 
   // Track active section on scroll for header nav indicator
   useEffect(() => {
     const sectionIds = ['hero', 'ide-pokok', 'theme', 'about', 'map-3d', 'shows', 'committee', 'media-showcase'];
-    const handleScroll = () => {
+    let frameId = 0;
+    const updateScrollState = () => {
+      frameId = 0;
       const scrollable = document.documentElement.scrollHeight - window.innerHeight;
       const progress = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
-      setScrollProgress(Math.min(100, Math.max(0, progress)));
-      setShowBackToTop(window.scrollY > 640);
+      const nextProgress = Math.min(100, Math.max(0, progress));
+      setScrollProgress((current) => Math.abs(current - nextProgress) >= 0.5 ? nextProgress : current);
+
+      const shouldShowBackToTop = window.scrollY > 640;
+      setShowBackToTop((current) => current === shouldShowBackToTop ? current : shouldShowBackToTop);
+
       const scrollPos = window.scrollY + 200;
       for (let i = sectionIds.length - 1; i >= 0; i--) {
         const el = document.getElementById(sectionIds[i]);
-        if (el && el.offsetTop <= scrollPos) {
-          setActiveSection(sectionIds[i]);
+        if (el && el.getBoundingClientRect().top + window.scrollY <= scrollPos) {
+          const nextSection = sectionIds[i];
+          setActiveSection((current) => current === nextSection ? current : nextSection);
           break;
         }
       }
     };
+    const handleScroll = () => {
+      if (!frameId) frameId = window.requestAnimationFrame(updateScrollState);
+    };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    updateScrollState();
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (frameId) window.cancelAnimationFrame(frameId);
+    };
   }, []);
 
   const handleNavigate = (targetId: string) => {
