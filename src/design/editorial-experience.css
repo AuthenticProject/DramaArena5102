@@ -1892,7 +1892,8 @@ section:hover > .da-section-frame {
 .da-lightbox-stage{overflow:auto;overscroll-behavior:contain}
 .da-lightbox-stage img{transition:transform .28s ease;transform-origin:center;cursor:zoom-in}
 .da-lightbox-stage.is-zoomed{cursor:grab}
-.da-lightbox-stage.is-zoomed img{max-width:none;max-height:none;width:auto;height:auto;min-width:100%;min-height:100%;object-fit:contain;transform:scale(1.65);cursor:zoom-out}
+.da-lightbox-stage.is-zoomed{display:block;cursor:grab}
+.da-lightbox-stage.is-zoomed img{display:block;width:165%;height:auto;max-width:none;max-height:none;min-width:0;min-height:0;object-fit:contain;transform:none;cursor:zoom-out}
 .da-lightbox-filmstrip{display:flex;align-items:center;gap:8px;width:min(100%,1000px);margin-top:13px;padding:7px 2px;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin;scrollbar-color:rgba(212,168,83,.55) transparent}
 .da-lightbox-filmstrip button{position:relative;flex:0 0 66px;width:66px;height:46px;overflow:hidden;border:1px solid rgba(237,232,226,.18);opacity:.55;transition:opacity .2s ease,border-color .2s ease,transform .2s ease}
 .da-lightbox-filmstrip button:hover{opacity:.9;transform:translateY(-2px)}
@@ -1901,3 +1902,13 @@ section:hover > .da-section-frame {
 .da-lightbox-filmstrip button span{position:absolute;right:4px;bottom:3px;color:#fff;background:rgba(5,12,18,.75);padding:2px 4px;font:7px 'Space Mono',monospace}
 @media(max-width:767px){.da-lightbox{padding:68px 12px 16px}.da-lightbox-stage{width:100%;height:min(48vh,500px);margin-top:14px}.da-lightbox-filmstrip{margin-top:8px}.da-lightbox-filmstrip button{flex-basis:54px;width:54px;height:40px}.da-lightbox-caption{align-items:flex-start;flex-direction:column;gap:12px;margin-top:10px;padding-top:10px}.da-lightbox-caption p{font-size:12px}.da-lightbox-zoom{top:52px;right:62px;min-height:36px;padding:0 9px}.da-lightbox-close{top:52px}.da-lightbox-nav{top:38%;width:36px;height:44px}.da-lightbox-keyhint{font-size:6px}}
 @media(prefers-reduced-motion:reduce){.da-lightbox-zoom,.da-lightbox-stage img,.da-lightbox-filmstrip button{transition:none}}
+
+
+/* Phase 55 — precision navigation and zoom ergonomics */
+.da-lightbox-filmstrip button:focus-visible,.da-lightbox-zoom:focus-visible{outline:2px solid #f3e1b8;outline-offset:3px;opacity:1}
+.da-lightbox-filmstrip button.is-current{scroll-margin-inline:42%;}
+.da-lightbox-stage.is-zoomed{scrollbar-width:thin;scrollbar-color:rgba(212,168,83,.58) rgba(5,12,18,.28)}
+.da-lightbox-stage.is-zoomed img{max-width:none!important}
+.da-lightbox-keyhint{user-select:none}
+@media(max-width:767px){.da-lightbox-stage.is-zoomed img{width:155%}}
+@media(prefers-reduced-motion:reduce){.da-lightbox-filmstrip{scroll-behavior:auto}}
