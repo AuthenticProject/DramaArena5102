@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://authenticproject.github.io/DramaArena5102/sitemap.xml
