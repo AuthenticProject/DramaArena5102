@@ -12,28 +12,28 @@ const showsData: ShowCategoryData[] = [
     id: 'show-musik', number: '01', category: 'SENI MUSIK',
     title: 'Harmoni Musikal 5102',
     items: ['Hadrah', 'Nasyid', 'Paduan Suara', 'Gema Shalawat', 'Akustik', 'Band 5102'],
-    img: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1200&auto=format&fit=crop',
+    img: 'photo 2.png',
     desc: 'Rangkaian pertunjukan musikal yang merangkum harmoni, vokal, dan ragam ekspresi seni suara.'
   },
   {
     id: 'show-teater', number: '02', category: 'SENI TEATER',
     title: 'Pementasan Drama Utama',
     items: ['Drama 5102', 'Pantomim', 'Teatrikal Puisi'],
-    img: 'https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?q=80&w=1200&auto=format&fit=crop',
+    img: 'photo 1.png',
     desc: 'Panggung penceritaan melalui akting, gerak, dan kekuatan dramatik sebuah pertunjukan.'
   },
   {
     id: 'show-tari', number: '03', category: 'SENI TARI',
     title: 'Koreografi Nusantara & Modern',
     items: ['Tari Saman Atjeh', 'Tari Campur Sari', 'Tari Singa Depok', 'Tari Timur', 'Tari Dayak', 'Tari Zapin', 'Tari India', 'Tari Modern'],
-    img: 'https://images.unsplash.com/photo-1547153760-18fc86324498?q=80&w=1200&auto=format&fit=crop',
+    img: 'building.png',
     desc: 'Perjumpaan gerak dan tradisi dari berbagai wilayah, disajikan melalui koreografi Nusantara dan modern.'
   },
   {
     id: 'show-rupa', number: '04', category: 'SENI RUPA & MULTIMEDIA',
     title: 'Visual Art & Multimedia',
     items: ['Grand Opening', 'Iklan Pendidikan', 'Video Motivasi', 'Trailer DA 5102', 'Grand Closing'],
-    img: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1200&auto=format&fit=crop',
+    img: 'vintage-typewriter-da5102.png',
     desc: 'Elemen visual dan multimedia yang membangun suasana, memperkuat narasi, serta menghubungkan setiap babak acara.'
   }
 ];
@@ -67,7 +67,7 @@ export const ShowsSection: React.FC<ShowsSectionProps> = ({ onOpenTrailer }) => 
             Mahakarya Panggung Spektakuler Santri Kelas 5 KMI
           </p>
           <p className="font-alverata text-sm text-[#EDE8E2]/65 max-w-2xl mx-auto mt-5 leading-relaxed">
-            Empat babak ekspresi seni dalam satu perhelatan. Pilih kategori untuk menelusuri sajian pertunjukan dan membuka catatan setiap pentas.
+            Empat babak ekspresi seni dalam satu perhelatan. Pilih kategori untuk menelusuri sajian pertunjukan dan membuka catatan setiap pentas. Visual menggunakan aset arsip resmi Drama Arena 5102.
           </p>
         </FadeIn>
 
@@ -102,7 +102,7 @@ export const ShowsSection: React.FC<ShowsSectionProps> = ({ onOpenTrailer }) => 
                 aria-label={`Buka detail ${show.title}`}
               >
                 <span className="da-show-image">
-                  <img src={show.img} alt="" loading="lazy" decoding="async" fetchPriority="low" />
+                  <img src={importImage(show.img)} alt="" loading="lazy" decoding="async" fetchPriority="low" />
                   <span className="da-show-image-shade" />
                   <span className="da-show-number">{show.number}</span>
                   <span className="da-show-open"><span>+</span><small>BUKA CATATAN PENTAS</small></span>

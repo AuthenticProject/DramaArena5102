@@ -1565,3 +1565,39 @@ section:hover > .da-section-frame {
   .da-home-photo-switch button,
   .da-home-emblem-switch button { animation: none !important; transition: none !important; transform: none !important; }
 }
+
+
+/* Phase 50 — keep the show archive visually grounded in the event's own assets */
+.da-show-image { isolation: isolate; }
+.da-show-image img {
+  will-change: transform;
+  transform: scale(1.015);
+}
+.da-show-card:hover .da-show-image img,
+.da-show-card:focus-visible .da-show-image img {
+  transform: scale(1.09);
+}
+.da-show-image::after {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  z-index: 1;
+  border: 1px solid rgba(243,225,184,.26);
+  pointer-events: none;
+  opacity: .45;
+  transition: inset .45s cubic-bezier(.2,.75,.25,1), opacity .3s ease, border-color .3s ease;
+}
+.da-show-card:hover .da-show-image::after,
+.da-show-card:focus-visible .da-show-image::after {
+  inset: 18px;
+  opacity: 1;
+  border-color: rgba(243,225,184,.62);
+}
+.da-show-card:focus-visible {
+  outline: 2px solid #d4a853;
+  outline-offset: 5px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .da-show-image img,
+  .da-show-image::after { transition: none !important; transform: none !important; }
+}
