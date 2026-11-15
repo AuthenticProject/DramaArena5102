@@ -23,12 +23,28 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({
   }), [categoryFilter]);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
   const selectedAsset = selectedIndex === null ? null : galleryItems[selectedIndex];
 
   const close = useCallback(() => setSelectedIndex(null), []);
   const move = useCallback((direction: number) => {
-    setSelectedIndex((current) => current === null ? null : (current + direction + galleryItems.length) % galleryItems.length);
+    setSelectedIndex((current) => current === null || galleryItems.length === 0 ? null : (current + direction + galleryItems.length) % galleryItems.length);
   }, [galleryItems.length]);
+
+  const handleStagePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType !== 'touch') return;
+    touchStartRef.current = { x: event.clientX, y: event.clientY };
+  };
+
+  const handleStagePointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
+    const start = touchStartRef.current;
+    touchStartRef.current = null;
+    if (!start || event.pointerType !== 'touch') return;
+    const deltaX = event.clientX - start.x;
+    const deltaY = event.clientY - start.y;
+    if (Math.abs(deltaX) < 48 || Math.abs(deltaX) < Math.abs(deltaY) * 1.25) return;
+    move(deltaX < 0 ? 1 : -1);
+  };
 
   useEffect(() => {
     if (selectedIndex === null) return;
@@ -121,7 +137,7 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({
               BUKA FILE ASLI <Maximize2 size={14} />
             </a>
           </div>
-          <div className="da-lightbox-keyhint">GUNAKAN ← → UNTUK MENJELAJAH · ESC UNTUK KELUAR</div>
+          <div className="da-lightbox-keyhint">GESER FOTO / GUNAKAN ← → · ESC UNTUK KELUAR</div>
         </div>
       )}
     </div>
