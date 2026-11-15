@@ -15,7 +15,8 @@
     "check:archive": "node scripts/immersive-archive-integrity.mjs",
     "check:editorial": "node scripts/editorial-depth-integrity.mjs",
     "check:hero": "node scripts/hero-identity-integrity.mjs",
-    "check:shows": "node scripts/show-archive-integrity.mjs"
+    "check:shows": "node scripts/show-archive-integrity.mjs",
+    "check:gallery-dialog": "node scripts/gallery-dialog-integrity.mjs"
   },
   "dependencies": {
     "framer-motion": "^12.38.0",
