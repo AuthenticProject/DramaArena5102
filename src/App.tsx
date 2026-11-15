@@ -16,6 +16,7 @@ import { Footer } from './components/Footer';
 import { AudioPlayer } from './components/AudioPlayer';
 import { MediaShowcase } from './pages/MediaShowcase';
 import { CommandPalette } from './components/CommandPalette';
+import { ChapterNavigator } from './components/ChapterNavigator';
 
 export function App() {
   // Show animated loading screen with spinning logo on load
@@ -210,6 +211,9 @@ export function App() {
 
       {/* Keyboard-first interactive site explorer */}
       <CommandPalette onNavigate={handleNavigate} activeSection={activeSection} />
+
+      {/* Scroll-aware editorial chapter navigation */}
+      <ChapterNavigator activeSection={activeSection} onNavigate={handleNavigate} />
 
       {/* Floating OST Music Player Widget */}
       <AudioPlayer />
