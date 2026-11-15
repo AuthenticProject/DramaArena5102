@@ -1772,3 +1772,99 @@ section:hover > .da-section-frame {
   .da-chapter-navigator *::before,
   .da-chapter-navigator *::after { transition: none !important; }
 }
+
+
+/* Phase 52 — cinematic scroll storytelling
+   Progressive enhancement: browsers without scroll-driven animations keep the
+   existing static editorial layout and chapter markers. */
+@supports (animation-timeline: view()) {
+  .main-wrapper main > section[id]:not(#hero) > .relative,
+  .main-wrapper main > section[id]:not(#hero) > .max-w-7xl,
+  .main-wrapper main > section[id]:not(#hero) > .max-w-6xl {
+    animation: da-story-content linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 38%;
+  }
+
+  .main-wrapper main > section[id]:not(#hero) h2 {
+    animation: da-story-heading linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 42%;
+  }
+
+  .main-wrapper main > section[id]:not(#hero) img:not([aria-hidden="true"]) {
+    animation: da-story-image linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 48%;
+  }
+
+  .main-wrapper main > .da-chapter-break {
+    animation: da-story-marker linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 45%;
+  }
+
+  .main-wrapper main > .da-chapter-break::before,
+  .main-wrapper main > .da-chapter-break::after {
+    animation: da-story-rule linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 55%;
+  }
+
+  @keyframes da-story-content {
+    from { opacity: .62; transform: translateY(28px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes da-story-heading {
+    from { opacity: .45; transform: translateY(22px); filter: blur(3px); }
+    to { opacity: 1; transform: translateY(0); filter: blur(0); }
+  }
+  @keyframes da-story-image {
+    from { opacity: .72; transform: scale(1.035); filter: saturate(.72); }
+    to { opacity: 1; transform: scale(1); filter: saturate(1); }
+  }
+  @keyframes da-story-marker {
+    from { opacity: .3; letter-spacing: .32em; }
+    to { opacity: 1; letter-spacing: .2em; }
+  }
+  @keyframes da-story-rule {
+    from { opacity: .15; }
+    to { opacity: 1; }
+  }
+}
+
+.da-chapter-break {
+  min-height: 74px;
+}
+.da-chapter-break span:last-child {
+  transition: color .35s ease, letter-spacing .35s ease;
+}
+.da-chapter-break:hover span:last-child {
+  color: #f3e1b8;
+  letter-spacing: .24em;
+}
+.da-chapter-break i {
+  transition: transform .45s cubic-bezier(.2,.75,.25,1), box-shadow .35s ease;
+}
+.da-chapter-break:hover i {
+  transform: rotate(135deg) scale(1.18);
+  box-shadow: 0 0 0 6px rgba(181,138,60,.1), 0 0 22px rgba(212,168,83,.38);
+}
+
+@media (max-width: 767px) {
+  .da-chapter-break { min-height: 60px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .da-chapter-break,
+  .da-chapter-break::before,
+  .da-chapter-break::after,
+  .da-chapter-break i,
+  .da-chapter-break span,
+  .main-wrapper main > section[id] h2,
+  .main-wrapper main > section[id] img {
+    animation: none !important;
+    transition: none !important;
+    filter: none !important;
+    transform: none !important;
+  }
+}
