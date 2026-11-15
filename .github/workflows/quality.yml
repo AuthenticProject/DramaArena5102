@@ -30,9 +30,6 @@ jobs:
       - name: Install locked dependencies
         run: npm ci
 
-      - name: Install lint tooling
-        run: npm install --no-save --no-package-lock eslint@8.57.1 @typescript-eslint/parser@7.18.0 @typescript-eslint/eslint-plugin@7.18.0 eslint-plugin-react-hooks@5.2.0
-
       - name: ESLint
         run: npm run lint
 
