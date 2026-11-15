@@ -46,6 +46,7 @@ export const IndonesiaMap3D: React.FC = () => {
   const mountRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [loadingProgress, setLoadingProgress] = useState<number>(0);
+  const [loadError, setLoadError] = useState<boolean>(false);
   const [autoRotate, setAutoRotate] = useState<boolean>(() => typeof window === 'undefined' || !window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   const autoRotateRef = useRef<boolean>(true);
   autoRotateRef.current = autoRotate;
@@ -363,6 +364,7 @@ export const IndonesiaMap3D: React.FC = () => {
       loader.load(
         glbPath,
         (gltf: any) => {
+          if (disposed) return;
           const model = gltf.scene;
           const initialBox = new THREE.Box3().setFromObject(model);
           const initialSize = initialBox.getSize(new THREE.Vector3());
@@ -414,10 +416,12 @@ export const IndonesiaMap3D: React.FC = () => {
           }
         },
         (error: any) => {
+          if (disposed) return;
           console.warn('GLB load failed, trying relative path fallback...', error);
           loader.load(
             './peta_provinsi_indonesia.glb',
             (gltf: any) => {
+              if (disposed) return;
               const model = gltf.scene;
               const initialBox = new THREE.Box3().setFromObject(model);
               const initialSize = initialBox.getSize(new THREE.Vector3());
@@ -456,6 +460,7 @@ export const IndonesiaMap3D: React.FC = () => {
             },
             undefined,
             () => {
+              if (disposed) return;
               // Both GLB load attempts failed (e.g. file:// CORS block or offline)
               createFallbackGround();
               renderPinsAndConnections();
@@ -507,6 +512,11 @@ export const IndonesiaMap3D: React.FC = () => {
           renderer.domElement.remove();
         }
         cancelAnimationFrame(animationFrameId);
+        controls?.dispose?.();
+        renderer?.dispose?.();
+        controlsRef.current = null;
+        cameraRef.current = null;
+        pinMeshesRef.current = [];
       };
     };
 
@@ -514,7 +524,10 @@ export const IndonesiaMap3D: React.FC = () => {
       if (disposed) return;
       loadThreeScript().catch((error) => {
         console.error('Unable to initialize the 3D campus map:', error);
-        if (!disposed) setLoading(false);
+        if (!disposed) {
+          setLoadError(true);
+          setLoading(false);
+        }
       });
     };
 
@@ -648,11 +661,15 @@ export const IndonesiaMap3D: React.FC = () => {
           </div>
 
           <div className="relative w-full h-[450px] sm:h-[550px] cursor-grab active:cursor-grabbing rounded-2xl overflow-hidden bg-[#070D14]">
-            {loading && (
+            {(loading || loadError) && (
               <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-[#0B151F]/95 backdrop-blur-md">
-                <div className="w-12 h-12 rounded-full border-4 border-[#B58A3C] border-t-transparent animate-spin mb-4" />
-                <div className="text-[#D4A853] font-bold text-base font-mileast tracking-wide">Menyiapkan Peta 3D Nusantara...</div>
-                <div className="text-xs text-[#EDE8E2]/70 mt-1 font-mono">{loadingProgress}% terunduh</div>
+                {!loadError && <div className="w-12 h-12 rounded-full border-4 border-[#B58A3C] border-t-transparent animate-spin mb-4" />}
+                <div className="text-[#D4A853] font-bold text-base font-mileast tracking-wide">
+                  {loadError ? 'Peta 3D tidak dapat dimuat' : 'Menyiapkan Peta 3D Nusantara...'}
+                </div>
+                <div className="text-xs text-[#EDE8E2]/70 mt-1 font-mono">
+                  {loadError ? 'Periksa koneksi internet lalu muat ulang halaman.' : `${loadingProgress}% terunduh`}
+                </div>
               </div>
             )}
             <div ref={mountRef} className="w-full h-full" />
