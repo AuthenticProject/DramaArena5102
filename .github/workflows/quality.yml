@@ -2,7 +2,6 @@ name: Quality Assurance
 
 on:
   pull_request:
-    branches: [ main, upgrade/phase-18-20-experience-polish ]
   push:
     branches: [ main ]
 
@@ -171,3 +170,18 @@ jobs:
 
       - name: Validate gallery gestures and selected map state
         run: npm run check:archive
+
+  editorial-depth-integrity:
+    name: Editorial chapter transition regression
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Validate chapter transitions and motion safeguards
+        run: npm run check:editorial

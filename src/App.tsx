@@ -141,25 +141,39 @@ export function App() {
         {/* Marquee Photo Banner Section */}
         <MarqueeSection />
 
+        <div className="da-chapter-break" aria-hidden="true"><span>CHAPTER 01</span><i /><span>THE FOUNDATIONS</span></div>
+
         {/* 02. Ide Pokok & Mahfudzot Section */}
         <IdePokokSection />
+
+        <div className="da-chapter-break" aria-hidden="true"><span>CHAPTER 02</span><i /><span>THE PHILOSOPHY</span></div>
 
         {/* 03. Tema & 04. Tiga Moto Acara Section */}
         <ThemeSection />
 
+        <div className="da-chapter-break" aria-hidden="true"><span>CHAPTER 03</span><i /><span>THE IDENTITY</span></div>
+
         {/* 04. Filosofi Logo & Palet Warna & Tipografi */}
         <AboutSection />
 
+        <div className="da-chapter-break" aria-hidden="true"><span>CHAPTER 04</span><i /><span>THE BROTHERHOOD</span></div>
+
         {/* 3D Map of Indonesia Section */}
         <IndonesiaMap3D />
+
+        <div className="da-chapter-break" aria-hidden="true"><span>CHAPTER 05</span><i /><span>THE PERFORMANCE</span></div>
 
         {/* 05. Shows & Stage Concept Section */}
         <ShowsSection
           onOpenTrailer={(show: ShowCategoryData) => setActiveShow(show)}
         />
 
+        <div className="da-chapter-break" aria-hidden="true"><span>CHAPTER 06</span><i /><span>THE PEOPLE BEHIND IT</span></div>
+
         {/* 06. Committee & Budget Section */}
         <CommitteeSection onNavigate={handleNavigate} />
+
+        <div className="da-chapter-break" aria-hidden="true"><span>CHAPTER 07</span><i /><span>THE ARCHIVE</span></div>
 
         {/* 07. Media Showcase Section */}
         <MediaShowcase

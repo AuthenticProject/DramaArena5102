@@ -123,7 +123,7 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({
           </div>
           <button ref={closeButtonRef} type="button" className="da-lightbox-close" onClick={close} aria-label="Tutup lightbox"><X size={20} /></button>
           <button type="button" className="da-lightbox-nav da-lightbox-prev" onClick={() => move(-1)} aria-label="Arsip sebelumnya"><ChevronLeft size={24} /></button>
-          <div className="da-lightbox-stage">
+          <div className="da-lightbox-stage" onPointerDown={handleStagePointerDown} onPointerUp={handleStagePointerUp} onPointerCancel={() => { touchStartRef.current = null; }}>
             <img src={getAssetUrl(selectedAsset)} alt={selectedAsset.title} decoding="async" />
           </div>
           <button type="button" className="da-lightbox-nav da-lightbox-next" onClick={() => move(1)} aria-label="Arsip berikutnya"><ChevronRight size={24} /></button>
