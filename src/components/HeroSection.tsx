@@ -42,6 +42,7 @@ export const GoldButton: React.FC<{ onClick?: () => void; label: string; outline
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenSponsorshipModal, onNavigate }) => {
   const [activeHeroTab, setActiveHeroTab] = useState<'wave' | 'monogram'>('wave');
+  const [activeHeroPhoto, setActiveHeroPhoto] = useState<'audience' | 'stage'>('audience');
 
   return (
     <section id="hero" className="da-home-hero relative overflow-hidden text-[#EDE8E2]">
@@ -97,11 +98,30 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenSponsorshipModal
         </div>
 
         <FadeIn delay={0.18} y={18} className="da-home-visual-wrap">
-          <div className="da-home-visual">
+          <div
+            className="da-home-visual da-home-visual-interactive"
+            onPointerMove={(event) => {
+              if (event.pointerType === 'touch') return;
+              const bounds = event.currentTarget.getBoundingClientRect();
+              const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+              const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+              event.currentTarget.style.setProperty('--hero-tilt-x', `${(-y * 3).toFixed(2)}deg`);
+              event.currentTarget.style.setProperty('--hero-tilt-y', `${(x * 4).toFixed(2)}deg`);
+              event.currentTarget.style.setProperty('--hero-glow-x', `${((x + 0.5) * 100).toFixed(1)}%`);
+              event.currentTarget.style.setProperty('--hero-glow-y', `${((y + 0.5) * 100).toFixed(1)}%`);
+            }}
+            onPointerLeave={(event) => {
+              event.currentTarget.style.setProperty('--hero-tilt-x', '0deg');
+              event.currentTarget.style.setProperty('--hero-tilt-y', '0deg');
+              event.currentTarget.style.setProperty('--hero-glow-x', '50%');
+              event.currentTarget.style.setProperty('--hero-glow-y', '50%');
+            }}
+          >
             <img
+              key={activeHeroPhoto}
               className="da-home-visual-image"
-              src={importImage('photo 1.png')}
-              alt="Dokumentasi persiapan dan kebersamaan santri Drama Arena 5102"
+              src={importImage(activeHeroPhoto === 'audience' ? 'photo 2.png' : 'photo 1.png')}
+              alt={activeHeroPhoto === 'audience' ? 'Suasana penonton dan kebersamaan di area pagelaran Drama Arena' : 'Panggung utama Drama Arena dengan tata cahaya dan dekorasi pertunjukan'}
               fetchPriority="high"
               decoding="async"
             />
@@ -126,9 +146,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenSponsorshipModal
 
             <div className="da-home-visual-caption">
               <div>
-                <span>THE OFFICIAL EMBLEM</span>
-                <strong>{activeHeroTab === 'wave' ? 'The Great Wave' : 'Interlocking Monogram'}</strong>
+                <span>{activeHeroPhoto === 'audience' ? 'THE PEOPLE BEHIND THE STAGE' : 'THE MAIN PERFORMANCE STAGE'}</span>
+                <strong>{activeHeroPhoto === 'audience' ? 'A Thousand Stories, One Stage' : 'Where Every Story Comes Alive'}</strong>
               </div>
+              <div className="da-home-photo-switch" role="group" aria-label="Pilih foto utama">
+                <button type="button" aria-pressed={activeHeroPhoto === 'audience'} onClick={() => setActiveHeroPhoto('audience')}>01 · AUDIENCE</button>
+                <button type="button" aria-pressed={activeHeroPhoto === 'stage'} onClick={() => setActiveHeroPhoto('stage')}>02 · STAGE</button>
+              </div>
+            </div>
+            <div className="da-home-emblem-caption">
+              <span>OFFICIAL EMBLEM</span>
+              <strong>{activeHeroTab === 'wave' ? 'THE GREAT WAVE' : 'INTERLOCKING MONOGRAM'}</strong>
               <div className="da-home-emblem-switch" role="group" aria-label="Pilih variasi lambang resmi">
                 <button type="button" aria-controls="hero-emblem-display" aria-pressed={activeHeroTab === 'wave'} onClick={() => setActiveHeroTab('wave')}>01</button>
                 <button type="button" aria-controls="hero-emblem-display" aria-pressed={activeHeroTab === 'monogram'} onClick={() => setActiveHeroTab('monogram')}>02</button>
