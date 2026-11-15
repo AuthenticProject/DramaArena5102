@@ -117,7 +117,7 @@ export const MediaShowcase: React.FC<MediaShowcaseProps> = ({ onBackToHome }) =>
           </div>
         </div>
 
-        {activeTab === 'all' ? (
+        {activeTab === 'all' && !searchTerm.trim() ? (
           <div className="da-media-all">
             <section className="da-media-feature">
               <div className="da-media-feature-copy">
@@ -164,7 +164,7 @@ export const MediaShowcase: React.FC<MediaShowcaseProps> = ({ onBackToHome }) =>
               <PhotoGallery categoryFilter={activeTab} searchTerm={searchTerm} />
             ) : (
               <div className={activeTab === 'guideline' ? 'da-media-guideline-grid' : 'da-media-asset-grid'}>
-                {filteredAssets.map((asset, index) => (
+                {filteredAssets.length ? filteredAssets.map((asset, index) => (
                   <button type="button" key={asset.id} className={`da-media-asset da-media-asset-${index % 4}`} onClick={() => setSelectedAsset(asset)}>
                     <span className="da-media-asset-image">
                       <img src={resolveAsset(asset)} alt={asset.title} loading="lazy" decoding="async" />
@@ -177,7 +177,7 @@ export const MediaShowcase: React.FC<MediaShowcaseProps> = ({ onBackToHome }) =>
                       <span>{asset.dimensions.width} × {asset.dimensions.height} PX <ArrowUpRight size={14} /></span>
                     </span>
                   </button>
-                ))}
+                )) : <div className="da-archive-empty"><span>NO MATCH / 5102</span><strong>Tidak ada arsip yang cocok.</strong><p>Coba kata kunci lain atau hapus pencarian.</p><button type="button" onClick={() => setSearchTerm('')}>RESET PENCARIAN</button></div>}
               </div>
             )}
           </section>
