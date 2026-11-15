@@ -1022,3 +1022,54 @@ section:hover > .da-section-frame {
     transition: none !important;
   }
 }
+
+
+/* Phase 42 — immersive archive gestures and selected-map focus */
+.da-lightbox-stage {
+  touch-action: pan-y pinch-zoom;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.da-lightbox-stage:active { cursor: grabbing; }
+.da-lightbox-stage img {
+  animation: da-archive-image-arrive .42s cubic-bezier(.22,1,.36,1) both;
+  will-change: opacity, transform;
+}
+.da-lightbox-nav {
+  transition: transform .28s cubic-bezier(.16,1,.3,1), background .25s ease, border-color .25s ease, color .25s ease;
+}
+.da-lightbox-prev:hover { transform: translate(-3px,-50%); }
+.da-lightbox-next:hover { transform: translate(3px,-50%); }
+.da-lightbox-close:hover { transform: rotate(90deg); }
+.da-gallery-item:focus-visible .da-gallery-image {
+  outline: 2px solid #d4a853;
+  outline-offset: 4px;
+}
+.da-gallery-zoom {
+  transition: opacity .3s ease, transform .4s cubic-bezier(.22,1,.36,1);
+}
+@keyframes da-archive-image-arrive {
+  from { opacity: .45; transform: scale(.975); }
+  to { opacity: 1; transform: scale(1); }
+}
+#map-3d canvas {
+  display: block;
+  outline: none;
+}
+#map-3d .group:focus-within {
+  border-color: rgba(243,225,184,.65);
+  box-shadow: 0 25px 80px rgba(0,0,0,.48), 0 0 0 1px rgba(212,168,83,.12);
+}
+#map-3d input:focus-visible {
+  outline: 2px solid #f3e1b8;
+  outline-offset: 3px;
+}
+@media (max-width: 767px) {
+  .da-lightbox-stage { touch-action: pan-y pinch-zoom; }
+  .da-lightbox-nav { opacity: .92; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .da-lightbox-stage img { animation: none; }
+  .da-lightbox-nav, .da-lightbox-close { transition: none; }
+}
