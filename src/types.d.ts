@@ -3,6 +3,8 @@ declare namespace React {
   export type FC<P = {}> = any;
   export type ComponentType<P = {}> = any;
   export type ReactElement<P = any, T = any> = any;
+  export type ElementType = any;
+  export type ElementType = any;
   export type MouseEvent<T = any> = any;
   export type FormEvent<T = any> = any;
   export function useState<T>(initialState: T | (() => T)): [T, (newState: T | ((prevState: T) => T)) => void];
@@ -103,6 +105,10 @@ declare module 'lucide-react' {
   export const CheckCheck: any;
   export const MessageCircle: any;
   export const Shirt: any;
+  export const Wallet: any;
+  export const ChevronDown: any;
+  export const Handshake: any;
+  export const Palette: any;
   export const Maximize2: any;
   export const ZoomIn: any;
   export const Info: any;
