@@ -137,7 +137,7 @@ export const CommitteeSection: React.FC<CommitteeSectionProps> = ({ onNavigate }
         )}
 
         <FadeIn className="da-committee-merch">
-          <div className="da-committee-merch-image"><img src={importImage('workshirt.png')} alt="Seragam resmi panitia Drama Arena 5102"/></div>
+          <div className="da-committee-merch-image"><img src={importImage('workshirt.png')} alt="Seragam resmi panitia Drama Arena 5102" loading="lazy" decoding="async"/></div>
           <div className="da-committee-merch-copy"><span>IDENTITAS RESMI · 5102</span><h3>Seragam dan identitas visual panitia</h3><p>Jelajahi arsip visual, pedoman identitas, dan dokumentasi pendukung Drama Arena 5102.</p></div>
           {onNavigate && <button type="button" onClick={() => onNavigate('media-showcase')}>Buka Media Showcase <ArrowRight size={15}/></button>}
         </FadeIn>
