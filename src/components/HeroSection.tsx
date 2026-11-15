@@ -1,12 +1,44 @@
 import React, { useState } from 'react';
 import { FadeIn } from './FadeIn';
-import { ArrowDownRight, ArrowUpRight, MapPin, CalendarDays, Sparkles } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, MapPin, Calendar, Sparkles } from 'lucide-react';
 import { importImage } from '../utils/assetHelpers';
 
 interface HeroSectionProps {
   onOpenSponsorshipModal: () => void;
   onNavigate: (sectionId: string) => void;
 }
+
+export const FleuronDivider: React.FC<{ className?: string }> = ({ className = '' }) => (
+  <div className={`flex items-center gap-3 my-3 w-full max-w-xs mx-auto ${className}`}>
+    <div className="flex-1 h-px bg-gradient-to-r from-transparent to-[#B58A3C]/60" />
+    <span className="text-[#D4AF37] text-xs font-serif">✦</span>
+    <div className="flex-1 h-px bg-gradient-to-l from-transparent to-[#B58A3C]/60" />
+  </div>
+);
+
+export const SectionLabel: React.FC<{ text: string }> = ({ text }) => (
+  <span className="font-mono text-[11px] tracking-[0.28em] uppercase font-bold text-[#D4AF37]">
+    ✦ {text} ✦
+  </span>
+);
+
+export const GoldButton: React.FC<{ onClick?: () => void; label: string; outline?: boolean }> = ({
+  onClick, label, outline = false
+}) => (
+  <button
+    type="button"
+    onClick={onClick}
+    className="group relative px-7 py-3 font-mono font-bold uppercase tracking-widest text-xs transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer shadow-md rounded-xl"
+    style={{
+      background: outline ? 'transparent' : 'linear-gradient(135deg, #F3E1B8 0%, #D4A853 50%, #B58A3C 100%)',
+      color: outline ? '#EDE8E2' : '#192E41',
+      border: outline ? '1.5px solid rgba(181, 138, 60, 0.5)' : '1.5px solid #D4AF37',
+      letterSpacing: '0.14em'
+    }}
+  >
+    {label} <span className="inline-block transition-transform group-hover:translate-x-1 ml-1">→</span>
+  </button>
+);
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenSponsorshipModal, onNavigate }) => {
   const [activeHeroTab, setActiveHeroTab] = useState<'wave' | 'monogram'>('wave');
@@ -47,7 +79,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenSponsorshipModal
           <FadeIn delay={0.22}>
             <div className="da-home-actions">
               <button type="button" onClick={() => onNavigate('ide-pokok')} className="da-home-primary">
-                Jelajahi kisah kami <ArrowUpRight size={17} />
+                Jelajahi kisah kami <ArrowRight size={17} />
               </button>
               <button type="button" onClick={onOpenSponsorshipModal} className="da-home-secondary">
                 Kemitraan <span>↗</span>
@@ -57,7 +89,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenSponsorshipModal
 
           <FadeIn delay={0.3}>
             <div className="da-home-meta">
-              <div><CalendarDays size={15} /><span>KAMIS, 07 MEI 2026</span></div>
+              <div><Calendar size={15} /><span>KAMIS, 07 MEI 2026</span></div>
               <i />
               <div><MapPin size={15} /><span>PONOROGO, INDONESIA</span></div>
             </div>
@@ -80,12 +112,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenSponsorshipModal
               <span>AN ARCHIVE OF TOGETHERNESS</span>
             </div>
 
-            <div className="da-home-emblem">
+            <div id="hero-emblem-display" className="da-home-emblem" aria-live="polite">
               <div className="da-home-emblem-glow" />
               <img
                 key={activeHeroTab}
                 src={importImage(activeHeroTab === 'wave' ? 'logo-da-wave-transparent.png' : 'logo-da-monogram-transparent.png')}
-                alt={activeHeroTab === 'wave' ? 'Lambang ombak resmi Drama Arena 5102' : 'Monogram resmi Drama Arena 5102'}
+                alt={activeHeroTab === 'wave' ? 'Lambang ombak resmi Drama Arena 5102' : 'Monogram DA resmi Drama Arena 5102'}
               />
               <div className="da-home-emblem-seal">
                 <img src={importImage('wax-seal-gold.png')} alt="" />
@@ -98,8 +130,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenSponsorshipModal
                 <strong>{activeHeroTab === 'wave' ? 'The Great Wave' : 'Interlocking Monogram'}</strong>
               </div>
               <div className="da-home-emblem-switch" role="group" aria-label="Pilih variasi lambang resmi">
-                <button type="button" aria-pressed={activeHeroTab === 'wave'} onClick={() => setActiveHeroTab('wave')}>01</button>
-                <button type="button" aria-pressed={activeHeroTab === 'monogram'} onClick={() => setActiveHeroTab('monogram')}>02</button>
+                <button type="button" aria-controls="hero-emblem-display" aria-pressed={activeHeroTab === 'wave'} onClick={() => setActiveHeroTab('wave')}>01</button>
+                <button type="button" aria-controls="hero-emblem-display" aria-pressed={activeHeroTab === 'monogram'} onClick={() => setActiveHeroTab('monogram')}>02</button>
               </div>
             </div>
             <div className="da-home-visual-index">FIG. 01 <span>IDENTITAS VISUAL</span></div>
