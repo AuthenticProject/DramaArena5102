@@ -4,6 +4,7 @@ import { Maximize2, X, ChevronLeft, ChevronRight, ZoomIn, ArrowUpRight } from 'l
 
 interface PhotoGalleryProps {
   categoryFilter?: 'all' | 'photo' | 'graphic' | 'merchandise';
+  searchTerm?: string;
   onSelectAsset?: (asset: DAAsset) => void;
   className?: string;
 }
@@ -13,14 +14,16 @@ const getAssetUrl = (asset: DAAsset) =>
 
 export const PhotoGallery: React.FC<PhotoGalleryProps> = ({
   categoryFilter = 'all',
+  searchTerm = '',
   onSelectAsset,
   className = '',
 }) => {
   const galleryItems = useMemo(() => ALL_ASSETS.filter((item) => {
-    if (categoryFilter === 'all') return item.category === 'photo' || item.category === 'merchandise';
-    if (categoryFilter === 'graphic') return ['logo', 'typography', 'color', 'guideline'].includes(item.category);
-    return item.category === categoryFilter;
-  }), [categoryFilter]);
+    const inCategory = categoryFilter === 'all' ? item.category === 'photo' || item.category === 'merchandise' : categoryFilter === 'graphic' ? ['logo', 'typography', 'color', 'guideline'].includes(item.category) : item.category === categoryFilter;
+    const query = searchTerm.trim().toLocaleLowerCase('id');
+    const matchesSearch = !query || [item.title, item.subtitle, item.description, item.name, item.category].join(' ').toLocaleLowerCase('id').includes(query);
+    return inCategory && matchesSearch;
+  }), [categoryFilter, searchTerm]);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const touchStartRef = useRef<{ x: number; y: number } | null>(null);
