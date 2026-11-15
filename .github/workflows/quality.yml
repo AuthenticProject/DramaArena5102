@@ -14,8 +14,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  quality:
-    name: Lint and production build
+  lint:
+    name: ESLint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -30,8 +30,55 @@ jobs:
       - name: Install locked dependencies
         run: npm ci
 
+      - name: Install lint tooling
+        run: npm install --no-save --no-package-lock eslint@8.57.1 @typescript-eslint/parser@7.18.0 @typescript-eslint/eslint-plugin@7.18.0 eslint-plugin-react-hooks@5.2.0
+
       - name: ESLint
         run: npm run lint
 
-      - name: TypeScript and Vite production build
+  build:
+    name: TypeScript and Vite production build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Production build
         run: npm run build
+
+  dependency-audit:
+    name: Dependency vulnerability report
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Report dependency vulnerabilities
+        run: npm audit --json > npm-audit.json
+        continue-on-error: true
+
+      - name: Upload audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm-audit-report
+          path: npm-audit.json
+          if-no-files-found: ignore
