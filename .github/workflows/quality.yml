@@ -101,3 +101,13 @@ jobs:
           name: static-asset-audit
           path: asset-audit.md
           if-no-files-found: error
+
+  site-integrity:
+    name: SEO and deployment integrity
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate canonical metadata, sitemap, robots and social image
+        run: npm run check:site
