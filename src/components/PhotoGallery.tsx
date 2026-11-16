@@ -7,6 +7,7 @@ interface PhotoGalleryProps {
   searchTerm?: string;
   onSelectAsset?: (asset: DAAsset) => void;
   className?: string;
+  onClearFilters?: () => void;
 }
 
 const getAssetUrl = (asset: DAAsset) =>
@@ -17,6 +18,7 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({
   searchTerm = '',
   onSelectAsset,
   className = '',
+  onClearFilters,
 }) => {
   const galleryItems = useMemo(() => ALL_ASSETS.filter((item) => {
     const inCategory = categoryFilter === 'all' ? item.category === 'photo' || item.category === 'merchandise' : categoryFilter === 'graphic' ? ['logo', 'typography', 'color', 'guideline'].includes(item.category) : item.category === categoryFilter;
@@ -96,6 +98,14 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({
         <span>THE VISUAL RECORD · 5102</span>
         <span>{String(galleryItems.length).padStart(2, '0')} ARTEFAK / FOTO</span>
       </div>
+      {galleryItems.length === 0 ? (
+        <div className="da-archive-empty" role="status">
+          <span>NO MATCHING VISUAL RECORD</span>
+          <strong>Belum ada arsip yang cocok.</strong>
+          <p>{searchTerm.trim() ? `Tidak ditemukan foto atau artefak untuk “${searchTerm.trim()}”. Coba kata kunci lain atau tampilkan seluruh koleksi.` : 'Koleksi ini belum memiliki item untuk ditampilkan.'}</p>
+          {onClearFilters && <button type="button" onClick={onClearFilters}>TAMPILKAN SEMUA KOLEKSI</button>}
+        </div>
+      ) : (
       <div className="da-gallery-grid">
         {galleryItems.map((item, index) => (
           <button
@@ -125,6 +135,7 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({
           </button>
         ))}
       </div>
+      )}
 
       {selectedAsset && selectedIndex !== null && (
         <div

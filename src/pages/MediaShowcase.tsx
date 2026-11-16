@@ -161,7 +161,7 @@ export const MediaShowcase: React.FC<MediaShowcaseProps> = ({ onBackToHome }) =>
               <span>{String(filteredAssets.length).padStart(2, '0')} ITEMS IN THIS COLLECTION</span>
             </div>
             {activeTab === 'photo' || activeTab === 'merchandise' ? (
-              <PhotoGallery categoryFilter={activeTab} searchTerm={searchTerm} />
+              <PhotoGallery categoryFilter={activeTab} searchTerm={searchTerm} onClearFilters={() => { setSearchTerm(''); setActiveTab('all'); }} />
             ) : (
               <div className={activeTab === 'guideline' ? 'da-media-guideline-grid' : 'da-media-asset-grid'}>
                 {filteredAssets.length ? filteredAssets.map((asset, index) => (
